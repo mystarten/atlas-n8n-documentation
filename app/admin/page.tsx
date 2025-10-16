@@ -5,6 +5,17 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 
+const getTemplatesLimitDisplay = (tier: string) => {
+  switch (tier) {
+    case 'free': return '3'
+    case 'starter': return '20'
+    case 'pro': return '40'
+    case 'enterprise': return '60'
+    default: return '3'
+  }
+}
+
+
 export default function AdminPage() {
   // Fonction inline pour afficher la limite de templates
   const getTemplatesLimitDisplay = (tier: string) => {
