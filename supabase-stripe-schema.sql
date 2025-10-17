@@ -8,3 +8,4 @@ COMMENT ON COLUMN user_usage.stripe_customer_id IS 'ID du client Stripe pour les
 COMMENT ON COLUMN user_usage.stripe_subscription_id IS 'ID de l\'abonnement Stripe actif';
 
 
+

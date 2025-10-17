@@ -39,3 +39,4 @@ WHERE u.email = 'starten.contact@gmail.com';
 -- company_name: NULL (ou ton nom d'entreprise)
 
 
+

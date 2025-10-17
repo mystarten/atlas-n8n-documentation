@@ -53,3 +53,4 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 SELECT check_usage_limit((SELECT id FROM auth.users WHERE email = 'starten.contact@gmail.com'));
 
 
+

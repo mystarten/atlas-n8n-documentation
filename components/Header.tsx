@@ -38,9 +38,8 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/30 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between h-auto">
-        <Link href="/" className="flex items-center gap-3 group">
-          <img src="/logo.png" alt="ATLAS Logo" className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-          <span className="font-bold text-xl text-white">ATLAS</span>
+        <Link href="/" className="flex items-center group">
+          <img src="/logo.png" alt="ATLAS Logo" className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
         </Link>
         
         <nav className="hidden md:flex items-center gap-8">

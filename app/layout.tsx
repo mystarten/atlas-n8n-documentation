@@ -1,12 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { UserProvider } from './contexts/UserContext'
 import { AuthProvider } from '@/components/AuthProvider'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter'
+})
+
+const poppins = Poppins({
+  weight: ['300', '400', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-poppins'
+})
 
 export const metadata: Metadata = {
   title: 'ATLAS - Documentation automatique pour workflows N8N',
@@ -132,7 +141,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="fr">
+    <html lang="fr" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
         <link rel="shortcut icon" href="/favicon.ico?v=2" />
@@ -141,13 +150,17 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={inter.className}>
+      <body className="font-inter bg-[#0f172a]">
         <AuthProvider>
           <UserProvider>
-            <Header />
-            <main className="min-h-screen">
+            {/* Navbar globale pour toutes les pages */}
+            <Navbar />
+            
+            {/* Contenu des pages avec padding-top pour éviter overlap */}
+            <main className="min-h-screen pt-20">
               {children}
             </main>
+            
             <Footer />
           </UserProvider>
         </AuthProvider>

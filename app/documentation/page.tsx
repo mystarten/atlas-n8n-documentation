@@ -1,386 +1,406 @@
-'use client'
-import Image from 'next/image'
-import Link from 'next/link'
+'use client';
+
+import { motion } from 'framer-motion';
 
 export default function DocumentationPage() {
   return (
-    <div className="min-h-screen bg-slate-900">
-      <div className="container mx-auto px-4 py-20">
+    <main className="min-h-screen bg-[#0f172a]">
         
-        {/* Hero */}
-        <div className="text-center mb-24 pt-16">
-          {/* Logo Atlas */}
-          <div className="mb-12">
-            <Image 
-              src="/logo.png" 
-              alt="Atlas Logo" 
-              width={120} 
-              height={120}
-              className="mx-auto"
-            />
-          </div>
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden pt-20">
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
+          {/* Logo ATLAS animé */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="mb-12"
+          >
+            <img 
+              src="/logo.png" 
+              alt="ATLAS" 
+              className="h-32 w-auto"
+            />
+          </motion.div>
+          
+          {/* Titre - "Atlas" en GRADIENT */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-7xl font-bold text-center mb-8 leading-tight"
+            style={{ fontFamily: 'Poppins, sans-serif' }}
+          >
             Documentation{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#8b5cf6] via-[#3b82f6] to-[#06b6d4] bg-clip-text text-transparent">
               Atlas
             </span>
-          </h1>
+          </motion.h1>
           
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          {/* Sous-titre */}
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl text-[#cbd5e1] text-center mb-8 leading-relaxed max-w-3xl font-light"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
             Découvrez la technologie derrière la génération automatique de documentation pour vos workflows N8N
-          </p>
+          </motion.p>
           
-          <div className="mt-8 inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white shadow-lg shadow-purple-500/30">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+          {/* Badge Claude - SANS EMOJI, GRADIENT SUBTIL */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#8b5cf6]/10 via-[#3b82f6]/10 to-[#06b6d4]/10 backdrop-blur-sm rounded-full border border-[#3b82f6]/30 mb-12"
+          >
+            <svg className="w-5 h-5 text-[#3b82f6]" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
             </svg>
-            <span className="font-semibold text-base">
-              Propulsé par <strong className="font-bold">Claude Sonnet 4.5</strong> avec modèles adaptatifs
+            <span className="text-[#e2e8f0] text-sm font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Propulsé par{' '}
+              <span className="bg-gradient-to-r from-[#8b5cf6] to-[#06b6d4] bg-clip-text text-transparent font-semibold">
+                Claude Sonnet 4.5
+              </span>
+              {' '}avec modèles adaptatifs
             </span>
-          </div>
-        </div>
-
-        {/* Section 1 - Le Problème */}
-        <section className="mb-32">
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
-            <div className="p-8 md:p-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
-                Le problème des templates non documentés
-              </h2>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Problème 1 */}
-                <div className="group p-6 rounded-2xl bg-slate-800/50 border border-slate-700 hover:border-red-500/50 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-white mb-3">
-                        Impossible à comprendre
-                      </h3>
-                      <p className="text-gray-300 leading-relaxed">
-                        Les workflows N8N partagés sur les forums et marketplaces sont de véritables 
-                        boîtes noires. Sans documentation, impossible de savoir quels credentials sont 
-                        nécessaires, quelles variables configurer, ou comment tester le workflow.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Problème 2 */}
-                <div className="group p-6 rounded-2xl bg-slate-800/50 border border-slate-700 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-white mb-3">
-                        Perte de temps massive
-                      </h3>
-                      <p className="text-gray-300 leading-relaxed">
-                        Résultat : 2 à 4 heures perdues par template pour deviner la configuration, 
-                        comprendre la logique, et faire fonctionner l'automation.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Image exemple - Réduite et optimisée */}
-              <div className="mt-10">
-                <div className="relative max-w-md mx-auto">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl blur-xl"></div>
-                  <div className="relative bg-slate-800/80 rounded-2xl border border-slate-700 p-6 backdrop-blur-sm">
-                    <div className="space-y-4">
-                      {/* Toggle 1 */}
-                      <div className="flex items-center justify-between p-4 bg-slate-900/50 rounded-lg">
-                        <span className="text-gray-300 text-sm font-medium">Always Output Data</span>
-                        <div className="w-12 h-6 bg-slate-700 rounded-full relative">
-                          <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Toggle 2 */}
-                      <div className="flex items-center justify-between p-4 bg-slate-900/50 rounded-lg">
-                        <span className="text-gray-300 text-sm font-medium">Execute Once</span>
-                        <div className="w-12 h-6 bg-slate-700 rounded-full relative">
-                          <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Toggle 3 */}
-                      <div className="flex items-center justify-between p-4 bg-slate-900/50 rounded-lg">
-                        <span className="text-gray-300 text-sm font-medium">Retry On Fail</span>
-                        <div className="w-12 h-6 bg-slate-700 rounded-full relative">
-                          <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full"></div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-400">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>À quoi servent ces options ?</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
+          
         </section>
 
-        {/* Section 2 - La Solution */}
-        <section className="mb-32">
-          <div className="bg-gradient-to-br from-cyan-900/10 to-transparent border-2 border-cyan-500/30 rounded-3xl p-12 hover:border-cyan-500/50 hover:shadow-[0_0_50px_rgba(6,182,212,0.2)] transition-all duration-500 group">
-            <h2 className="text-4xl font-bold text-white mb-10 group-hover:scale-105 transition-transform">
-              Documentation automatique par IA
-            </h2>
+        {/* Section : Le problème - SANS EMOJI */}
+        <section className="py-24 px-6 bg-[#0f172a] relative">
+          <div className="max-w-6xl mx-auto">
             
-            <p className="text-gray-300 text-lg leading-relaxed mb-12">
-              Atlas transforme vos workflows bruts en templates professionnels prêts à l'emploi, 
-              grâce à une combinaison unique d'IA enrichie et de traitement JavaScript avancé.
-            </p>
-
-            {/* Cartes technologie */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              {/* Carte 1 */}
-              <div className="bg-gradient-to-br from-blue-900/30 to-transparent border-2 border-blue-500/40 rounded-2xl p-8 hover:border-blue-500/80 hover:scale-105 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300">
-                <div className="w-12 h-12 bg-blue-600/30 border-2 border-blue-500/50 rounded-xl flex items-center justify-center text-2xl font-bold text-blue-300 mx-auto mb-6">
-                  1
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 text-center">IA enrichie N8N</h3>
-                <p className="text-gray-300 text-center leading-relaxed">
-                  Intelligence artificielle spécialement entraînée sur l'écosystème N8N pour comprendre la logique des workflows
-                </p>
-              </div>
-
-              {/* Carte 2 */}
-              <div className="bg-gradient-to-br from-cyan-900/30 to-transparent border-2 border-cyan-500/40 rounded-2xl p-8 hover:border-cyan-500/80 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all duration-300">
-                <div className="w-12 h-12 bg-cyan-600/30 border-2 border-cyan-500/50 rounded-xl flex items-center justify-center text-2xl font-bold text-cyan-300 mx-auto mb-6">
-                  2
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 text-center">Claude Sonnet 4.5</h3>
-                <p className="text-gray-300 text-center leading-relaxed">
-                  Modèle d'IA de pointe avec modèles adaptatifs pour analyser la logique complexe et générer des instructions claires
-                </p>
-              </div>
-
-              {/* Carte 3 */}
-              <div className="bg-gradient-to-br from-blue-900/30 to-transparent border-2 border-blue-500/40 rounded-2xl p-8 hover:border-blue-500/80 hover:scale-105 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300">
-                <div className="w-12 h-12 bg-blue-600/30 border-2 border-blue-500/50 rounded-xl flex items-center justify-center text-2xl font-bold text-blue-300 mx-auto mb-6">
-                  3
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 text-center">Fonctions JS avancées</h3>
-                <p className="text-gray-300 text-center leading-relaxed">
-                  Traitement JavaScript complexe pour parser, enrichir et structurer la documentation
-                </p>
-              </div>
-            </div>
-
-            {/* Image après */}
-            <div className="mt-12 max-w-4xl mx-auto">
-              <div className="relative rounded-2xl overflow-hidden border-2 border-cyan-500/30 shadow-2xl">
-                <Image 
-                  src="/apres.png" 
-                  alt="Template avec documentation" 
-                  width={800} 
-                  height={450}
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-              <p className="text-center text-gray-400 mt-6 italic text-lg">
-                Le même template documenté par Atlas : utilisable en 10 minutes
+            {/* Titre section */}
+            <div className="text-center mb-16">
+              <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                Le problème
+              </p>
+              <h2 className="text-5xl font-bold text-white mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                Des templates N8N sans mode d'emploi
+              </h2>
+              <p className="text-xl text-[#cbd5e1] max-w-3xl mx-auto font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                Vous téléchargez un template sur une marketplace, Instagram ou YouTube... mais impossible de savoir comment l'utiliser.
               </p>
             </div>
+            
+            {/* Grid problèmes - DESIGN PRO SANS EMOJI */}
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              
+              {/* Problème 1 */}
+              <div className="p-8 bg-[#1e293b]/50 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#ef4444]/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-[#ef4444]/10 rounded-xl flex items-center justify-center mb-6">
+                  <svg className="w-6 h-6 text-[#ef4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  Une boîte noire totale
+                </h3>
+                <p className="text-[#cbd5e1] leading-relaxed font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Des dizaines de nœuds, zéro explication. Personne ne sait par où commencer ni comment configurer.
+                </p>
+              </div>
+
+              {/* Problème 2 */}
+              <div className="p-8 bg-[#1e293b]/50 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#f59e0b]/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-[#f59e0b]/10 rounded-xl flex items-center justify-center mb-6">
+                  <svg className="w-6 h-6 text-[#f59e0b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  Des heures perdues
+                </h3>
+                <p className="text-[#cbd5e1] leading-relaxed font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Tester chaque connexion, chercher sur Google, essayer de comprendre... Le temps file sans résultat.
+                </p>
+              </div>
+
+              {/* Problème 3 */}
+              <div className="p-8 bg-[#1e293b]/50 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#8b5cf6]/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-[#8b5cf6]/10 rounded-xl flex items-center justify-center mb-6">
+                  <svg className="w-6 h-6 text-[#8b5cf6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  Frustration maximale
+                </h3>
+                <p className="text-[#cbd5e1] leading-relaxed font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Vous abandonnez le template avant même de l'avoir testé. La valeur perçue est nulle.
+                </p>
+              </div>
+              
+            </div>
+
+            {/* Stat */}
+            <div className="text-center p-8 bg-gradient-to-r from-[#ef4444]/10 to-[#f59e0b]/10 rounded-2xl border border-[#ef4444]/20">
+              <p className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                87% des templates téléchargés
+              </p>
+              <p className="text-lg text-[#cbd5e1] font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                ne sont jamais utilisés faute de documentation claire
+              </p>
+            </div>
+            
           </div>
         </section>
 
-        {/* Section 3 - Comment ça marche */}
-        <section className="mb-32">
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-            Comment fonctionne la génération
+        {/* Section : La solution */}
+        <section className="py-24 px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b] relative">
+          <div className="max-w-6xl mx-auto">
+            
+            {/* Titre section */}
+            <div className="text-center mb-16">
+              <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                La solution
+              </p>
+              <h2 className="text-5xl font-bold text-white mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                Atlas transforme vos templates en{' '}
+                <span className="bg-gradient-to-r from-[#8b5cf6] to-[#06b6d4] bg-clip-text text-transparent">
+                  produits clé en main
+                </span>
           </h2>
+              <p className="text-xl text-[#cbd5e1] max-w-3xl mx-auto font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                En 40 secondes, Atlas génère toute la documentation nécessaire pour comprendre et utiliser n'importe quel workflow N8N.
+              </p>
+            </div>
 
-          <div className="space-y-8">
-            {/* Étape 1 */}
-            <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border-2 border-blue-500/30 rounded-3xl p-10 hover:border-blue-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] transition-all duration-500 group">
-              <div className="flex items-start gap-8">
-                <div className="text-5xl font-bold text-blue-400 flex-shrink-0 group-hover:scale-125 transition-transform">01</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white mb-4">Parsing du workflow JSON</h3>
-                  <p className="text-gray-300 text-base leading-relaxed mb-6">
-                    Votre fichier N8N est analysé en profondeur par des fonctions JavaScript avancées. 
-                    Chaque nœud, chaque connexion, chaque paramètre est extrait et structuré.
-                  </p>
-                  <div className="bg-slate-900/50 border border-blue-500/20 rounded-xl p-6 font-mono text-sm">
-                    <pre className="text-cyan-300 overflow-x-auto">
-{`// Extraction de la structure du workflow
-const nodes = workflow.nodes.map(node => ({
-  id: node.id,
-  type: node.type,
-  parameters: node.parameters,
-  credentials: node.credentials
-}))`}
-                    </pre>
+            {/* Grid solutions */}
+            <div className="grid md:grid-cols-2 gap-8">
+              
+              {/* QuickStart */}
+              <div className="p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#3b82f6]/30 hover:border-[#3b82f6]/50 transition-all duration-300">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-[#3b82f6]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      QuickStart en 5 minutes
+                    </h3>
+                    <p className="text-[#3b82f6] text-sm font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      POST-IT EXPLICATIFS SUR CHAQUE NŒUD
+                    </p>
+                  </div>
+                </div>
+                <p className="text-[#cbd5e1] leading-relaxed mb-4 font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Atlas ajoute automatiquement des post-it sur chaque nœud pour expliquer son rôle, comment faire les connexions, et quelles données il utilise.
+                </p>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Démarrage immédiat sans recherche
+                </div>
+              </div>
+              
+              {/* Notes paramètres */}
+              <div className="p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#3b82f6]/30 hover:border-[#3b82f6]/50 transition-all duration-300">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-[#8b5cf6]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-[#8b5cf6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      Notes dans chaque nœud
+                    </h3>
+                    <p className="text-[#8b5cf6] text-sm font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      DOCUMENTATION DÉTAILLÉE DES PARAMÈTRES
+                    </p>
+                  </div>
+                </div>
+                <p className="text-[#cbd5e1] leading-relaxed mb-4 font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Chaque paramètre est documenté avec des explications claires : à quoi il sert, quelle valeur mettre, comment le configurer.
+                </p>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Plus de confusion, tout est clair
+                </div>
+              </div>
+              
+              {/* Watermark pour créateurs */}
+              <div className="p-8 bg-gradient-to-br from-[#8b5cf6]/10 to-[#06b6d4]/10 backdrop-blur-sm rounded-2xl border border-[#8b5cf6]/30 hover:border-[#8b5cf6]/50 transition-all duration-300 md:col-span-2">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-[#8b5cf6]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-[#8b5cf6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                      Watermark personnalisé pour les créateurs
+                    </h3>
+                    <p className="bg-gradient-to-r from-[#8b5cf6] to-[#06b6d4] bg-clip-text text-transparent text-sm font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      AUGMENTEZ LA VALEUR PERÇUE DE VOS TEMPLATES
+                    </p>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <p className="text-[#cbd5e1] leading-relaxed mb-4 font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      Vous partagez vos templates sur Instagram, YouTube ou des marketplaces ? Atlas vous permet d'ajouter votre logo et watermark directement dans les nœuds.
+                    </p>
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-3 text-[#cbd5e1] font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <svg className="w-5 h-5 text-[#3b82f6] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Branding personnalisé sur tous les exports</span>
+                      </li>
+                      <li className="flex items-start gap-3 text-[#cbd5e1] font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <svg className="w-5 h-5 text-[#3b82f6] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Vos abonnés comprennent immédiatement vos workflows</span>
+                      </li>
+                      <li className="flex items-start gap-3 text-[#cbd5e1] font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <svg className="w-5 h-5 text-[#3b82f6] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Moins de questions, plus de satisfaction</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-[#8b5cf6]/20 blur-2xl rounded-full"></div>
+                      <div className="relative p-8 bg-[#1e293b] rounded-2xl border-2 border-[#8b5cf6]/50 shadow-2xl shadow-[#8b5cf6]/20">
+                        <p className="text-6xl font-bold text-white mb-2 text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>10x</p>
+                        <p className="text-[#cbd5e1] text-center" style={{ fontFamily: 'Inter, sans-serif' }}>Valeur perçue</p>
+                  </div>
+                </div>
                   </div>
                 </div>
               </div>
+              
             </div>
-
-            {/* Étape 2 */}
-            <div className="bg-gradient-to-r from-cyan-900/20 to-cyan-900/20 border-2 border-cyan-500/30 rounded-3xl p-10 hover:border-cyan-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(6,182,212,0.3)] transition-all duration-500 group">
-              <div className="flex items-start gap-8">
-                <div className="text-5xl font-bold text-cyan-400 flex-shrink-0 group-hover:scale-125 transition-transform">02</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white mb-4">Analyse par IA enrichie N8N</h3>
-                  <p className="text-gray-300 text-base leading-relaxed mb-6">
-                    Notre IA, spécialement enrichie avec des connaissances sur l'écosystème N8N, 
-                    analyse la logique du workflow. Elle comprend les intégrations, les déclencheurs, 
-                    et les transformations de données.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-xl p-4">
-                      <div className="font-semibold text-cyan-300 mb-2">Détection automatique</div>
-                      <div className="text-gray-400 text-sm">Identifie les APIs, webhooks, et services</div>
-                    </div>
-                    <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-xl p-4">
-                      <div className="font-semibold text-cyan-300 mb-2">Analyse des connexions</div>
-                      <div className="text-gray-400 text-sm">Comprend le flux de données entre nœuds</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Étape 3 */}
-            <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border-2 border-blue-500/30 rounded-3xl p-10 hover:border-blue-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] transition-all duration-500 group">
-              <div className="flex items-start gap-8">
-                <div className="text-5xl font-bold text-blue-400 flex-shrink-0 group-hover:scale-125 transition-transform">03</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white mb-4">Génération intelligente avec Claude Sonnet 4.5</h3>
-                  <p className="text-gray-300 text-base leading-relaxed mb-6">
-                    Claude Sonnet 4.5 avec modèles adaptatifs prend le relais pour générer une documentation structurée, 
-                    claire et professionnelle. Le modèle crée des instructions précises, 
-                    identifie les prérequis, et propose des exemples de configuration.
-                  </p>
-                  <div className="bg-slate-900/50 border border-blue-500/20 rounded-xl p-6 font-mono text-sm">
-                    <pre className="text-blue-300 overflow-x-auto">
-{`// Génération de la documentation
-const prompt = buildEnrichedPrompt(nodes, connections)
-const documentation = await claude.generate({
-  model: 'claude-sonnet-4.5',
-  prompt: prompt,
-  context: 'N8N workflow documentation'
-})`}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Étape 4 */}
-            <div className="bg-gradient-to-r from-cyan-900/20 to-cyan-900/20 border-2 border-cyan-500/30 rounded-3xl p-10 hover:border-cyan-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(6,182,212,0.3)] transition-all duration-500 group">
-              <div className="flex items-start gap-8">
-                <div className="text-5xl font-bold text-cyan-400 flex-shrink-0 group-hover:scale-125 transition-transform">04</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white mb-4">Enrichissement et formatage final</h3>
-                  <p className="text-gray-300 text-base leading-relaxed mb-6">
-                    Des fonctions JavaScript complexes enrichissent la documentation générée : 
-                    ajout d'exemples de credentials, création de checklists de test, 
-                    formatage Markdown professionnel, et structuration des sections.
-                  </p>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                      <div className="font-semibold text-cyan-300 text-sm">Checklists</div>
-                    </div>
-                    <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                      <div className="font-semibold text-cyan-300 text-sm">Exemples</div>
-                    </div>
-                    <div className="bg-cyan-900/20 border border-cyan-500/30 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                      <div className="font-semibold text-cyan-300 text-sm">Tests</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </section>
 
-        {/* Section 4 - Résultat */}
-        <section className="mb-32">
-          <div className="bg-gradient-to-br from-blue-900/10 via-cyan-900/10 to-cyan-900/10 border-2 border-blue-500/30 rounded-3xl p-12 hover:border-blue-500/50 hover:shadow-[0_0_60px_rgba(168,85,247,0.3)] transition-all duration-500">
-            <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Ce que vous obtenez
+        {/* Section Exemples de Documentation Générée */}
+        <section className="py-16 px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl font-bold text-white mb-12" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              Exemples de Documentation Générée
             </h2>
-            <div className="grid md:grid-cols-2 gap-10">
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-2">Description complète du workflow</h3>
-                    <p className="text-gray-400">Objectif, cas d'usage, et fonctionnement général</p>
-                  </div>
+
+            {/* Grid 3 exemples */}
+            <div className="grid md:grid-cols-3 gap-8">
+              
+              {/* Comptable */}
+              <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  📊 Comptabilité Automatisée
+                </h3>
+                <p className="text-[#cbd5e1] text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Tickets de caisse → CRM comptable
+                </p>
+                <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
+                  <img src="/comptableapres.png" alt="Exemple comptable" className="w-full h-auto" />
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Prérequis techniques détaillés</h3>
-                    <p className="text-gray-400">API keys, webhooks, et configurations nécessaires</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Instructions étape par étape</h3>
-                    <p className="text-gray-400">Configuration complète de chaque nœud</p>
-                  </div>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>Documenté par ATLAS</span>
                 </div>
               </div>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Exemples de credentials</h3>
-                    <p className="text-gray-400">Format et structure des clés API requises</p>
-                  </div>
+
+              {/* Veille */}
+              <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  🔍 Veille Concurrentielle
+                </h3>
+                <p className="text-[#cbd5e1] text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Analyse produits + rapports stratégiques
+                </p>
+                <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
+                  <img src="/concurrenceapres.png" alt="Exemple veille" className="w-full h-auto" />
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Procédure de test complète</h3>
-                    <p className="text-gray-400">Comment vérifier que tout fonctionne correctement</p>
-                  </div>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>Documenté par ATLAS</span>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Prêt à l'emploi en 10 minutes</h3>
-                    <p className="text-gray-400">Template immédiatement utilisable</p>
-                  </div>
+              </div>
+
+              {/* Sora */}
+              <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
+                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  🎬 Génération Vidéo IA
+                </h3>
+                <p className="text-[#cbd5e1] text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Création vidéos automatiques avec Sora
+                </p>
+                <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
+                  <img src="/soraapres.png" alt="Exemple Sora" className="w-full h-auto" />
+                </div>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span>Documenté par ATLAS</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Mention Export PDF */}
+            <div className="mt-12 p-6 bg-gradient-to-r from-[#ef4444]/10 to-[#dc2626]/10 rounded-2xl border border-[#ef4444]/30">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#ef4444]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-[#ef4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Export PDF Inclus</h4>
+                  <p className="text-[#cbd5e1] font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    Tous les workflows documentés peuvent être exportés en PDF professionnel. Parfait pour partager avec votre équipe, clients ou pour vos archives.
+                  </p>
                 </div>
               </div>
             </div>
+
           </div>
         </section>
 
-        {/* CTA */}
-        <div className="text-center">
-          <Link 
-            href="/"
-            className="inline-block px-12 py-5 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-2xl font-bold text-xl hover:scale-110 hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] transition-all duration-300"
-          >
-            Essayer Atlas maintenant
-          </Link>
+        {/* CTA Final */}
+        <section className="py-20 px-6 bg-[#0f172a]">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-5xl font-bold text-white mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              Prêt à transformer vos templates ?
+            </h2>
+            <p className="text-xl text-[#cbd5e1] mb-12" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Rejoignez les créateurs N8N qui documentent leurs workflows en 40 secondes
+            </p>
+            <a 
+              href="/generate"
+              className="inline-block px-12 py-5 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white text-lg font-semibold rounded-lg hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all hover:scale-105 shadow-lg shadow-[#3b82f6]/50"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              Commencer gratuitement →
+            </a>
+            <p className="text-sm text-[#cbd5e1] mt-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Sans carte bancaire • 3 générations offertes
+            </p>
         </div>
-      </div>
-    </div>
-  )
+        </section>
+        
+    </main>
+  );
 }

@@ -46,3 +46,4 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 SELECT increment_user_usage((SELECT id FROM auth.users WHERE email = 'starten.contact@gmail.com'));
 
 
+
