@@ -290,10 +290,10 @@ export default function DocumentationPage() {
           </div>
         </section>
 
-        {/* Section Exemples de Documentation Générée */}
+        {/* Section Exemples */}
         <section className="py-16 px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-white mb-12" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h2 className="text-4xl font-bold text-white mb-12 font-poppins">
               Exemples de Documentation Générée
             </h2>
 
@@ -302,16 +302,16 @@ export default function DocumentationPage() {
               
               {/* Comptable */}
               <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
-                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                  📊 Comptabilité Automatisée
+                <h3 className="text-xl font-bold text-white mb-3 font-poppins">
+                  Comptabilité Automatisée
                 </h3>
-                <p className="text-[#cbd5e1] text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-[#cbd5e1] text-sm mb-4 font-inter">
                   Tickets de caisse → CRM comptable
                 </p>
                 <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
-                  <img src="/comptableapres.png" alt="Exemple comptable" className="w-full h-auto" />
+                  <img src="/img/comptableapres.png" alt="Exemple comptable" className="w-full h-auto" />
                 </div>
-                <div className="flex items-center gap-2 text-[#10b981] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm font-inter">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
@@ -321,16 +321,16 @@ export default function DocumentationPage() {
 
               {/* Veille */}
               <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
-                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                  🔍 Veille Concurrentielle
+                <h3 className="text-xl font-bold text-white mb-3 font-poppins">
+                  Veille Concurrentielle
                 </h3>
-                <p className="text-[#cbd5e1] text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-[#cbd5e1] text-sm mb-4 font-inter">
                   Analyse produits + rapports stratégiques
                 </p>
                 <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
-                  <img src="/concurrenceapres.png" alt="Exemple veille" className="w-full h-auto" />
+                  <img src="/img/concurrenceapres.png" alt="Exemple veille" className="w-full h-auto" />
                 </div>
-                <div className="flex items-center gap-2 text-[#10b981] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm font-inter">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
@@ -340,16 +340,16 @@ export default function DocumentationPage() {
 
               {/* Sora */}
               <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
-                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                  🎬 Génération Vidéo IA
+                <h3 className="text-xl font-bold text-white mb-3 font-poppins">
+                  Génération Vidéo IA
                 </h3>
-                <p className="text-[#cbd5e1] text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-[#cbd5e1] text-sm mb-4 font-inter">
                   Création vidéos automatiques avec Sora
                 </p>
                 <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
-                  <img src="/soraapres.png" alt="Exemple Sora" className="w-full h-auto" />
+                  <img src="/img/soraapres.png" alt="Exemple Sora" className="w-full h-auto" />
                 </div>
-                <div className="flex items-center gap-2 text-[#10b981] text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <div className="flex items-center gap-2 text-[#10b981] text-sm font-inter">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
@@ -368,8 +368,8 @@ export default function DocumentationPage() {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Export PDF Inclus</h4>
-                  <p className="text-[#cbd5e1] font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <h4 className="text-xl font-bold text-white mb-2 font-poppins">Export PDF Inclus</h4>
+                  <p className="text-[#cbd5e1] font-inter font-light">
                     Tous les workflows documentés peuvent être exportés en PDF professionnel. Parfait pour partager avec votre équipe, clients ou pour vos archives.
                   </p>
                 </div>

@@ -588,30 +588,23 @@ export default function Home() {
           >
             <div className="mb-8">
               <h3 className="text-3xl font-bold text-white mb-3 font-poppins">
-                📊 Automatisation Comptable
+                Automatisation Comptable
               </h3>
               <p className="text-[#cbd5e1] font-inter">
                 Workflow automatisant la saisie de tickets de caisse dans un CRM comptable
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="grid md:grid-cols-2 gap-8 mb-6">
               {/* Avant */}
               <div className="group">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#ef4444]/10 rounded-xl flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#ef4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold font-inter">Avant ATLAS</p>
-                    <p className="text-[#64748b] text-sm font-inter">Workflow brut sans documentation</p>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-white font-semibold font-inter mb-1">Avant ATLAS</p>
+                  <p className="text-[#64748b] text-sm font-inter">Workflow brut sans documentation</p>
                 </div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-[#ef4444]/30 group-hover:border-[#ef4444]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/comptableavant.png" 
+                    src="/img/comptableavant.png" 
                     alt="Workflow comptable avant ATLAS"
                     className="w-full h-auto"
                   />
@@ -620,20 +613,13 @@ export default function Home() {
 
               {/* Après */}
               <div className="group">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#10b981]/10 rounded-xl flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#10b981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold font-inter">Après ATLAS</p>
-                    <p className="text-[#64748b] text-sm font-inter">Documentation générée automatiquement</p>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
+                  <p className="text-[#64748b] text-sm font-inter">Documentation générée automatiquement</p>
                 </div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-[#10b981]/30 group-hover:border-[#10b981]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/comptableapres.png" 
+                    src="/img/comptableapres.png" 
                     alt="Workflow comptable après ATLAS"
                     className="w-full h-auto"
                   />
@@ -641,26 +627,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Notes détaillées */}
-            <div className="bg-[#1e293b]/50 backdrop-blur-sm rounded-2xl border border-[#334155]/30 p-6">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-10 h-10 bg-[#3b82f6]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-white font-semibold mb-2 font-inter">Annotations Détaillées</p>
-                  <p className="text-[#cbd5e1] text-sm mb-4 font-inter">
-                    ATLAS ajoute automatiquement des notes explicatives sur chaque nœud du workflow
-                  </p>
-                </div>
-              </div>
-              <div className="rounded-xl overflow-hidden border border-[#334155]/30">
+            {/* Notes détaillées - PLUS PETITE */}
+            <div className="bg-[#1e293b]/30 backdrop-blur-sm rounded-xl border border-[#334155]/20 p-4">
+              <p className="text-white font-semibold mb-2 text-sm font-inter">Annotations Détaillées</p>
+              <p className="text-[#cbd5e1] text-xs mb-3 font-inter">
+                ATLAS ajoute automatiquement des notes explicatives sur chaque nœud du workflow
+              </p>
+              <div className="rounded-lg overflow-hidden border border-[#334155]/20">
                 <img 
-                  src="/comptablenotes.png" 
+                  src="/img/comptablenotes.png" 
                   alt="Annotations détaillées du workflow comptable"
-                  className="w-full h-auto"
+                  className="w-full h-auto opacity-90"
                 />
               </div>
             </div>
@@ -676,7 +653,7 @@ export default function Home() {
           >
             <div className="mb-8">
               <h3 className="text-3xl font-bold text-white mb-3 font-poppins">
-                🔍 Veille Concurrentielle Automatisée
+                Veille Concurrentielle Automatisée
               </h3>
               <p className="text-[#cbd5e1] font-inter">
                 Workflow analysant les produits concurrents et générant des rapports stratégiques
@@ -686,20 +663,13 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-8">
               {/* Avant */}
               <div className="group">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#ef4444]/10 rounded-xl flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#ef4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold font-inter">Avant ATLAS</p>
-                    <p className="text-[#64748b] text-sm font-inter">Workflow complexe et opaque</p>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-white font-semibold font-inter mb-1">Avant ATLAS</p>
+                  <p className="text-[#64748b] text-sm font-inter">Workflow complexe et opaque</p>
                 </div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-[#ef4444]/30 group-hover:border-[#ef4444]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/concurrenceavant.png" 
+                    src="/img/concurrenceavant.png" 
                     alt="Workflow veille concurrentielle avant ATLAS"
                     className="w-full h-auto"
                   />
@@ -708,20 +678,13 @@ export default function Home() {
 
               {/* Après */}
               <div className="group">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#10b981]/10 rounded-xl flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#10b981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold font-inter">Après ATLAS</p>
-                    <p className="text-[#64748b] text-sm font-inter">Workflow documenté et compréhensible</p>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
+                  <p className="text-[#64748b] text-sm font-inter">Workflow documenté et compréhensible</p>
                 </div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-[#10b981]/30 group-hover:border-[#10b981]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/concurrenceapres.png" 
+                    src="/img/concurrenceapres.png" 
                     alt="Workflow veille concurrentielle après ATLAS"
                     className="w-full h-auto"
                   />
@@ -739,30 +702,23 @@ export default function Home() {
           >
             <div className="mb-8">
               <h3 className="text-3xl font-bold text-white mb-3 font-poppins">
-                🎬 Génération Vidéo Automatique (Sora)
+                Génération Vidéo Automatique
               </h3>
               <p className="text-[#cbd5e1] font-inter">
-                Workflow automatisant la création de vidéos avec IA générative
+                Workflow automatisant la création de vidéos avec IA générative (Sora)
               </p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-8">
               {/* Avant */}
               <div className="group">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#ef4444]/10 rounded-xl flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#ef4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold font-inter">Avant ATLAS</p>
-                    <p className="text-[#64748b] text-sm font-inter">Process non documenté</p>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-white font-semibold font-inter mb-1">Avant ATLAS</p>
+                  <p className="text-[#64748b] text-sm font-inter">Process non documenté</p>
                 </div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-[#ef4444]/30 group-hover:border-[#ef4444]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/soraavant.png" 
+                    src="/img/soraavant.png" 
                     alt="Workflow Sora avant ATLAS"
                     className="w-full h-auto"
                   />
@@ -771,20 +727,13 @@ export default function Home() {
 
               {/* Après */}
               <div className="group">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#10b981]/10 rounded-xl flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#10b981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold font-inter">Après ATLAS</p>
-                    <p className="text-[#64748b] text-sm font-inter">Documentation claire et précise</p>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
+                  <p className="text-[#64748b] text-sm font-inter">Documentation claire et précise</p>
                 </div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-[#10b981]/30 group-hover:border-[#10b981]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/soraapres.png" 
+                    src="/img/soraapres.png" 
                     alt="Workflow Sora après ATLAS"
                     className="w-full h-auto"
                   />
