@@ -111,12 +111,12 @@ export default function PricingPage() {
                 className="rounded-xl group-hover:rotate-3 transition-all duration-300" 
                 style={{ objectFit: 'contain', background: 'transparent' }} 
               />
-              <span className="text-3xl font-black text-white group-hover:text-[#7C3AED] transition-colors duration-300">Atlas</span>
+              <span className="text-2xl font-black text-white group-hover:text-[#7C3AED] transition-colors duration-300">Atlas</span>
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants} className="text-center mb-20">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
               Tarifs{' '}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 simples
@@ -126,7 +126,7 @@ export default function PricingPage() {
                 transparents
               </span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               Choisissez le plan qui correspond à vos besoins. Changez ou annulez à tout moment.
             </p>
           </motion.div>
@@ -151,7 +151,7 @@ export default function PricingPage() {
                         </span>
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
                     {plan.title && (
                       <p className="text-sm text-blue-300 font-semibold">{plan.title}</p>
                     )}
@@ -160,8 +160,8 @@ export default function PricingPage() {
                   {/* Prix aligné */}
                   <div className="text-center mb-6 min-h-[80px] flex items-center justify-center">
                     <div className="flex items-baseline justify-center">
-                      <span className="text-6xl font-black text-gradient-violet">{plan.price}€</span>
-                      <span className="text-gray-400 text-xl ml-1">{plan.period}</span>
+                      <span className="text-5xl font-black text-gradient-violet">{plan.price}€</span>
+                      <span className="text-gray-400 text-lg ml-1">{plan.period}</span>
                     </div>
                   </div>
                   
@@ -216,7 +216,7 @@ export default function PricingPage() {
 
           {/* TABLEAU COMPARATIF - GLASSMORPHISM */}
           <motion.div variants={itemVariants} className="mt-24 max-w-7xl mx-auto">
-            <h2 className="text-4xl font-bold text-center text-white mb-4">
+            <h2 className="text-3xl font-bold text-center text-white mb-4">
               Comparaison détaillée des plans
             </h2>
             <p className="text-center text-blue-200/70 mb-12 text-lg">
@@ -347,7 +347,7 @@ export default function PricingPage() {
               <div className="inline-block px-6 py-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-400/30 text-blue-300 rounded-full text-sm font-semibold mb-6">
                 Intelligence Artificielle
               </div>
-              <h2 className="text-4xl font-bold text-white mb-4">
+              <h2 className="text-3xl font-bold text-white mb-4">
                 Pourquoi les meilleurs modèles IA ?
               </h2>
               <p className="text-lg text-blue-200/70 max-w-3xl mx-auto">
@@ -365,7 +365,7 @@ export default function PricingPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">GPT-5</h3>
+                    <h3 className="text-xl font-bold text-white">GPT-5</h3>
                     <p className="text-blue-300 font-semibold">Plan Pro</p>
                   </div>
                 </div>
@@ -415,7 +415,7 @@ export default function PricingPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">Claude Sonnet 4.5</h3>
+                    <h3 className="text-xl font-bold text-white">Claude Sonnet 4.5</h3>
                     <p className="text-cyan-300 font-semibold">Plan Enterprise</p>
                   </div>
                 </div>
@@ -456,7 +456,7 @@ export default function PricingPage() {
 
             {/* Comparaison avantages */}
             <div className="mt-12 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500/30 rounded-2xl p-8 max-w-5xl mx-auto">
-              <h3 className="text-2xl font-bold text-white text-center mb-6">
+              <h3 className="text-xl font-bold text-white text-center mb-6">
                 Pourquoi ces modèles surpassent les IA standard ?
               </h3>
               <div className="grid md:grid-cols-3 gap-6">
@@ -503,7 +503,7 @@ export default function PricingPage() {
               <div className="inline-block px-6 py-2 bg-blue-500/20 border border-blue-400/30 text-blue-300 rounded-full text-sm font-semibold mb-6">
                 Propulsé par Claude (Anthropic)
               </div>
-              <h2 className="text-4xl font-bold text-white mb-4">
+              <h2 className="text-3xl font-bold text-white mb-4">
                 Des modèles IA adaptés à chaque besoin
               </h2>
               <p className="text-lg text-blue-200/70 max-w-3xl mx-auto">
@@ -592,7 +592,7 @@ export default function PricingPage() {
 
           <motion.div variants={itemVariants} className="text-center mt-16">
             <div className="glass-dark rounded-3xl p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-white mb-6">Questions fréquentes</h3>
+              <h3 className="text-xl font-bold text-white mb-6">Questions fréquentes</h3>
               <div className="space-y-6 text-left">
                 <div>
                   <h4 className="font-bold text-white mb-2">Puis-je changer de plan à tout moment ?</h4>

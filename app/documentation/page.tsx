@@ -20,14 +20,14 @@ export default function DocumentationPage() {
             />
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-8">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
             Documentation{' '}
             <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
               Atlas
             </span>
           </h1>
           
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Découvrez la technologie derrière la génération automatique de documentation pour vos workflows N8N
           </p>
           
@@ -46,7 +46,7 @@ export default function DocumentationPage() {
         <section className="mb-32">
           <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
             <div className="p-8 md:p-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
                 Le problème des templates non documentés
               </h2>
               
@@ -60,7 +60,7 @@ export default function DocumentationPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-3">
+                      <h3 className="text-lg font-bold text-white mb-3">
                         Impossible à comprendre
                       </h3>
                       <p className="text-gray-300 leading-relaxed">
@@ -81,7 +81,7 @@ export default function DocumentationPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-3">
+                      <h3 className="text-lg font-bold text-white mb-3">
                         Perte de temps massive
                       </h3>
                       <p className="text-gray-300 leading-relaxed">
@@ -140,11 +140,11 @@ export default function DocumentationPage() {
         {/* Section 2 - La Solution */}
         <section className="mb-32">
           <div className="bg-gradient-to-br from-cyan-900/10 to-transparent border-2 border-cyan-500/30 rounded-3xl p-12 hover:border-cyan-500/50 hover:shadow-[0_0_50px_rgba(6,182,212,0.2)] transition-all duration-500 group">
-            <h2 className="text-5xl font-bold text-white mb-10 group-hover:scale-105 transition-transform">
+            <h2 className="text-4xl font-bold text-white mb-10 group-hover:scale-105 transition-transform">
               Documentation automatique par IA
             </h2>
             
-            <p className="text-gray-300 text-xl leading-relaxed mb-12">
+            <p className="text-gray-300 text-lg leading-relaxed mb-12">
               Atlas transforme vos workflows bruts en templates professionnels prêts à l'emploi, 
               grâce à une combinaison unique d'IA enrichie et de traitement JavaScript avancé.
             </p>
@@ -156,7 +156,7 @@ export default function DocumentationPage() {
                 <div className="w-12 h-12 bg-blue-600/30 border-2 border-blue-500/50 rounded-xl flex items-center justify-center text-2xl font-bold text-blue-300 mx-auto mb-6">
                   1
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4 text-center">IA enrichie N8N</h3>
+                <h3 className="text-xl font-bold text-white mb-4 text-center">IA enrichie N8N</h3>
                 <p className="text-gray-300 text-center leading-relaxed">
                   Intelligence artificielle spécialement entraînée sur l'écosystème N8N pour comprendre la logique des workflows
                 </p>
@@ -167,7 +167,7 @@ export default function DocumentationPage() {
                 <div className="w-12 h-12 bg-cyan-600/30 border-2 border-cyan-500/50 rounded-xl flex items-center justify-center text-2xl font-bold text-cyan-300 mx-auto mb-6">
                   2
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4 text-center">Claude Sonnet 4.5</h3>
+                <h3 className="text-xl font-bold text-white mb-4 text-center">Claude Sonnet 4.5</h3>
                 <p className="text-gray-300 text-center leading-relaxed">
                   Modèle d'IA de pointe avec modèles adaptatifs pour analyser la logique complexe et générer des instructions claires
                 </p>
@@ -178,7 +178,7 @@ export default function DocumentationPage() {
                 <div className="w-12 h-12 bg-blue-600/30 border-2 border-blue-500/50 rounded-xl flex items-center justify-center text-2xl font-bold text-blue-300 mx-auto mb-6">
                   3
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4 text-center">Fonctions JS avancées</h3>
+                <h3 className="text-xl font-bold text-white mb-4 text-center">Fonctions JS avancées</h3>
                 <p className="text-gray-300 text-center leading-relaxed">
                   Traitement JavaScript complexe pour parser, enrichir et structurer la documentation
                 </p>
@@ -205,7 +205,7 @@ export default function DocumentationPage() {
 
         {/* Section 3 - Comment ça marche */}
         <section className="mb-32">
-          <h2 className="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
             Comment fonctionne la génération
           </h2>
 
@@ -213,10 +213,10 @@ export default function DocumentationPage() {
             {/* Étape 1 */}
             <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border-2 border-blue-500/30 rounded-3xl p-10 hover:border-blue-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] transition-all duration-500 group">
               <div className="flex items-start gap-8">
-                <div className="text-6xl font-bold text-blue-400 flex-shrink-0 group-hover:scale-125 transition-transform">01</div>
+                <div className="text-5xl font-bold text-blue-400 flex-shrink-0 group-hover:scale-125 transition-transform">01</div>
                 <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-white mb-4">Parsing du workflow JSON</h3>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-4">Parsing du workflow JSON</h3>
+                  <p className="text-gray-300 text-base leading-relaxed mb-6">
                     Votre fichier N8N est analysé en profondeur par des fonctions JavaScript avancées. 
                     Chaque nœud, chaque connexion, chaque paramètre est extrait et structuré.
                   </p>
@@ -238,10 +238,10 @@ const nodes = workflow.nodes.map(node => ({
             {/* Étape 2 */}
             <div className="bg-gradient-to-r from-cyan-900/20 to-cyan-900/20 border-2 border-cyan-500/30 rounded-3xl p-10 hover:border-cyan-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(6,182,212,0.3)] transition-all duration-500 group">
               <div className="flex items-start gap-8">
-                <div className="text-6xl font-bold text-cyan-400 flex-shrink-0 group-hover:scale-125 transition-transform">02</div>
+                <div className="text-5xl font-bold text-cyan-400 flex-shrink-0 group-hover:scale-125 transition-transform">02</div>
                 <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-white mb-4">Analyse par IA enrichie N8N</h3>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-4">Analyse par IA enrichie N8N</h3>
+                  <p className="text-gray-300 text-base leading-relaxed mb-6">
                     Notre IA, spécialement enrichie avec des connaissances sur l'écosystème N8N, 
                     analyse la logique du workflow. Elle comprend les intégrations, les déclencheurs, 
                     et les transformations de données.
@@ -263,10 +263,10 @@ const nodes = workflow.nodes.map(node => ({
             {/* Étape 3 */}
             <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border-2 border-blue-500/30 rounded-3xl p-10 hover:border-blue-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] transition-all duration-500 group">
               <div className="flex items-start gap-8">
-                <div className="text-6xl font-bold text-blue-400 flex-shrink-0 group-hover:scale-125 transition-transform">03</div>
+                <div className="text-5xl font-bold text-blue-400 flex-shrink-0 group-hover:scale-125 transition-transform">03</div>
                 <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-white mb-4">Génération intelligente avec Claude Sonnet 4.5</h3>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-4">Génération intelligente avec Claude Sonnet 4.5</h3>
+                  <p className="text-gray-300 text-base leading-relaxed mb-6">
                     Claude Sonnet 4.5 avec modèles adaptatifs prend le relais pour générer une documentation structurée, 
                     claire et professionnelle. Le modèle crée des instructions précises, 
                     identifie les prérequis, et propose des exemples de configuration.
@@ -289,10 +289,10 @@ const documentation = await claude.generate({
             {/* Étape 4 */}
             <div className="bg-gradient-to-r from-cyan-900/20 to-cyan-900/20 border-2 border-cyan-500/30 rounded-3xl p-10 hover:border-cyan-500/60 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(6,182,212,0.3)] transition-all duration-500 group">
               <div className="flex items-start gap-8">
-                <div className="text-6xl font-bold text-cyan-400 flex-shrink-0 group-hover:scale-125 transition-transform">04</div>
+                <div className="text-5xl font-bold text-cyan-400 flex-shrink-0 group-hover:scale-125 transition-transform">04</div>
                 <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-white mb-4">Enrichissement et formatage final</h3>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-4">Enrichissement et formatage final</h3>
+                  <p className="text-gray-300 text-base leading-relaxed mb-6">
                     Des fonctions JavaScript complexes enrichissent la documentation générée : 
                     ajout d'exemples de credentials, création de checklists de test, 
                     formatage Markdown professionnel, et structuration des sections.
@@ -317,7 +317,7 @@ const documentation = await claude.generate({
         {/* Section 4 - Résultat */}
         <section className="mb-32">
           <div className="bg-gradient-to-br from-blue-900/10 via-cyan-900/10 to-cyan-900/10 border-2 border-blue-500/30 rounded-3xl p-12 hover:border-blue-500/50 hover:shadow-[0_0_60px_rgba(168,85,247,0.3)] transition-all duration-500">
-            <h2 className="text-5xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Ce que vous obtenez
             </h2>
             <div className="grid md:grid-cols-2 gap-10">
@@ -325,7 +325,7 @@ const documentation = await claude.generate({
                 <div className="flex items-start gap-4">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Description complète du workflow</h3>
+                    <h3 className="text-lg font-bold text-white mb-2">Description complète du workflow</h3>
                     <p className="text-gray-400">Objectif, cas d'usage, et fonctionnement général</p>
                   </div>
                 </div>

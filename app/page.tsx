@@ -225,14 +225,14 @@ export default function Home() {
 
         <div className="container-custom relative z-10 w-full">
           <div className="text-center max-w-5xl mx-auto mb-20">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8">
               Documentez vos workflows{' '}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 N8N
               </span>{' '}
               en quelques secondes
             </h1>
-            <p className="text-xl md:text-2xl text-gray-400 mb-6 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-400 mb-6 leading-relaxed">
               Glissez votre fichier JSON, ajoutez des notes et obtenez une documentation professionnelle instantanément
             </p>
             
@@ -313,7 +313,7 @@ export default function Home() {
                   <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
                     <div className="flex items-center justify-between mb-6">
                       <div>
-                        <h3 className="text-xl font-bold text-white mb-2">
+                        <h3 className="text-lg font-bold text-white mb-2">
                           Choisissez votre format de sortie
                         </h3>
                         <p className="text-blue-200/70 text-sm">
@@ -472,10 +472,10 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-6">
                 Documentation générée avec succès !
               </h2>
-              <p className="text-xl text-gray-300 mb-12">
+              <p className="text-lg text-gray-300 mb-12">
                 ✅ Template générée et téléchargée avec succès ! Préparation pour une nouvelle génération...
               </p>
             </div>
@@ -487,10 +487,10 @@ export default function Home() {
       <section className="section-padding relative bg-[#1A1F3A]/50">
         <div className="container-custom">
           <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
               Comment ça marche
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
               De votre JSON brut à une documentation professionnelle en 4 étapes automatiques
             </p>
           </div>
@@ -604,10 +604,10 @@ export default function Home() {
       <section className="section-padding relative">
         <div className="container-custom">
           <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
               Voyez la différence
             </h2>
-            <p className="text-xl text-gray-400 leading-relaxed">
+            <p className="text-lg text-gray-400 leading-relaxed">
               40 secondes pour passer de chaos à clarté
             </p>
           </div>
@@ -645,7 +645,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 mb-20">
             <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 hover:border-slate-700 transition-colors">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-white">SANS ATLAS</h3>
+                <h3 className="text-xl font-bold text-white">SANS ATLAS</h3>
                 <span className="text-4xl text-red-500">✕</span>
               </div>
               <div className="rounded-2xl overflow-hidden shadow-2xl mb-6">
@@ -662,7 +662,7 @@ export default function Home() {
 
             <div className="bg-slate-900/80 backdrop-blur-xl border-2 border-blue-500/50 rounded-2xl p-8 hover:border-blue-500 transition-colors shadow-lg shadow-blue-500/10">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-white">AVEC ATLAS</h3>
+                <h3 className="text-xl font-bold text-white">AVEC ATLAS</h3>
                 <span className="text-4xl text-green-400">✓</span>
               </div>
               <div className="rounded-2xl overflow-hidden shadow-2xl mb-6">
@@ -715,7 +715,7 @@ export default function Home() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-xl text-gray-300 italic leading-relaxed">
+                <p className="text-lg text-gray-300 italic leading-relaxed">
                   "Atlas a complètement transformé ma façon de partager mes workflows. Mes abonnés comprennent enfin mes automations complexes sans que j'aie à tout expliquer. Un gain de temps incroyable !"
                 </p>
               </div>
@@ -749,7 +749,7 @@ export default function Home() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-xl text-gray-300 italic leading-relaxed">
+                <p className="text-lg text-gray-300 italic leading-relaxed">
                   "En tant que consultant, la documentation est cruciale. Atlas génère exactement ce dont mes clients ont besoin. Plus de confusion, juste de la clarté. C'est devenu indispensable dans mon workflow."
                 </p>
               </div>
@@ -763,10 +763,10 @@ export default function Home() {
         <div className="container-custom">
           <div className="text-center">
             <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-16 shadow-lg shadow-black/10">
-              <h3 className="text-4xl md:text-6xl font-black text-white mb-8">
+              <h3 className="text-3xl md:text-5xl font-black text-white mb-8">
                 <span className="text-gradient-violet">2 478</span> templates générés cette semaine
               </h3>
-              <p className="text-xl text-gray-300">
+              <p className="text-lg text-gray-300">
                 Rejoignez des centaines de professionnels qui font confiance à Atlas
               </p>
             </div>
@@ -778,10 +778,10 @@ export default function Home() {
       <section className="section-padding relative">
         <div className="container-custom">
           <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
               Le type de documentation que vous obtenez
             </h2>
-            <p className="text-xl text-gray-400 leading-relaxed">
+            <p className="text-lg text-gray-400 leading-relaxed">
               Templates enrichis avec annotations professionnelles
             </p>
           </div>
@@ -816,10 +816,10 @@ export default function Home() {
       <section className="section-padding relative bg-[#1A1F3A]/50">
         <div className="container-custom">
           <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
               Ce que disent nos utilisateurs
             </h2>
-            <p className="text-xl text-gray-400 leading-relaxed">
+            <p className="text-lg text-gray-400 leading-relaxed">
               Rejoignez des centaines de professionnels satisfaits
             </p>
           </div>
@@ -895,7 +895,7 @@ export default function Home() {
                         className="rounded-full border-4 border-[#7C3AED] glow-violet"
                       />
                     </div>
-                    <h4 className="text-xl font-bold text-white mb-2">{testimonial.name}</h4>
+                    <h4 className="text-lg font-bold text-white mb-2">{testimonial.name}</h4>
                     <p className="text-gray-400 mb-4">{testimonial.role}</p>
                     <div className="flex justify-center mb-4">
                       {[...Array(5)].map((_, i) => (
