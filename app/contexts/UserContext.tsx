@@ -93,9 +93,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
     refreshUserData()
 
     // Écouter les changements d'authentification
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      console.log('🔔 Changement d\'authentification détecté')
-      refreshUserData()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('🔔 Changement d\'authentification détecté:', event)
+      
+      // ✅ IMPORTANT : Ignorer les erreurs PKCE pour éviter le double échange de code
+      if (event === 'TOKEN_REFRESHED' || event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+        refreshUserData()
+      } else if (event === 'USER_UPDATED') {
+        refreshUserData()
+      }
+      // Ignorer explicitement INITIAL_SESSION et PKCE_ERROR
     })
 
     return () => {
