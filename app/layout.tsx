@@ -36,10 +36,20 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.ico?v=2', sizes: 'any' },
+      { url: '/favicon.ico', sizes: '16x16', type: 'image/x-icon' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
       { url: '/logo.png', sizes: '192x192', type: 'image/png' },
     ],
+    shortcut: '/favicon.ico?v=2',
     apple: '/logo.png',
+    other: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        url: '/favicon.ico?v=2',
+      },
+    ],
   },
   openGraph: {
     type: 'website',
@@ -83,6 +93,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+        <link rel="shortcut icon" href="/favicon.ico?v=2" />
+      </head>
       <body className={inter.className}>
         <AuthProvider>
           <UserProvider>
