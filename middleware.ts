@@ -54,8 +54,8 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // ✅ Vérifier la session SANS appeler getUser() (plus rapide)
-  const { data: { session } } = await supabase.auth.getSession()
+  // ✅ IMPORTANT: Rafraîchir la session pour vérifier si elle est toujours valide
+  const { data: { user } } = await supabase.auth.getUser()
 
   // Pages protégées
   const protectedPaths = ['/account', '/admin']
@@ -64,12 +64,12 @@ export async function middleware(request: NextRequest) {
   )
 
   // Rediriger si non authentifié sur une page protégée
-  if (isProtectedPath && !session) {
+  if (isProtectedPath && !user) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
   // Rediriger si déjà connecté et sur /login
-  if (request.nextUrl.pathname === '/login' && session) {
+  if (request.nextUrl.pathname === '/login' && user) {
     return NextResponse.redirect(new URL('/account', request.url))
   }
 
