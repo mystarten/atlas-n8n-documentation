@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/account', '/admin', '/api/', '/auth/'],
       },
     ],
-    sitemap: 'https://appbuilder.app/sitemap.xml',
+    sitemap: 'https://atlasbuilder.app/sitemap.xml',
   }
 }
 

@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'ATLAS' }],
   creator: 'ATLAS',
   publisher: 'ATLAS',
-  metadataBase: new URL('https://appbuilder.app'),
+  metadataBase: new URL('https://atlasbuilder.app'),
   alternates: {
     canonical: '/',
   },
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: 'https://appbuilder.app',
+    url: 'https://atlasbuilder.app',
     title: 'ATLAS - Documentation automatique pour workflows N8N',
     description: 'Documentez vos workflows N8N automatiquement en 30 secondes avec IA',
     siteName: 'ATLAS',
@@ -98,7 +98,7 @@ export default function RootLayout({
     description: 'Documentation automatique pour workflows N8N avec intelligence artificielle',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
-    url: 'https://appbuilder.app',
+    url: 'https://atlasbuilder.app',
     offers: {
       '@type': 'Offer',
       price: '9',
@@ -113,7 +113,7 @@ export default function RootLayout({
     author: {
       '@type': 'Organization',
       name: 'ATLAS',
-      url: 'https://appbuilder.app',
+      url: 'https://atlasbuilder.app',
     },
     aggregateRating: {
       '@type': 'AggregateRating',
