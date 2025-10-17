@@ -5,17 +5,6 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 
-const getTemplatesLimitDisplay = (tier: string) => {
-  switch (tier) {
-    case 'free': return '3'
-    case 'starter': return '20'
-    case 'pro': return '40'
-    case 'enterprise': return '60'
-    default: return '3'
-  }
-}
-
-
 export default function AdminPage() {
   // Fonction inline pour afficher la limite de templates
   const getTemplatesLimitDisplay = (tier: string) => {
@@ -195,7 +184,7 @@ export default function AdminPage() {
             </p>
             <p className="text-gray-300">
               <strong className="text-white">Templates :</strong>{' '}
-              <span className="text-blue-400 font-semibold">{templates_generated} / {getTemplatesLimitDisplay(templates_limit)}</span>
+              <span className="text-blue-400 font-semibold">{templates_generated} / {getTemplatesLimitDisplay(subscription_tier)}</span>
             </p>
             <p className="text-gray-300">
               <strong className="text-white">Nom entreprise :</strong>{' '}
@@ -225,7 +214,7 @@ export default function AdminPage() {
             </button>
           </div>
           <p className="text-sm text-gray-400 mt-3">
-            Le bouton "Synchroniser avec Stripe" récupère votre plan depuis Stripe et met à jour Supabase
+            Le bouton &quot;Synchroniser avec Stripe&quot; récupère votre plan depuis Stripe et met à jour Supabase
           </p>
         </div>
 
@@ -276,7 +265,7 @@ export default function AdminPage() {
                 🏢 Personnalisation Branding
               </h2>
               <p className="text-gray-400 text-sm">
-                Remplacez "ATLAS" par le nom de votre entreprise dans tous les documents générés (PDF et notes n8n)
+                Remplacez &quot;ATLAS&quot; par le nom de votre entreprise dans tous les documents générés (PDF et notes n8n)
               </p>
             </div>
           </div>
@@ -295,7 +284,7 @@ export default function AdminPage() {
                   className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 text-white rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-400/50 transition-all"
                 />
                 <p className="text-xs text-gray-400 mt-2">
-                  💡 Laissez vide pour utiliser "ATLAS" par défaut
+                  💡 Laissez vide pour utiliser &quot;ATLAS&quot; par défaut
                 </p>
               </div>
 
@@ -340,10 +329,10 @@ export default function AdminPage() {
               {company_name && (
                 <div className="bg-green-900/20 border-2 border-green-500/30 rounded-lg p-4">
                   <p className="text-sm text-green-300">
-                    ✅ <strong>Nom actuel :</strong> "{company_name}"
+                    ✅ <strong>Nom actuel :</strong> &quot;{company_name}&quot;
                   </p>
                   <p className="text-xs text-green-400 mt-1">
-                    Ce nom apparaîtra dans tous vos documents générés à la place de "ATLAS"
+                    Ce nom apparaîtra dans tous vos documents générés à la place de &quot;ATLAS&quot;
                   </p>
                 </div>
               )}
@@ -369,4 +358,3 @@ export default function AdminPage() {
     </div>
   )
 }
-
