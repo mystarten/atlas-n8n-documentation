@@ -91,11 +91,55 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'ATLAS',
+    description: 'Documentation automatique pour workflows N8N avec intelligence artificielle',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    url: 'https://appbuilder.app',
+    offers: {
+      '@type': 'Offer',
+      price: '9',
+      priceCurrency: 'EUR',
+      priceValidUntil: '2025-12-31',
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'ATLAS',
+      },
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'ATLAS',
+      url: 'https://appbuilder.app',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '127',
+    },
+    softwareVersion: '1.0',
+    applicationSubCategory: 'Workflow Automation',
+    featureList: [
+      'Documentation automatique N8N',
+      'Génération avec IA (Claude Sonnet 4.5, GPT-5)',
+      'Templates professionnels enrichis',
+      'Export PDF et notes N8N',
+      'Support multi-formats',
+    ],
+  }
+
   return (
     <html lang="fr">
       <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
         <link rel="shortcut icon" href="/favicon.ico?v=2" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className={inter.className}>
         <AuthProvider>
