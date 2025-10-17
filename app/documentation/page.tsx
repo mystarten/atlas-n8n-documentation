@@ -151,7 +151,7 @@ export default function DocumentationPage() {
         </section>
 
         {/* Section : La solution */}
-        <section className="py-24 px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b] relative">
+        <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b] relative">
           <div className="max-w-6xl mx-auto">
             
             {/* Titre section */}
@@ -209,7 +209,7 @@ export default function DocumentationPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                  </div>
+            </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
                       Notes dans chaque nœud
@@ -237,7 +237,7 @@ export default function DocumentationPage() {
                     <svg className="w-6 h-6 text-[#8b5cf6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                     </svg>
-                  </div>
+            </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
                       Watermark personnalisé pour les créateurs
@@ -272,15 +272,15 @@ export default function DocumentationPage() {
                         <span>Moins de questions, plus de satisfaction</span>
                       </li>
                     </ul>
-                  </div>
+                    </div>
                   <div className="flex items-center justify-center">
                     <div className="relative">
                       <div className="absolute inset-0 bg-[#8b5cf6]/20 blur-2xl rounded-full"></div>
                       <div className="relative p-8 bg-[#1e293b] rounded-2xl border-2 border-[#8b5cf6]/50 shadow-2xl shadow-[#8b5cf6]/20">
                         <p className="text-6xl font-bold text-white mb-2 text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>10x</p>
                         <p className="text-[#cbd5e1] text-center" style={{ fontFamily: 'Inter, sans-serif' }}>Valeur perçue</p>
-                  </div>
-                </div>
+                    </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -291,14 +291,14 @@ export default function DocumentationPage() {
         </section>
 
         {/* Section Exemples */}
-        <section className="py-16 px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
+        <section className="py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-white mb-12 font-poppins">
               Exemples de Documentation Générée
             </h2>
 
             {/* Grid 3 exemples */}
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               
               {/* Comptable */}
               <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
@@ -310,14 +310,14 @@ export default function DocumentationPage() {
                 </p>
                 <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
                   <img src="/img/comptableapres.png" alt="Exemple comptable" className="w-full h-auto" />
-                </div>
+                  </div>
                 <div className="flex items-center gap-2 text-[#10b981] text-sm font-inter">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   <span>Documenté par ATLAS</span>
                 </div>
-              </div>
+                  </div>
 
               {/* Veille */}
               <div className="bg-[#1e293b]/50 rounded-2xl border border-[#334155]/30 p-6 hover:border-[#3b82f6]/50 transition-colors">
@@ -348,7 +348,7 @@ export default function DocumentationPage() {
                 </p>
                 <div className="rounded-lg overflow-hidden border border-[#334155]/30 mb-4">
                   <img src="/img/soraapres.png" alt="Exemple Sora" className="w-full h-auto" />
-                </div>
+                  </div>
                 <div className="flex items-center gap-2 text-[#10b981] text-sm font-inter">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -361,13 +361,13 @@ export default function DocumentationPage() {
 
             {/* Mention Export PDF */}
             <div className="mt-12 p-6 bg-gradient-to-r from-[#ef4444]/10 to-[#dc2626]/10 rounded-2xl border border-[#ef4444]/30">
-              <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-[#ef4444]/20 rounded-xl flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-[#ef4444]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <div>
+                  <div>
                   <h4 className="text-xl font-bold text-white mb-2 font-poppins">Export PDF Inclus</h4>
                   <p className="text-[#cbd5e1] font-inter font-light">
                     Tous les workflows documentés peuvent être exportés en PDF professionnel. Parfait pour partager avec votre équipe, clients ou pour vos archives.

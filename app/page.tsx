@@ -57,7 +57,7 @@ export default function Home() {
     <div className="w-full overflow-hidden">
       
       {/* HERO SECTION AVEC ANIMATIONS - STYLE BHINDI */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 overflow-hidden">
         
         {/* Orbs bleus animés en background */}
         <div className="absolute inset-0 opacity-20">
@@ -118,7 +118,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-7xl font-bold text-white mb-8 leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight font-poppins"
           >
             Documentation N8N{' '}
             <span className="text-[#3b82f6]">automatique</span>
@@ -130,8 +130,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl text-[#e2e8f0] mb-12 leading-relaxed font-light tracking-wide"
-            style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+            className="text-lg sm:text-xl md:text-2xl text-[#e2e8f0] mb-8 sm:mb-12 leading-relaxed font-light tracking-wide font-inter"
           >
             ATLAS transforme vos workflows bruts en documentation professionnelle avec IA.
           </motion.p>
@@ -141,11 +140,11 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <a 
               href="/generate" 
-              className="px-10 py-4 bg-[#3b82f6] text-white text-lg font-semibold rounded-xl hover:bg-[#2563eb] transition-all hover:scale-105 shadow-lg shadow-[#3b82f6]/50"
+              className="w-full sm:w-auto px-8 md:px-10 py-4 bg-[#3b82f6] text-white text-base md:text-lg font-semibold rounded-xl hover:bg-[#2563eb] transition-all hover:scale-105 shadow-lg shadow-[#3b82f6]/50 text-center font-inter"
             >
               Essayer gratuitement →
             </a>
@@ -164,7 +163,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: "-100px" }}
-        className="py-24 px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
+        className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
       >
         <div className="max-w-6xl mx-auto">
           
@@ -179,7 +178,7 @@ export default function Home() {
             <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm font-inter">
               Visualisation en temps réel
             </p>
-            <h2 className="text-4xl font-bold text-white mb-4 font-poppins">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-poppins">
               De workflow brut à structure claire
             </h2>
             <p className="text-lg text-[#cbd5e1] font-inter font-light">
@@ -251,12 +250,12 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 md:mb-16"
           >
             <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm font-inter">
               Fonctionnalités
             </p>
-            <h2 className="text-4xl font-bold text-white mb-4 font-poppins">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-poppins">
               Ce qu'ATLAS fait pour vous
             </h2>
             <p className="text-lg text-[#cbd5e1] font-inter font-light">
@@ -265,7 +264,7 @@ export default function Home() {
           </motion.div>
 
           {/* Grid avec animations stagger */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             
             <FeatureCard
               icon={<FileText className="w-8 h-8 text-[#3b82f6]" />}
@@ -319,16 +318,16 @@ export default function Home() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeInOut" }}
         viewport={{ once: true }}
-        className="py-24 px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
+        className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
       >
         <div className="max-w-7xl mx-auto">
           
           {/* Titre */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm font-inter">
               Documentation professionnelle
             </p>
-            <h2 className="text-4xl font-bold text-white mb-4 font-poppins">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-poppins">
               Annotations automatiques sur vos workflows
             </h2>
             <p className="text-lg text-[#cbd5e1] font-inter font-light">
@@ -337,7 +336,7 @@ export default function Home() {
           </div>
 
           {/* Grid Avant/Après - TAILLE FIXE */}
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 max-w-6xl mx-auto mb-8 sm:mb-12 md:mb-16">
             
             {/* AVANT - Sans notes */}
             <motion.div 
@@ -408,7 +407,7 @@ export default function Home() {
                   </div>
 
           {/* Stats - EN DESSOUS DES IMAGES */}
-          <div className="grid grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-5xl mx-auto">
             
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -465,7 +464,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: "-100px" }}
-        className="py-24 px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
+        className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
       >
         <div className="max-w-7xl mx-auto">
           
@@ -555,7 +554,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: "-100px" }}
-        className="py-24 px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b]"
+        className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b]"
       >
         <div className="max-w-7xl mx-auto">
           
@@ -565,12 +564,12 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 md:mb-16"
           >
             <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm font-inter">
               Exemples Concrets
             </p>
-            <h2 className="text-5xl font-bold text-white mb-6 font-poppins">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 font-poppins">
               Workflows Documentés par ATLAS
             </h2>
             <p className="text-xl text-[#cbd5e1] max-w-3xl mx-auto font-inter font-light">
@@ -587,13 +586,13 @@ export default function Home() {
             className="mb-24"
           >
             <div className="mb-8">
-              <h3 className="text-3xl font-bold text-white mb-3 font-poppins">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-poppins">
                 Automatisation Comptable
               </h3>
               <p className="text-[#cbd5e1] font-inter">
                 Workflow automatisant la saisie de tickets de caisse dans un CRM comptable
               </p>
-            </div>
+              </div>
             
             <div className="grid md:grid-cols-2 gap-8 mb-6">
               {/* Avant */}
@@ -601,7 +600,7 @@ export default function Home() {
                 <div className="mb-4">
                   <p className="text-white font-semibold font-inter mb-1">Avant ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Workflow brut sans documentation</p>
-                </div>
+            </div>
                 <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
                     src="/img/comptableavant.png" 
@@ -639,8 +638,8 @@ export default function Home() {
                   alt="Annotations détaillées du workflow comptable"
                   className="w-full h-auto opacity-90"
                 />
-              </div>
             </div>
+        </div>
           </motion.div>
 
           {/* Exemple 2 : Veille Concurrentielle */}
@@ -652,21 +651,21 @@ export default function Home() {
             className="mb-24"
           >
             <div className="mb-8">
-              <h3 className="text-3xl font-bold text-white mb-3 font-poppins">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-poppins">
                 Veille Concurrentielle Automatisée
               </h3>
               <p className="text-[#cbd5e1] font-inter">
                 Workflow analysant les produits concurrents et générant des rapports stratégiques
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-8">
+            </p>
+          </div>
+          
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {/* Avant */}
               <div className="group">
                 <div className="mb-4">
                   <p className="text-white font-semibold font-inter mb-1">Avant ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Workflow complexe et opaque</p>
-                </div>
+                  </div>
                 <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
                     src="/img/concurrenceavant.png" 
@@ -681,14 +680,14 @@ export default function Home() {
                 <div className="mb-4">
                   <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Workflow documenté et compréhensible</p>
-                </div>
+              </div>
                 <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
                     src="/img/concurrenceapres.png" 
                     alt="Workflow veille concurrentielle après ATLAS"
                     className="w-full h-auto"
                   />
-                </div>
+            </div>
               </div>
             </div>
           </motion.div>
@@ -701,15 +700,15 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="mb-8">
-              <h3 className="text-3xl font-bold text-white mb-3 font-poppins">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-poppins">
                 Génération Vidéo Automatique
               </h3>
               <p className="text-[#cbd5e1] font-inter">
                 Workflow automatisant la création de vidéos avec IA générative (Sora)
               </p>
-            </div>
+                  </div>
             
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {/* Avant */}
               <div className="group">
                 <div className="mb-4">
@@ -722,15 +721,15 @@ export default function Home() {
                     alt="Workflow Sora avant ATLAS"
                     className="w-full h-auto"
                   />
-                </div>
-              </div>
+                    </div>
+                    </div>
 
               {/* Après */}
               <div className="group">
                 <div className="mb-4">
                   <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Documentation claire et précise</p>
-                </div>
+                  </div>
                 <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
                     src="/img/soraapres.png" 
@@ -739,10 +738,10 @@ export default function Home() {
                   />
                 </div>
               </div>
-            </div>
+              </div>
           </motion.div>
 
-        </div>
+            </div>
       </motion.section>
 
       {/* SECTION TESTIMONIALS - GRADIENT SMOOTH */}
@@ -787,7 +786,7 @@ export default function Home() {
                 <span className="text-[#3b82f6] font-bold text-lg font-mono">2,478</span> templates générés cette semaine
               </p>
             </motion.div>
-            </div>
+                  </div>
           
           {/* Container avec scroll automatique */}
                 <div className="relative">
@@ -805,7 +804,7 @@ export default function Home() {
                     <p className="font-semibold text-white text-lg">Zahir Aftab</p>
                     <p className="text-sm text-[#cbd5e1] font-light">N8N Automation Expert</p>
                 </div>
-                </div>
+              </div>
 
                 {/* Étoiles - NOUVEAU */}
                 <div className="flex gap-1 mb-4">
@@ -814,13 +813,13 @@ export default function Home() {
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
-              </div>
+            </div>
 
                 <p className="text-[#cbd5e1] leading-relaxed font-light">
                   "Mes clients comprennent enfin mes workflows. Plus besoin de passer des heures à expliquer."
             </p>
           </div>
-          
+
               {/* Testimonial 2 - Alexandre */}
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#3b82f6]/30 transition-all duration-300">
                 <div className="flex items-start gap-4 mb-4">
@@ -832,7 +831,7 @@ export default function Home() {
                   <div className="flex-1">
                     <p className="font-semibold text-white text-lg">Alexandre D.</p>
                     <p className="text-sm text-[#cbd5e1] font-light">N8N Workflow Specialist</p>
-                  </div>
+              </div>
             </div>
 
                 {/* Étoiles */}
@@ -842,12 +841,12 @@ export default function Home() {
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
-              </div>
+          </div>
 
                 <p className="text-[#cbd5e1] leading-relaxed font-light">
                   "Onboarding client divisé par 3. Atlas génère exactement la doc qu'il faut."
                 </p>
-                  </div>
+              </div>
 
               {/* Testimonial 3 - Mats */}
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#3b82f6]/30 transition-all duration-300">
@@ -860,8 +859,8 @@ export default function Home() {
                   <div className="flex-1">
                     <p className="font-semibold text-white text-lg">Mats Automation</p>
                     <p className="text-sm text-[#cbd5e1] font-light">Expert N8N | 50K+ abonnés</p>
-                </div>
-                    </div>
+              </div>
+            </div>
 
                 {/* Étoiles */}
                 <div className="flex gap-1 mb-4">
@@ -870,12 +869,12 @@ export default function Home() {
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
-                    </div>
+          </div>
 
                 <p className="text-[#cbd5e1] leading-relaxed font-light">
                   "La documentation automatique me fait gagner des heures chaque semaine."
             </p>
-                  </div>
+            </div>
 
               {/* Testimonial 4 - Sophie */}
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#3b82f6]/30 transition-all duration-300">
@@ -888,8 +887,8 @@ export default function Home() {
                   <div className="flex-1">
                     <p className="font-semibold text-white text-lg">Sophie Martin</p>
                     <p className="text-sm text-[#cbd5e1] font-light">Consultante Automation</p>
-                </div>
-            </div>
+                  </div>
+                  </div>
 
                 {/* Étoiles */}
                 <div className="flex gap-1 mb-4">
@@ -898,12 +897,12 @@ export default function Home() {
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
-              </div>
+                </div>
                 
                 <p className="text-[#cbd5e1] leading-relaxed font-light">
                   "Idéal pour partager mes templates avec ma communauté. Documentation claire et pro."
-            </p>
-                  </div>
+                </p>
+              </div>
 
               {/* Testimonial 5 - Lucas */}
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#3b82f6]/30 transition-all duration-300">
@@ -916,8 +915,8 @@ export default function Home() {
                   <div className="flex-1">
                     <p className="font-semibold text-white text-lg">Lucas Durand</p>
                     <p className="text-sm text-[#cbd5e1] font-light">Tech Lead</p>
-                </div>
-              </div>
+                  </div>
+                  </div>
                 
                 {/* Étoiles */}
                 <div className="flex gap-1 mb-4">
@@ -926,12 +925,12 @@ export default function Home() {
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
-            </div>
+                </div>
 
                 <p className="text-[#cbd5e1] leading-relaxed font-light">
                   "Maintenance simplifiée. L'équipe comprend les workflows même 6 mois après leur création."
-            </p>
-          </div>
+                </p>
+              </div>
 
               {/* Testimonial 6 - Emma */}
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30 hover:border-[#3b82f6]/30 transition-all duration-300">
@@ -954,12 +953,12 @@ export default function Home() {
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
                   <span className="text-[#fbbf24] text-lg">⭐</span>
-            </div>
+        </div>
 
                 <p className="text-[#cbd5e1] leading-relaxed font-light">
                   "Gain de temps colossal pour mes livrables clients. La qualité de la doc est impressionnante."
-                </p>
-              </div>
+              </p>
+            </div>
 
               {/* Duplicate pour loop infini - Répète les 6 testimonials */}
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30">
@@ -972,13 +971,13 @@ export default function Home() {
                   <div>
                     <p className="font-semibold text-white text-lg">Zahir Aftab</p>
                     <p className="text-sm text-[#cbd5e1]">N8N Automation Expert</p>
-              </div>
-            </div>
+          </div>
+        </div>
                 <p className="text-[#cbd5e1] leading-relaxed">
                   "Mes clients comprennent enfin mes workflows. Plus besoin de passer des heures à expliquer."
-                </p>
+            </p>
           </div>
-
+          
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30">
                 <div className="flex items-start gap-4 mb-6">
                   <img 
@@ -995,7 +994,7 @@ export default function Home() {
                   "Onboarding client divisé par 3. Atlas génère exactement la doc qu'il faut."
                 </p>
               </div>
-
+              
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30">
                 <div className="flex items-start gap-4 mb-6">
                   <img 
@@ -1006,12 +1005,12 @@ export default function Home() {
                   <div>
                     <p className="font-semibold text-white text-lg">Mats Automation</p>
                     <p className="text-sm text-[#cbd5e1]">Expert N8N | 50K+ abonnés</p>
-                  </div>
-                </div>
+              </div>
+            </div>
                 <p className="text-[#cbd5e1] leading-relaxed">
                   "La documentation automatique me fait gagner des heures chaque semaine."
                 </p>
-              </div>
+          </div>
           
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30">
                 <div className="flex items-start gap-4 mb-6">
@@ -1029,7 +1028,7 @@ export default function Home() {
                   "Idéal pour partager mes templates avec ma communauté. Documentation claire et pro."
             </p>
           </div>
-          
+
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30">
                 <div className="flex items-start gap-4 mb-6">
                   <img 
@@ -1040,12 +1039,12 @@ export default function Home() {
                   <div>
                     <p className="font-semibold text-white text-lg">Lucas Durand</p>
                     <p className="text-sm text-[#cbd5e1]">Tech Lead</p>
-              </div>
-            </div>
+                    </div>
+                    </div>
                 <p className="text-[#cbd5e1] leading-relaxed">
                   "Maintenance simplifiée. L'équipe comprend les workflows même 6 mois après leur création."
-            </p>
-          </div>
+                    </p>
+                  </div>
 
               <div className="min-w-[450px] p-8 bg-[#1e293b]/80 backdrop-blur-sm rounded-2xl border border-[#334155]/30">
                 <div className="flex items-start gap-4 mb-6">
@@ -1057,12 +1056,12 @@ export default function Home() {
                   <div>
                     <p className="font-semibold text-white text-lg">Emma Rousseau</p>
                     <p className="text-sm text-[#cbd5e1]">Freelance N8N</p>
-                    </div>
-                    </div>
+                </div>
+          </div>
                 <p className="text-[#cbd5e1] leading-relaxed">
                   "Gain de temps colossal pour mes livrables clients. La qualité de la doc est impressionnante."
                     </p>
-                  </div>
+        </div>
               
               </div>
             </div>
@@ -1075,7 +1074,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: "-100px" }}
-        className="py-24 px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
+        className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] relative"
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl font-bold text-white mb-6">

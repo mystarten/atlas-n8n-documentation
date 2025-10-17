@@ -685,11 +685,11 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <main className="min-h-screen bg-[#0f172a] pt-20">
         
         {/* Hero avec Image */}
-        <section className="relative py-20 px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b]">
+        <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b]">
           
           {/* Image Hero */}
-          <div className="max-w-5xl mx-auto mb-12 rounded-2xl overflow-hidden">
-            <div className="relative h-[400px]">
+          <div className="max-w-5xl mx-auto mb-8 sm:mb-12 rounded-xl md:rounded-2xl overflow-hidden">
+            <div className="relative h-[250px] sm:h-[350px] md:h-[400px]">
               <img 
                 src={article.image}
                 alt={article.title}
@@ -729,12 +729,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             </div>
             
             {/* Titre */}
-            <h1 className="text-5xl font-bold text-white mb-6 leading-tight font-poppins">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight font-poppins">
               {article.title}
             </h1>
             
             {/* Description */}
-            <p className="text-xl text-[#cbd5e1] font-inter font-light leading-relaxed">
+            <p className="text-lg sm:text-xl text-[#cbd5e1] font-inter font-light leading-relaxed">
               {article.description}
             </p>
             
@@ -742,7 +742,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         </section>
         
         {/* Contenu Article */}
-        <section className="py-16 px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
+        <section className="py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
           <div className="max-w-3xl mx-auto">
             
             <article className="space-y-8">

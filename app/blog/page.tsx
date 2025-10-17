@@ -69,25 +69,25 @@ export default function BlogPage() {
       <main className="min-h-screen bg-[#0f172a] pt-20">
         
         {/* Hero Section */}
-        <section className="py-20 px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b]">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-b from-[#0f172a] to-[#1e293b]">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-[#3b82f6] font-semibold mb-3 tracking-wider uppercase text-sm font-inter">
               Blog ATLAS
             </p>
-            <h1 className="text-6xl font-bold text-white mb-6 font-poppins">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 font-poppins">
               Automatisation & IA
             </h1>
-            <p className="text-xl text-[#cbd5e1] font-inter font-light leading-relaxed">
+            <p className="text-lg sm:text-xl text-[#cbd5e1] font-inter font-light leading-relaxed">
               Guides, tutoriels et bonnes pratiques pour maîtriser l'automatisation avec N8N et l'intelligence artificielle
             </p>
           </div>
         </section>
         
         {/* Articles Grid */}
-        <section className="py-16 px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
+        <section className="py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-[#1e293b] to-[#0f172a]">
           <div className="max-w-7xl mx-auto">
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               
               {articles.map((article) => (
                 <Link 
