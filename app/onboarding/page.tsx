@@ -12,25 +12,38 @@ export default function OnboardingPage() {
   const [discoverySource, setDiscoverySource] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [checkingProfile, setCheckingProfile] = useState(true);
   const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        router.push('/login');
-        return;
-      }
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError || !session) {
+          router.push('/login');
+          return;
+        }
 
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
+        // Vérifier si le profil existe déjà
+        const { data: profile, error: profileError } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', session.user.id)
+          .maybeSingle();
 
-      if (profile?.onboarding_completed) {
-        router.push('/generate');
+        // Si profil existe et onboarding complet → rediriger vers /generate
+        if (profile && profile.onboarding_completed) {
+          router.push('/generate');
+          return;
+        }
+
+        // Sinon, montrer l'onboarding
+        setCheckingProfile(false);
+      } catch (err) {
+        console.error('Error checking profile:', err);
+        setCheckingProfile(false);
       }
     };
 
@@ -60,43 +73,43 @@ export default function OnboardingPage() {
       setLoading(true);
       setError('');
 
-      // ✅ SOLUTION : Utiliser getSession au lieu de getUser
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      if (sessionError) {
-        throw new Error('Erreur de session : ' + sessionError.message);
-      }
-      
-      if (!session || !session.user) {
-        throw new Error('Non authentifié - Veuillez vous reconnecter');
+      if (sessionError || !session || !session.user) {
+        throw new Error('Non authentifié. Veuillez vous reconnecter.');
       }
 
       const user = session.user;
 
-      const dataToInsert = {
+      const profileData = {
         user_id: user.id,
         first_name: firstName.trim(),
         user_type: userType,
         discovery_source: discoverySource,
         onboarding_completed: true,
+        updated_at: new Date().toISOString(),
       };
 
-      console.log('📝 Insertion data:', dataToInsert);
+      console.log('📝 Insertion data:', profileData);
 
-      const { data, error: insertError } = await supabase
+      // UPSERT : crée si n'existe pas, met à jour sinon
+      const { data, error: upsertError } = await supabase
         .from('user_profiles')
-        .insert(dataToInsert)
+        .upsert(profileData, { 
+          onConflict: 'user_id',
+          ignoreDuplicates: false 
+        })
         .select()
         .single();
 
-      if (insertError) {
-        console.error('❌ Supabase error:', insertError);
-        throw new Error(insertError.message);
+      if (upsertError) {
+        console.error('❌ Supabase error:', upsertError);
+        throw new Error('Erreur lors de l\'enregistrement. Veuillez réessayer.');
       }
 
       console.log('✅ Success:', data);
 
-      // Redirection immédiate
+      // Redirection immédiate vers /generate
       window.location.href = '/generate';
     } catch (err: any) {
       console.error('💥 Error:', err);
@@ -104,6 +117,21 @@ export default function OnboardingPage() {
       setLoading(false);
     }
   };
+
+  // Loading state pendant la vérification du profil
+  if (checkingProfile) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1e] via-[#0f172a] to-[#0a0f1e] flex items-center justify-center">
+        <div className="text-center">
+          <div className="relative mb-6 mx-auto w-16 h-16">
+            <div className="w-16 h-16 border-4 border-[#334155] rounded-full"></div>
+            <div className="w-16 h-16 border-4 border-[#3b82f6] rounded-full border-t-transparent absolute top-0 left-0 animate-spin"></div>
+          </div>
+          <p className="text-[#94a3b8] font-inter">Chargement...</p>
+        </div>
+      </div>
+    );
+  }
 
   const progress = (step / 3) * 100;
 
@@ -261,7 +289,7 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* Step 3 : Source de découverte */}
+          {/* Step 3 : Source de découverte avec logos colorés */}
           {step === 3 && !loading && (
             <div className="flex-1 flex flex-col animate-in fade-in slide-in-from-right-4 duration-500">
               <div className="flex-1">
@@ -372,7 +400,8 @@ export default function OnboardingPage() {
               </div>
               <button
                 onClick={handleSubmit}
-                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-xl hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/40 hover:shadow-[#3b82f6]/60 hover:scale-[1.02] font-inter text-lg"
+                disabled={loading}
+                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-xl hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/40 hover:shadow-[#3b82f6]/60 hover:scale-[1.02] font-inter text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Terminer
               </button>
@@ -397,4 +426,3 @@ export default function OnboardingPage() {
     </div>
   );
 }
-
