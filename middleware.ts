@@ -61,14 +61,14 @@ export async function middleware(req: NextRequest) {
   // Si connecté, vérifier l'onboarding pour les pages protégées
   if (session && (req.nextUrl.pathname.startsWith('/generate') || req.nextUrl.pathname.startsWith('/account'))) {
     try {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('onboarding_completed')
-        .eq('id', session.user.id)
+      const { data: onboardingData } = await supabase
+        .from('onboarding_data')
+        .select('id')
+        .eq('user_id', session.user.id)
         .maybeSingle();
 
-      // Si l'onboarding n'est pas complété, rediriger vers /onboarding
-      if (!profile?.onboarding_completed) {
+      // Si pas de données d'onboarding, rediriger vers /onboarding
+      if (!onboardingData) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.pathname = '/onboarding';
         return NextResponse.redirect(redirectUrl);

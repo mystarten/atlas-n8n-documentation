@@ -27,14 +27,14 @@ export default function OnboardingPage() {
           return;
         }
 
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('onboarding_completed')
-          .eq('id', user.id)
+        const { data: onboardingData } = await supabase
+          .from('onboarding_data')
+          .select('id')
+          .eq('user_id', user.id)
           .maybeSingle();
 
         // Si l'onboarding est déjà complété, rediriger vers /generate
-        if (profile?.onboarding_completed) {
+        if (onboardingData) {
           console.log('✅ Onboarding déjà complété, redirection vers /generate');
           router.push('/generate');
           return;
@@ -83,7 +83,7 @@ export default function OnboardingPage() {
 
       console.log('✅ User trouvé:', user.id);
 
-      // 1. Sauvegarder les données d'onboarding dans la nouvelle table
+      // Sauvegarder les données d'onboarding
       const { data: onboardingData, error: onboardingError } = await supabase
         .from('onboarding_data')
         .upsert({
@@ -102,19 +102,6 @@ export default function OnboardingPage() {
 
       console.log('✅ Données onboarding sauvegardées:', onboardingData);
 
-      // 2. Marquer l'onboarding comme complété dans la table profiles
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({ onboarding_completed: true })
-        .eq('id', user.id);
-
-      if (profileError) {
-        console.error('❌ Erreur mise à jour profile:', profileError);
-        throw profileError;
-      }
-
-      console.log('✅ Onboarding marqué comme complété');
-
       // 3. Rediriger vers /generate
       console.log('🚀 Onboarding terminé - REDIRECTION vers /generate');
       router.push('/generate');
@@ -129,12 +116,14 @@ export default function OnboardingPage() {
   // Affichage de chargement pendant la vérification
   if (isCheckingOnboarding) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1e] via-[#0f172a] to-[#0a0f1e] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1e] via-[#0f172a] to-[#0a0f1e] flex items-center justify-center p-6">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#334155] rounded-full mb-4">
-            <div className="w-16 h-16 border-4 border-[#3b82f6] rounded-full border-t-transparent animate-spin"></div>
+          <div className="relative mb-6">
+            <div className="w-16 h-16 border-4 border-[#334155] rounded-full"></div>
+            <div className="w-16 h-16 border-4 border-[#3b82f6] rounded-full border-t-transparent absolute top-0 left-0 animate-spin"></div>
           </div>
-          <p className="text-[#cbd5e1] font-inter">Vérification de votre profil...</p>
+          <h3 className="text-xl font-semibold text-white mb-2 font-poppins">Vérification de votre profil</h3>
+          <p className="text-[#94a3b8] font-inter">Préparation de votre expérience personnalisée...</p>
         </div>
       </div>
     );

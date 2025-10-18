@@ -45,11 +45,10 @@ export default function LoginPage() {
         
         console.log('✅ Signup réussi !', data);
         
-        // Le middleware s'occupera de la redirection vers /onboarding
-        // Pas besoin de redirection forcée ici
+        // Redirection directe vers onboarding après création de compte
         setMessage('Compte créé avec succès ! Redirection...');
         setTimeout(() => {
-          window.location.href = '/generate';
+          window.location.href = '/onboarding';
         }, 1000);
       } else {
         // Login
