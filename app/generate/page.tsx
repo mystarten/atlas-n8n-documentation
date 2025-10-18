@@ -80,6 +80,17 @@ export default function Generate() {
         console.log('✅ Données usage chargées:', statsData)
       } catch (err) {
         console.error('❌ Erreur chargement usage:', err)
+        // ✅ Fallback en cas d'erreur
+        setUsageData({
+          current: 0,
+          limit: 3,
+          tier: 'free'
+        })
+        setUsageLimit({ 
+          current: 0, 
+          limit: 3 
+        })
+        setUserPlan('free')
       }
     }
     

@@ -60,11 +60,9 @@ export default function AccountPage() {
       }
       
       console.log('✅ Utilisateur trouvé:', user.id);
-
       setUser(user)
 
-    // ✅ Utiliser l'API stats au lieu de lire user_usage
-    try {
+      // ✅ Chargement optimisé : tout en une seule requête
       const res = await fetch('/api/user/stats')
       const statsData = await res.json()
       
@@ -73,38 +71,39 @@ export default function AccountPage() {
       setTier(statsData.tier || 'free')
       setTemplatesGenerated(statsData.used || 0)
       
-      // Récupérer stripe_customer_id depuis profiles
-      const { data: profileData } = await supabase
-        .from('profiles')
-        .select('stripe_customer_id, subscription_status, subscription_end_date')
-        .eq('id', user.id)
-        .single()
-      
-      if (profileData) {
-        setStripeCustomerId(profileData.stripe_customer_id)
-        setSubscriptionStatus(profileData.subscription_status || 'active')
-        if (profileData.subscription_end_date) {
-          setSubscriptionEndDate(new Date(profileData.subscription_end_date))
-        }
-      }
-    } catch (error) {
-      console.error('❌ Erreur chargement données:', error)
-    }
+      // ✅ Chargement parallèle des données Stripe (non bloquant)
+      Promise.all([
+        // Récupérer stripe_customer_id depuis profiles
+        supabase
+          .from('profiles')
+          .select('stripe_customer_id, subscription_status, subscription_end_date')
+          .eq('id', user.id)
+          .single()
+          .then(({ data: profileData }) => {
+            if (profileData) {
+              setStripeCustomerId(profileData.stripe_customer_id)
+              setSubscriptionStatus(profileData.subscription_status || 'active')
+              if (profileData.subscription_end_date) {
+                setSubscriptionEndDate(new Date(profileData.subscription_end_date))
+              }
+            }
+          }),
+        
+        // Charger les infos Stripe pour cancelAtPeriodEnd
+        fetch('/api/subscription/status')
+          .then(res => res.json())
+          .then(subStatus => {
+            if (subStatus.cancel_at_period_end) {
+              setCancelAtPeriodEnd(true)
+            }
+          })
+      ]).catch(error => {
+        console.error('❌ Erreur chargement données parallèles:', error)
+      })
 
-    // Charger les infos Stripe pour cancelAtPeriodEnd
-    try {
-      const subStatusRes = await fetch('/api/subscription/status')
-      const subStatus = await subStatusRes.json()
-      if (subStatus.cancel_at_period_end) {
-        setCancelAtPeriodEnd(true)
-      }
-    } catch (error) {
-      console.error('Erreur chargement status Stripe:', error)
-    }
-
-    setIsLoading(false)
     } catch (error) {
       console.error('❌ Erreur générale loadUserData:', error)
+    } finally {
       setIsLoading(false)
     }
   }
