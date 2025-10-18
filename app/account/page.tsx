@@ -61,7 +61,7 @@ export default function AccountPage() {
       
       console.log('✅ Utilisateur trouvé:', user.id);
 
-    setUser(user)
+      setUser(user)
 
     // ✅ Utiliser l'API stats au lieu de lire user_usage
     try {
@@ -103,6 +103,10 @@ export default function AccountPage() {
     }
 
     setIsLoading(false)
+    } catch (error) {
+      console.error('❌ Erreur générale loadUserData:', error)
+      setIsLoading(false)
+    }
   }
 
   const getLimitByTier = (tier: string) => {

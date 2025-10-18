@@ -19,11 +19,13 @@ export default function Header() {
       const { data: { session } } = await supabase.auth.getSession()
       setUser(session?.user ?? null)
       console.log('✅ Session chargée:', session ? 'connecté' : 'non connecté')
+      console.log('👤 User ID:', session?.user?.id)
     }
     
     initAuth()
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('🔄 Auth state changed:', session ? 'connecté' : 'non connecté')
       setUser(session?.user ?? null)
     })
     
@@ -46,11 +48,15 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/30 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between h-auto">
-        <Link href="/" className="flex items-center group">
-          <img src="/logo.png" alt="ATLAS Logo" className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-        </Link>
+      <div className="w-full px-6 py-5 flex items-center justify-center h-auto">
+        {/* Logo à gauche */}
+        <div className="absolute left-6">
+          <Link href="/" className="flex items-center group">
+            <img src="/logo.png" alt="ATLAS Logo" className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
+          </Link>
+        </div>
         
+        {/* Navigation centrée */}
         <nav className="hidden md:flex items-center gap-8">
           <Link href="/" className={`text-gray-300 hover:text-white transition-colors font-medium ${pathname === '/' ? 'text-white' : ''}`}>
             Accueil
@@ -80,8 +86,8 @@ export default function Header() {
           </button>
         </div>
         
-        {/* AFFICHAGE INSTANTANÉ - pas d'attente */}
-        <div className="flex items-center gap-4">
+        {/* Boutons de connexion à droite */}
+        <div className="absolute right-6 flex items-center gap-4">
           {!mounted ? (
             <div className="px-4 py-2 bg-white/10 rounded-lg animate-pulse h-8 w-24"></div>
           ) : user ? (

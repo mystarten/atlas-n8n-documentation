@@ -673,7 +673,7 @@ export default function Home() {
                   </div>
                 <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
-                    src="/img/concurrenceavant.png" 
+                    src="/concurenceavant.png" 
                     alt="Workflow veille concurrentielle avant ATLAS"
                     className="w-full h-auto"
                   />
