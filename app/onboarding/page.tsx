@@ -89,7 +89,8 @@ export default function OnboardingPage() {
       
       if (!user) {
         console.error('❌ Pas d\'utilisateur');
-        router.push('/login');
+        setError('Erreur d\'authentification. Veuillez vous reconnecter.');
+        setLoading(false);
         return;
       }
 
@@ -109,18 +110,20 @@ export default function OnboardingPage() {
 
       if (onboardingError) {
         console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
-        throw onboardingError;
+        setError(`Erreur de sauvegarde: ${onboardingError.message}`);
+        setLoading(false);
+        return;
       }
 
       console.log('✅ Données onboarding sauvegardées:', onboardingData);
 
-      // 3. Rediriger vers /generate
+      // Rediriger vers /generate
       console.log('🚀 Onboarding terminé - REDIRECTION vers /generate');
       router.push('/generate');
       
-    } catch (err) {
+    } catch (err: any) {
       console.error('💥 Erreur:', err);
-      setError('Une erreur est survenue. Veuillez réessayer.');
+      setError(`Erreur inattendue: ${err.message || 'Veuillez réessayer.'}`);
       setLoading(false);
     }
   };
@@ -424,7 +427,18 @@ export default function OnboardingPage() {
                 <div className="w-16 h-16 border-4 border-[#3b82f6] rounded-full border-t-transparent absolute top-0 left-0 animate-spin"></div>
               </div>
               <h3 className="text-xl font-semibold text-white mb-2 font-poppins">Configuration de votre espace</h3>
-              <p className="text-[#94a3b8] font-inter text-center">Préparation de votre environnement personnalisé...</p>
+              <p className="text-[#94a3b8] font-inter text-center mb-4">Préparation de votre environnement personnalisé...</p>
+              
+              {/* Bouton de debug temporaire */}
+              <button
+                onClick={() => {
+                  console.log('🔄 Debug: Forcer redirection vers /generate');
+                  router.push('/generate');
+                }}
+                className="px-4 py-2 bg-[#ef4444] text-white text-sm rounded-lg hover:bg-[#dc2626] transition-colors"
+              >
+                Debug: Forcer redirection
+              </button>
             </div>
           )}
 
