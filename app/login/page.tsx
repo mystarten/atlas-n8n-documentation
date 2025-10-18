@@ -46,30 +46,15 @@ export default function LoginPage() {
         setTimeout(() => router.push('/onboarding'), 1500);
       } else {
         // Login
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         if (error) throw error;
 
-        // ✅ REDIRECTION IMMÉDIATE ET FORCÉE
-        console.log('✅ Login réussi, redirection...');
-        
-        // Vérifier si l'onboarding est fait
-        if (data.user) {
-          const { data: profile } = await supabase
-            .from('user_profiles')
-            .select('onboarding_completed')
-            .eq('user_id', data.user.id)
-            .maybeSingle();
-
-          if (profile?.onboarding_completed) {
-            window.location.href = '/generate';
-          } else {
-            window.location.href = '/onboarding';
-          }
-        }
-        // Ne pas mettre setLoading(false) ici car on redirige
+        // Redirection IMMÉDIATE sans vérification
+        console.log('✅ Login OK - Redirection vers /onboarding');
+        window.location.href = '/onboarding';
         return;
       }
     } catch (err: any) {
