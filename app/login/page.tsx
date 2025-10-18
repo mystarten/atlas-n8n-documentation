@@ -82,12 +82,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex relative overflow-hidden">
       
-      {/* LEFT SIDE - FORMULAIRE (1/3) */}
-      <div className="w-full lg:w-1/3 bg-[#0f172a] flex items-center justify-center p-6 sm:p-8 lg:p-12 relative">
+      {/* Background uniforme avec dégradé */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3b82f6] via-[#8b5cf6] to-[#ec4899] opacity-90"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
+      
+      {/* LEFT SIDE - Login Form (w-full lg:w-2/5) */}
+      <div className="relative z-10 w-full lg:w-2/5 flex items-center justify-center p-6 sm:p-8 bg-[#0f172a]/95 backdrop-blur-xl">
         
-        {/* Retour accueil - Mobile */}
+        {/* Retour accueil */}
         <Link 
           href="/"
           className="absolute top-6 left-6 text-[#64748b] hover:text-white transition-colors text-sm font-inter flex items-center gap-2"
@@ -100,46 +104,42 @@ export default function LoginPage() {
 
         <div className="w-full max-w-md">
           
-          {/* Logo + Header */}
+          {/* Logo + Titre */}
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-6">
-              <Image
-                src="/logo.png"
-                alt="ATLAS"
-                width={64}
-                height={64}
-                className="object-contain"
+            <div className="mb-6">
+              <Image 
+                src="/logo.png" 
+                alt="ATLAS" 
+                width={80} 
+                height={80} 
+                className="mx-auto drop-shadow-2xl"
               />
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 font-poppins">
               {isSignUp ? 'Créer un compte' : 'Connexion'}
             </h1>
-            <p className="text-[#94a3b8] font-inter">
-              {isSignUp ? 'Rejoignez ATLAS et documentez vos workflows' : 'Accédez à votre espace ATLAS'}
+            <p className="text-[#cbd5e1] font-inter">
+              Accédez à votre espace ATLAS
             </p>
           </div>
 
-          {/* Messages d'erreur/succès */}
-          {error && (
-            <div className={`mb-6 p-4 rounded-xl border font-inter text-sm ${
-              error.startsWith('✅') 
-                ? 'bg-[#10b981]/10 border-[#10b981]/30 text-[#10b981]'
-                : 'bg-[#ef4444]/10 border-[#ef4444]/30 text-[#ef4444]'
-            }`}>
-              {error}
-            </div>
-          )}
-
+          {/* Messages Success/Error */}
           {message && (
-            <div className="mb-6 p-4 rounded-xl border bg-[#10b981]/10 border-[#10b981]/30 text-[#10b981] font-inter text-sm">
-              {message}
+            <div className="mb-6 p-4 bg-[#10b981]/10 border border-[#10b981]/30 rounded-lg backdrop-blur-sm">
+              <p className="text-[#10b981] text-sm font-inter">{message}</p>
             </div>
           )}
 
-          {/* Formulaire Email/Password */}
-          <form onSubmit={handleAuth} className="space-y-4 mb-6">
+          {error && (
+            <div className="mb-6 p-4 bg-[#ef4444]/10 border border-[#ef4444]/30 rounded-lg backdrop-blur-sm">
+              <p className="text-[#ef4444] text-sm font-inter">{error}</p>
+            </div>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleAuth} className="space-y-4">
             
-            {/* Email */}
+            {/* Email Input */}
             <div>
               <label className="block text-sm font-medium text-[#cbd5e1] mb-2 font-inter">
                 Email
@@ -149,22 +149,19 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-[#0f172a] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 outline-none transition-all font-inter"
+                className="w-full px-4 py-3 bg-[#1e293b] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 transition-all font-inter"
                 placeholder="votre@email.com"
               />
             </div>
 
-            {/* Password */}
+            {/* Password Input */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-medium text-[#cbd5e1] font-inter">
                   Mot de passe
                 </label>
                 {!isSignUp && (
-                  <Link 
-                    href="/reset-password" 
-                    className="text-xs text-[#3b82f6] hover:text-[#2563eb] transition-colors font-inter"
-                  >
+                  <Link href="/reset-password" className="text-xs text-[#3b82f6] hover:text-[#2563eb] transition-colors font-inter">
                     Oublié ?
                   </Link>
                 )}
@@ -175,15 +172,12 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 bg-[#0f172a] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 outline-none transition-all font-inter"
+                className="w-full px-4 py-3 bg-[#1e293b] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 transition-all font-inter"
                 placeholder="••••••••"
               />
-              {isSignUp && (
-                <p className="text-xs text-[#64748b] mt-2 font-inter">Minimum 6 caractères</p>
-              )}
             </div>
 
-            {/* Confirmer Password - Sign Up uniquement */}
+            {/* Confirm Password (Sign Up only) */}
             {isSignUp && (
               <div>
                 <label className="block text-sm font-medium text-[#cbd5e1] mb-2 font-inter">
@@ -195,24 +189,25 @@ export default function LoginPage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 bg-[#0f172a] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 outline-none transition-all font-inter"
+                  className="w-full px-4 py-3 bg-[#1e293b] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 transition-all font-inter"
                   placeholder="••••••••"
                 />
               </div>
             )}
 
-            {/* Bouton Submit */}
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] hover:from-[#2563eb] hover:to-[#1d4ed8] text-white font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3b82f6]/30 font-inter"
+              className="w-full px-6 py-3 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-lg hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/30 disabled:opacity-50 disabled:cursor-not-allowed font-inter"
             >
-              {loading ? 'Chargement...' : isSignUp ? 'Créer mon compte' : 'Se connecter'}
+              {loading ? 'Chargement...' : (isSignUp ? 'Créer mon compte' : 'Se connecter')}
             </button>
           </form>
 
-          {/* Toggle Sign Up / Login */}
-          <div className="text-center mb-6">
+          {/* Toggle Sign In / Sign Up */}
+          <p className="text-center mt-6 text-sm text-[#cbd5e1] font-inter">
+            {isSignUp ? 'Déjà un compte ?' : 'Pas encore de compte ?'}{' '}
             <button
               onClick={() => {
                 setIsSignUp(!isSignUp);
@@ -222,30 +217,24 @@ export default function LoginPage() {
                 setPassword('');
                 setConfirmPassword('');
               }}
-              className="text-sm text-[#94a3b8] hover:text-white transition-colors font-inter"
+              className="text-[#3b82f6] hover:text-[#2563eb] font-semibold transition-colors"
             >
-              {isSignUp ? 'Déjà un compte ? ' : 'Pas encore de compte ? '}
-              <span className="text-[#3b82f6] font-semibold">
-                {isSignUp ? 'Se connecter' : "S'inscrire"}
-              </span>
+              {isSignUp ? 'Se connecter' : 'S\'inscrire'}
             </button>
-          </div>
+          </p>
 
           {/* Divider */}
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#334155]"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-[#0f172a] text-[#64748b] font-inter">Ou continuer avec</span>
-            </div>
+          <div className="flex items-center gap-4 my-6">
+            <div className="flex-1 h-px bg-[#334155]"></div>
+            <span className="text-[#64748b] text-sm font-inter">ou continuer avec</span>
+            <div className="flex-1 h-px bg-[#334155]"></div>
           </div>
 
-          {/* Google Login */}
+          {/* Google Button */}
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full py-3 bg-[#1e293b] hover:bg-[#334155] border border-[#334155] text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-3 disabled:opacity-50 font-inter"
+            className="w-full px-6 py-3 bg-white text-[#0f172a] font-semibold rounded-lg hover:bg-gray-100 transition-all flex items-center justify-center gap-3 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-inter"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -259,50 +248,47 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* RIGHT SIDE - LOGO GÉANT (2/3) - CACHÉ SUR MOBILE */}
-      <div className="hidden lg:flex w-2/3 bg-gradient-to-br from-[#3b82f6] via-[#8b5cf6] to-[#ec4899] items-center justify-center relative overflow-hidden">
-        
-        {/* Background effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-3xl"></div>
-        </div>
-
-        {/* Contenu */}
-        <div className="relative z-10 text-center">
+      {/* RIGHT SIDE - Exemple Template (Hidden on mobile, w-0 lg:w-3/5) */}
+      <div className="hidden lg:flex relative z-10 w-3/5 items-center justify-center p-12">
+        <div className="max-w-4xl">
           
-          {/* Logo ATLAS géant */}
-          <div className="mb-12 animate-pulse">
-            <Image
-              src="/logo.png"
-              alt="ATLAS"
-              width={500}
-              height={500}
-              className="object-contain drop-shadow-2xl"
-            />
+          {/* Titre Section Droite */}
+          <div className="text-center mb-8">
+            <h2 className="text-5xl font-bold text-white mb-4 font-poppins drop-shadow-2xl">
+              ATLAS
+            </h2>
+            <p className="text-2xl text-white/90 font-inter font-light">
+              Documentation automatique pour workflows N8N
+            </p>
           </div>
 
-          {/* Tagline */}
-          <h2 className="text-5xl font-bold text-white mb-4 font-poppins drop-shadow-lg">
-            ATLAS
-          </h2>
-          <p className="text-2xl text-white/90 font-light font-inter max-w-2xl mx-auto leading-relaxed">
-            Documentation automatique pour workflows N8N
-          </p>
+          {/* Image Exemple Workflow (comptableapres.png ou soraapres.png) */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl blur-3xl"></div>
+            <div className="relative rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl backdrop-blur-sm">
+              <Image
+                src="/img/comptableapres.png"
+                alt="Exemple de workflow documenté par ATLAS"
+                width={1200}
+                height={800}
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
 
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+          {/* Stats en dessous */}
+          <div className="grid grid-cols-3 gap-6 mt-8">
             <div className="text-center">
-              <p className="text-4xl font-bold text-white mb-2 font-poppins">40s</p>
-              <p className="text-white/80 text-sm font-inter">Génération</p>
+              <div className="text-4xl font-bold text-white mb-1 font-poppins">40s</div>
+              <div className="text-white/70 text-sm font-inter">Génération rapide</div>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-white mb-2 font-poppins">2.5K+</p>
-              <p className="text-white/80 text-sm font-inter">Templates</p>
+              <div className="text-4xl font-bold text-white mb-1 font-poppins">2.5K+</div>
+              <div className="text-white/70 text-sm font-inter">Workflows documentés</div>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-white mb-2 font-poppins">98%</p>
-              <p className="text-white/80 text-sm font-inter">Satisfaction</p>
+              <div className="text-4xl font-bold text-white mb-1 font-poppins">98%</div>
+              <div className="text-white/70 text-sm font-inter">Satisfaction</div>
             </div>
           </div>
 
