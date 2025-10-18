@@ -109,8 +109,8 @@ export default function OnboardingPage() {
         .upsert({
           user_id: user.id,
           first_name: firstName.trim(),
-          user_type: userType,
-          discovery_source: discoverySource,
+          'user-type': userType,  // ← CORRIGÉ : tiret au lieu d'underscore
+          disocvery_names: discoverySource,  // ← CORRIGÉ : nom de colonne réel
         })
         .select()
         .single();
