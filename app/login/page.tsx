@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -24,6 +25,13 @@ export default function LoginPage() {
     setError('');
     setMessage('');
 
+    // Validation des mots de passe pour Sign Up
+    if (isSignUp && password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      setLoading(false);
+      return;
+    }
+
     try {
       if (isSignUp) {
         // Inscription
@@ -31,14 +39,16 @@ export default function LoginPage() {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=/generate`,
           },
         });
 
         if (error) {
           setError(error.message);
+          setLoading(false);
         } else {
-          setMessage('✅ Email de confirmation envoyé ! Vérifiez votre boîte mail.');
+          setMessage('Compte créé ! Redirection...');
+          setTimeout(() => router.push('/generate'), 1500);
         }
       } else {
         // Connexion
@@ -49,13 +59,13 @@ export default function LoginPage() {
 
         if (error) {
           setError(error.message);
+          setLoading(false);
         } else {
           router.push('/generate');
         }
       }
     } catch (err) {
       setError('Une erreur est survenue. Veuillez réessayer.');
-    } finally {
       setLoading(false);
     }
   };
@@ -66,7 +76,7 @@ export default function LoginPage() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?next=/generate`,
       },
     });
   };
@@ -173,6 +183,24 @@ export default function LoginPage() {
               )}
             </div>
 
+            {/* Confirmer Password - Sign Up uniquement */}
+            {isSignUp && (
+              <div>
+                <label className="block text-sm font-medium text-[#cbd5e1] mb-2 font-inter">
+                  Confirmer le mot de passe
+                </label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="w-full px-4 py-3 bg-[#0f172a] border border-[#334155] rounded-lg text-white placeholder-[#64748b] focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/20 outline-none transition-all font-inter"
+                  placeholder="••••••••"
+                />
+              </div>
+            )}
+
             {/* Bouton Submit */}
             <button
               type="submit"
@@ -192,6 +220,7 @@ export default function LoginPage() {
                 setMessage('');
                 setEmail('');
                 setPassword('');
+                setConfirmPassword('');
               }}
               className="text-sm text-[#94a3b8] hover:text-white transition-colors font-inter"
             >
