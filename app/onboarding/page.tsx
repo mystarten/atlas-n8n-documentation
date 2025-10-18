@@ -12,8 +12,43 @@ export default function OnboardingPage() {
   const [discoverySource, setDiscoverySource] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isCheckingOnboarding, setIsCheckingOnboarding] = useState(true);
   const router = useRouter();
   const supabase = createClient();
+
+  // Vérifier si l'onboarding est déjà complété au chargement
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          router.push('/login');
+          return;
+        }
+
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('onboarding_completed')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        // Si l'onboarding est déjà complété, rediriger vers /generate
+        if (profile?.onboarding_completed) {
+          console.log('✅ Onboarding déjà complété, redirection vers /generate');
+          router.push('/generate');
+          return;
+        }
+
+        setIsCheckingOnboarding(false);
+      } catch (error) {
+        console.error('Erreur vérification onboarding:', error);
+        setIsCheckingOnboarding(false);
+      }
+    };
+
+    checkOnboardingStatus();
+  }, [supabase, router]);
 
   const handleNext = () => {
     if (step === 1 && !firstName.trim()) {
@@ -29,6 +64,11 @@ export default function OnboardingPage() {
   };
 
   const handleSubmit = async () => {
+    if (!discoverySource) {
+      setError('Veuillez sélectionner comment vous avez découvert ATLAS');
+      return;
+    }
+
     console.log('🚀 Début handleSubmit');
     setLoading(true);
     
@@ -37,41 +77,68 @@ export default function OnboardingPage() {
       
       if (!user) {
         console.error('❌ Pas d\'utilisateur');
-        window.location.href = '/generate';
+        router.push('/login');
         return;
       }
 
       console.log('✅ User trouvé:', user.id);
 
-      // SAUVEGARDER D'ABORD (ATTENDRE que ça soit fait)
-      const { data, error } = await supabase
-        .from('user_profiles')
+      // 1. Sauvegarder les données d'onboarding dans la nouvelle table
+      const { data: onboardingData, error: onboardingError } = await supabase
+        .from('onboarding_data')
         .upsert({
           user_id: user.id,
-          first_name: firstName.trim() || 'User',
-          user_type: userType || 'creator',
-          discovery_source: discoverySource || 'autre',
-          onboarding_completed: true,
+          first_name: firstName.trim(),
+          user_type: userType,
+          discovery_source: discoverySource,
         })
         .select()
         .single();
 
-      if (error) {
-        console.error('❌ Erreur sauvegarde:', error);
-      } else {
-        console.log('✅ Profil sauvegardé avec succès:', data);
+      if (onboardingError) {
+        console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
+        throw onboardingError;
       }
 
-      // PUIS rediriger (après que la sauvegarde soit confirmée)
-      console.log('🚀 Sauvegarde OK - REDIRECTION vers /generate');
-      window.location.href = '/generate';
+      console.log('✅ Données onboarding sauvegardées:', onboardingData);
+
+      // 2. Marquer l'onboarding comme complété dans la table profiles
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ onboarding_completed: true })
+        .eq('id', user.id);
+
+      if (profileError) {
+        console.error('❌ Erreur mise à jour profile:', profileError);
+        throw profileError;
+      }
+
+      console.log('✅ Onboarding marqué comme complété');
+
+      // 3. Rediriger vers /generate
+      console.log('🚀 Onboarding terminé - REDIRECTION vers /generate');
+      router.push('/generate');
       
     } catch (err) {
       console.error('💥 Erreur:', err);
-      // Rediriger quand même
-      window.location.href = '/generate';
+      setError('Une erreur est survenue. Veuillez réessayer.');
+      setLoading(false);
     }
   };
+
+  // Affichage de chargement pendant la vérification
+  if (isCheckingOnboarding) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1e] via-[#0f172a] to-[#0a0f1e] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[#334155] rounded-full mb-4">
+            <div className="w-16 h-16 border-4 border-[#3b82f6] rounded-full border-t-transparent animate-spin"></div>
+          </div>
+          <p className="text-[#cbd5e1] font-inter">Vérification de votre profil...</p>
+        </div>
+      </div>
+    );
+  }
 
   const progress = (step / 3) * 100;
 

@@ -45,9 +45,12 @@ export default function LoginPage() {
         
         console.log('✅ Signup réussi !', data);
         
-        // REDIRECTION FORCÉE IMMÉDIATE
-        window.location.href = '/onboarding';
-        return;
+        // Le middleware s'occupera de la redirection vers /onboarding
+        // Pas besoin de redirection forcée ici
+        setMessage('Compte créé avec succès ! Redirection...');
+        setTimeout(() => {
+          window.location.href = '/generate';
+        }, 1000);
       } else {
         // Login
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -56,22 +59,12 @@ export default function LoginPage() {
         });
         if (error) throw error;
 
-        // Vérifier si l'onboarding est déjà complété
-        if (data.user) {
-          const { data: profile } = await supabase
-            .from('user_profiles')
-            .select('onboarding_completed')
-            .eq('user_id', data.user.id)
-            .maybeSingle();
-          
-          if (profile?.onboarding_completed) {
-            console.log('✅ Onboarding déjà fait → /generate');
-            window.location.href = '/generate';
-          } else {
-            console.log('🆕 Premier login → /onboarding');
-            window.location.href = '/onboarding';
-          }
-        }
+        // Le middleware s'occupera de vérifier l'onboarding
+        // Redirection simple vers /generate
+        setMessage('Connexion réussie ! Redirection...');
+        setTimeout(() => {
+          window.location.href = '/generate';
+        }, 1000);
         return;
       }
     } catch (err: any) {

@@ -51,9 +51,37 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // Si pas de session et tentative d'accès à /onboarding, rediriger vers /login
+  if (!session && req.nextUrl.pathname.startsWith('/onboarding')) {
+    const redirectUrl = req.nextUrl.clone();
+    redirectUrl.pathname = '/login';
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // Si connecté, vérifier l'onboarding pour les pages protégées
+  if (session && (req.nextUrl.pathname.startsWith('/generate') || req.nextUrl.pathname.startsWith('/account'))) {
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('id', session.user.id)
+        .maybeSingle();
+
+      // Si l'onboarding n'est pas complété, rediriger vers /onboarding
+      if (!profile?.onboarding_completed) {
+        const redirectUrl = req.nextUrl.clone();
+        redirectUrl.pathname = '/onboarding';
+        return NextResponse.redirect(redirectUrl);
+      }
+    } catch (error) {
+      console.error('Erreur vérification onboarding:', error);
+      // En cas d'erreur, permettre l'accès pour éviter les boucles
+    }
+  }
+
   return res;
 }
 
 export const config = {
-  matcher: ['/generate/:path*', '/account/:path*'],
+  matcher: ['/generate/:path*', '/account/:path*', '/onboarding/:path*'],
 };
