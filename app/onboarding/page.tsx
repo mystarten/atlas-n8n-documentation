@@ -76,9 +76,7 @@ export default function OnboardingPage() {
 
       if (insertError) throw insertError;
 
-      // Simuler un chargement smooth
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
+      // Rediriger immédiatement
       router.push('/generate');
       router.refresh();
     } catch (err: any) {
@@ -118,9 +116,8 @@ export default function OnboardingPage() {
 
         {/* Progress Bar */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-[#cbd5e1] font-inter">Étape {step}/3</span>
-            <span className="text-sm text-[#3b82f6] font-inter font-semibold">{Math.round(progress)}%</span>
+          <div className="mb-3 text-center">
+            <span className="text-sm text-[#cbd5e1] font-inter">Étape {step} sur 3</span>
           </div>
           <div className="h-2 bg-[#1e293b] rounded-full overflow-hidden">
             <div 
@@ -235,20 +232,12 @@ export default function OnboardingPage() {
                   </button>
                 </div>
               </div>
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={() => setStep(1)}
-                  className="px-6 py-4 bg-[#334155] text-white font-semibold rounded-xl hover:bg-[#475569] transition-all font-inter"
-                >
-                  Retour
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="flex-1 px-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-xl hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/40 hover:shadow-[#3b82f6]/60 hover:scale-[1.02] font-inter text-lg"
-                >
-                  Continuer
-                </button>
-              </div>
+              <button
+                onClick={handleNext}
+                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-xl hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/40 hover:shadow-[#3b82f6]/60 hover:scale-[1.02] font-inter text-lg"
+              >
+                Continuer
+              </button>
             </div>
           )}
 
@@ -295,20 +284,12 @@ export default function OnboardingPage() {
                   ))}
                 </div>
               </div>
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={() => setStep(2)}
-                  className="px-6 py-4 bg-[#334155] text-white font-semibold rounded-xl hover:bg-[#475569] transition-all font-inter"
-                >
-                  Retour
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  className="flex-1 px-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-xl hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/40 hover:shadow-[#3b82f6]/60 hover:scale-[1.02] font-inter text-lg"
-                >
-                  Terminer
-                </button>
-              </div>
+              <button
+                onClick={handleSubmit}
+                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-semibold rounded-xl hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/40 hover:shadow-[#3b82f6]/60 hover:scale-[1.02] font-inter text-lg"
+              >
+                Terminer
+              </button>
             </div>
           )}
 
