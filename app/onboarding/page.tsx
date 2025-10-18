@@ -28,8 +28,35 @@ export default function OnboardingPage() {
     setStep(step + 1);
   };
 
-  const handleSubmit = () => {
-    console.log('🚀 Redirection immédiate vers /generate');
+  const handleSubmit = async () => {
+    console.log('🚀 Onboarding terminé !');
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        // Marquer l'onboarding comme terminé en base
+        await supabase
+          .from('user_profiles')
+          .upsert({
+            user_id: user.id,
+            onboarding_completed: true,
+            first_name: firstName.trim() || 'User',
+            user_type: userType || 'creator',
+            discovery_source: discoverySource || 'autre',
+          });
+        
+        console.log('✅ Onboarding marqué comme terminé');
+      }
+      
+      // Marquer en localStorage aussi
+      localStorage.setItem('onboarding_completed', 'true');
+      
+    } catch (err) {
+      console.error('❌ Erreur:', err);
+    }
+    
+    // REDIRECTION FORCÉE vers /generate
     window.location.href = '/generate';
   };
 

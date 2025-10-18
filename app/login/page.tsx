@@ -50,15 +50,28 @@ export default function LoginPage() {
         return;
       } else {
         // Login
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         if (error) throw error;
 
-        // Redirection IMMÉDIATE sans vérification
-        console.log('✅ Login OK - Redirection vers /onboarding');
-        window.location.href = '/onboarding';
+        // Vérifier si l'onboarding est déjà complété
+        if (data.user) {
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('onboarding_completed')
+            .eq('user_id', data.user.id)
+            .maybeSingle();
+          
+          if (profile?.onboarding_completed) {
+            console.log('✅ Onboarding déjà fait → /generate');
+            window.location.href = '/generate';
+          } else {
+            console.log('🆕 Premier login → /onboarding');
+            window.location.href = '/onboarding';
+          }
+        }
         return;
       }
     } catch (err: any) {
