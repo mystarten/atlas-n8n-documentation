@@ -1,19 +1,49 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [user, setUser] = useState<any>(null);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const supabase = createClient();
+
+  // Vérifier si l'utilisateur est connecté
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getUser();
+
+    // Écouter les changements d'auth
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setIsUserMenuOpen(false);
+    router.push('/');
+    router.refresh();
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 w-full bg-[#0f172a]/90 backdrop-blur-lg border-b border-[#1e293b] z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
         
-        {/* Logo - Toujours visible */}
+        {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image 
             src="/logo.png" 
@@ -24,63 +54,95 @@ export default function Navbar() {
           />
         </Link>
         
-        {/* Nav links - Desktop seulement */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          <Link 
-            href="/" 
-            className={`text-sm transition-colors font-inter ${
-              pathname === '/' 
-                ? 'text-white font-medium' 
-                : 'text-[#e2e8f0] hover:text-white'
-            }`}
-          >
+          <Link href="/" className={`text-sm transition-colors font-inter ${pathname === '/' ? 'text-white font-medium' : 'text-[#e2e8f0] hover:text-white'}`}>
             Accueil
           </Link>
-          <Link 
-            href="/documentation" 
-            className={`text-sm transition-colors font-inter ${
-              pathname === '/documentation' 
-                ? 'text-white font-medium' 
-                : 'text-[#e2e8f0] hover:text-white'
-            }`}
-          >
+          <Link href="/documentation" className={`text-sm transition-colors font-inter ${pathname === '/documentation' ? 'text-white font-medium' : 'text-[#e2e8f0] hover:text-white'}`}>
             Documentation
           </Link>
-          <Link 
-            href="/blog" 
-            className={`text-sm transition-colors font-inter ${
-              pathname.startsWith('/blog') 
-                ? 'text-white font-medium' 
-                : 'text-[#e2e8f0] hover:text-white'
-            }`}
-          >
+          <Link href="/blog" className={`text-sm transition-colors font-inter ${pathname.startsWith('/blog') ? 'text-white font-medium' : 'text-[#e2e8f0] hover:text-white'}`}>
             Blog
           </Link>
-          <Link 
-            href="/pricing" 
-            className={`text-sm transition-colors font-inter ${
-              pathname === '/pricing' 
-                ? 'text-white font-medium' 
-                : 'text-[#e2e8f0] hover:text-white'
-            }`}
-          >
+          <Link href="/pricing" className={`text-sm transition-colors font-inter ${pathname === '/pricing' ? 'text-white font-medium' : 'text-[#e2e8f0] hover:text-white'}`}>
             Tarifs
           </Link>
         </div>
-        
-        {/* Bouton Se connecter - Desktop seulement */}
-        <Link 
-          href="/login" 
-          className="hidden md:flex px-6 py-2.5 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white text-sm font-semibold rounded-lg hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/30 font-inter"
-        >
-          Se connecter
-        </Link>
-        
-        {/* Bouton Menu Hamburger - Mobile seulement */}
-        <button 
-          onClick={() => setIsOpen(!isOpen)} 
+
+        {/* Desktop - User Menu OU Login Button */}
+        <div className="hidden md:flex items-center gap-4">
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-3 px-4 py-2 bg-[#1e293b] rounded-lg hover:bg-[#334155] transition-colors"
+              >
+                <div className="w-8 h-8 bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                  {user.email?.[0].toUpperCase()}
+                </div>
+                <span className="text-white text-sm font-inter max-w-[150px] truncate">{user.email}</span>
+                <svg className={`w-4 h-4 text-[#cbd5e1] transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-[#1e293b] border border-[#334155] rounded-lg shadow-xl overflow-hidden">
+                  <Link
+                    href="/generate"
+                    onClick={() => setIsUserMenuOpen(false)}
+                    className="block px-4 py-3 text-[#e2e8f0] hover:bg-[#334155] transition-colors font-inter text-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Générer
+                    </div>
+                  </Link>
+                  <Link
+                    href="/account"
+                    onClick={() => setIsUserMenuOpen(false)}
+                    className="block px-4 py-3 text-[#e2e8f0] hover:bg-[#334155] transition-colors font-inter text-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      Mon compte
+                    </div>
+                  </Link>
+                  <div className="border-t border-[#334155]"></div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-3 text-[#ef4444] hover:bg-[#334155] transition-colors font-inter text-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      Déconnexion
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link 
+              href="/login" 
+              className="px-6 py-2.5 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white text-sm font-semibold rounded-lg hover:from-[#2563eb] hover:to-[#1d4ed8] transition-all shadow-lg shadow-[#3b82f6]/30 font-inter"
+            >
+              Se connecter
+            </Link>
+          )}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 text-[#e2e8f0] hover:text-white transition-colors"
-          aria-label="Menu"
         >
           {isOpen ? (
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,64 +154,42 @@ export default function Navbar() {
             </svg>
           )}
         </button>
-        
       </div>
-      
-      {/* Menu Mobile - Slide down */}
+
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#1e293b] border-t border-[#334155]">
           <div className="px-4 py-4 space-y-3">
-            <Link 
-              href="/" 
-              onClick={() => setIsOpen(false)} 
-              className={`block px-4 py-3 rounded-lg transition-colors font-inter ${
-                pathname === '/' 
-                  ? 'bg-[#3b82f6]/20 text-white font-medium' 
-                  : 'text-[#e2e8f0] hover:bg-[#334155]'
-              }`}
-            >
+            <Link href="/" onClick={() => setIsOpen(false)} className={`block px-4 py-3 rounded-lg transition-colors font-inter ${pathname === '/' ? 'bg-[#3b82f6]/20 text-white font-medium' : 'text-[#e2e8f0] hover:bg-[#334155]'}`}>
               Accueil
             </Link>
-            <Link 
-              href="/documentation" 
-              onClick={() => setIsOpen(false)} 
-              className={`block px-4 py-3 rounded-lg transition-colors font-inter ${
-                pathname === '/documentation' 
-                  ? 'bg-[#3b82f6]/20 text-white font-medium' 
-                  : 'text-[#e2e8f0] hover:bg-[#334155]'
-              }`}
-            >
+            <Link href="/documentation" onClick={() => setIsOpen(false)} className={`block px-4 py-3 rounded-lg transition-colors font-inter ${pathname === '/documentation' ? 'bg-[#3b82f6]/20 text-white font-medium' : 'text-[#e2e8f0] hover:bg-[#334155]'}`}>
               Documentation
             </Link>
-            <Link 
-              href="/blog" 
-              onClick={() => setIsOpen(false)} 
-              className={`block px-4 py-3 rounded-lg transition-colors font-inter ${
-                pathname.startsWith('/blog') 
-                  ? 'bg-[#3b82f6]/20 text-white font-medium' 
-                  : 'text-[#e2e8f0] hover:bg-[#334155]'
-              }`}
-            >
+            <Link href="/blog" onClick={() => setIsOpen(false)} className={`block px-4 py-3 rounded-lg transition-colors font-inter ${pathname.startsWith('/blog') ? 'bg-[#3b82f6]/20 text-white font-medium' : 'text-[#e2e8f0] hover:bg-[#334155]'}`}>
               Blog
             </Link>
-            <Link 
-              href="/pricing" 
-              onClick={() => setIsOpen(false)} 
-              className={`block px-4 py-3 rounded-lg transition-colors font-inter ${
-                pathname === '/pricing' 
-                  ? 'bg-[#3b82f6]/20 text-white font-medium' 
-                  : 'text-[#e2e8f0] hover:bg-[#334155]'
-              }`}
-            >
+            <Link href="/pricing" onClick={() => setIsOpen(false)} className={`block px-4 py-3 rounded-lg transition-colors font-inter ${pathname === '/pricing' ? 'bg-[#3b82f6]/20 text-white font-medium' : 'text-[#e2e8f0] hover:bg-[#334155]'}`}>
               Tarifs
             </Link>
-            <Link 
-              href="/login" 
-              onClick={() => setIsOpen(false)} 
-              className="block px-6 py-3 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white text-center font-semibold rounded-lg transition-all shadow-lg font-inter mt-4"
-            >
-              Se connecter
-            </Link>
+
+            {user ? (
+              <>
+                <Link href="/generate" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-lg bg-[#3b82f6]/20 text-white font-medium font-inter">
+                  Générer
+                </Link>
+                <Link href="/account" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-lg text-[#e2e8f0] hover:bg-[#334155] transition-colors font-inter">
+                  Mon compte
+                </Link>
+                <button onClick={handleLogout} className="w-full text-left px-4 py-3 rounded-lg text-[#ef4444] hover:bg-[#334155] transition-colors font-inter">
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <Link href="/login" onClick={() => setIsOpen(false)} className="block px-6 py-3 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white text-center font-semibold rounded-lg font-inter mt-4">
+                Se connecter
+              </Link>
+            )}
           </div>
         </div>
       )}
