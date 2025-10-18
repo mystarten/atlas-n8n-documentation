@@ -58,6 +58,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // TEMPORAIREMENT DÉSACTIVÉ - Éviter la boucle infinie
+  // TODO: Réactiver une fois la table onboarding_data créée
+  /*
   // Si connecté, vérifier l'onboarding pour les pages protégées
   if (session && (req.nextUrl.pathname.startsWith('/generate') || req.nextUrl.pathname.startsWith('/account'))) {
     try {
@@ -78,6 +81,7 @@ export async function middleware(req: NextRequest) {
       // En cas d'erreur, permettre l'accès pour éviter les boucles
     }
   }
+  */
 
   return res;
 }

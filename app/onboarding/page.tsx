@@ -16,9 +16,9 @@ export default function OnboardingPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  // Vérifier si l'onboarding est déjà complété au chargement
+  // Vérification simplifiée - éviter les boucles
   useEffect(() => {
-    const checkOnboardingStatus = async () => {
+    const checkUser = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         
@@ -29,35 +29,20 @@ export default function OnboardingPage() {
         }
 
         console.log('✅ Utilisateur trouvé:', user.id);
-
-        const { data: onboardingData } = await supabase
-          .from('onboarding_data')
-          .select('id')
-          .eq('user_id', user.id)
-          .maybeSingle();
-
-        // Si l'onboarding est déjà complété, rediriger vers /generate
-        if (onboardingData) {
-          console.log('✅ Onboarding déjà complété, redirection vers /generate');
-          router.push('/generate');
-          return;
-        }
-
-        console.log('🆕 Onboarding nécessaire, affichage du formulaire');
         setIsCheckingOnboarding(false);
       } catch (error) {
-        console.error('❌ Erreur vérification onboarding:', error);
+        console.error('❌ Erreur vérification utilisateur:', error);
         setIsCheckingOnboarding(false);
       }
     };
 
-    // Timeout de sécurité pour éviter le loading infini
+    // Timeout de sécurité très court
     const timeout = setTimeout(() => {
       console.log('⏰ Timeout de sécurité - affichage du formulaire');
       setIsCheckingOnboarding(false);
-    }, 5000);
+    }, 2000);
 
-    checkOnboardingStatus();
+    checkUser();
 
     return () => clearTimeout(timeout);
   }, [supabase, router]);
@@ -96,28 +81,31 @@ export default function OnboardingPage() {
 
       console.log('✅ User trouvé:', user.id);
 
-      // Sauvegarder les données d'onboarding
-      const { data: onboardingData, error: onboardingError } = await supabase
-        .from('onboarding_data')
-        .upsert({
-          user_id: user.id,
-          first_name: firstName.trim(),
-          user_type: userType,
-          discovery_source: discoverySource,
-        })
-        .select()
-        .single();
+      // Essayer de sauvegarder, mais ne pas bloquer si ça échoue
+      try {
+        const { data: onboardingData, error: onboardingError } = await supabase
+          .from('onboarding_data')
+          .upsert({
+            user_id: user.id,
+            first_name: firstName.trim(),
+            user_type: userType,
+            discovery_source: discoverySource,
+          })
+          .select()
+          .single();
 
-      if (onboardingError) {
-        console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
-        setError(`Erreur de sauvegarde: ${onboardingError.message}`);
-        setLoading(false);
-        return;
+        if (onboardingError) {
+          console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
+          console.log('⚠️ Continuons quand même vers /generate');
+        } else {
+          console.log('✅ Données onboarding sauvegardées:', onboardingData);
+        }
+      } catch (saveError) {
+        console.error('❌ Erreur lors de la sauvegarde:', saveError);
+        console.log('⚠️ Continuons quand même vers /generate');
       }
 
-      console.log('✅ Données onboarding sauvegardées:', onboardingData);
-
-      // Rediriger vers /generate
+      // Rediriger vers /generate dans tous les cas
       console.log('🚀 Onboarding terminé - REDIRECTION vers /generate');
       router.push('/generate');
       
