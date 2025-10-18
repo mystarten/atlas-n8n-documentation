@@ -29,62 +29,39 @@ export default function OnboardingPage() {
   };
 
   const handleSubmit = async () => {
+    console.log('🚀 handleSubmit appelé !');
+    setLoading(true);
+    
     try {
-      console.log('🚀 handleSubmit démarré');
+      const { data: { user } } = await supabase.auth.getUser();
       
-      if (!discoverySource) {
-        setError('Veuillez sélectionner une option');
+      if (!user) {
+        console.error('❌ Pas d\'utilisateur - Redirection /generate');
+        window.location.href = '/generate';
         return;
       }
 
-      setLoading(true);
-      setError('');
+      console.log('✅ User:', user.id);
 
-      console.log('🔍 Récupération user...');
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      
-      if (userError || !user) {
-        console.error('❌ User error:', userError);
-        throw new Error('Non authentifié. Veuillez vous reconnecter.');
-      }
-
-      console.log('✅ User récupéré:', user.id);
-
-      const profileData = {
-        user_id: user.id,
-        first_name: firstName.trim(),
-        user_type: userType,
-        discovery_source: discoverySource,
-        onboarding_completed: true,
-        updated_at: new Date().toISOString(),
-      };
-
-      console.log('📝 Data à sauvegarder:', profileData);
-
-      // UPSERT : crée si n'existe pas, met à jour sinon
-      const { data, error: upsertError } = await supabase
+      await supabase
         .from('user_profiles')
-        .upsert(profileData, { 
-          onConflict: 'user_id',
-          ignoreDuplicates: false 
-        })
-        .select()
-        .single();
+        .upsert({
+          user_id: user.id,
+          first_name: firstName.trim() || 'User',
+          user_type: userType || 'creator',
+          discovery_source: discoverySource || 'autre',
+          onboarding_completed: true,
+        });
 
-      if (upsertError) {
-        console.error('❌ Supabase error:', upsertError);
-        throw new Error(upsertError.message || 'Erreur lors de l\'enregistrement.');
-      }
-
-      console.log('✅ Profil sauvegardé avec succès !', data);
-      console.log('🚀 Redirection vers /generate');
-
-      // Redirection immédiate vers /generate
+      console.log('✅ Profil sauvegardé');
+      
+      // REDIRECTION FORCÉE
       window.location.href = '/generate';
-    } catch (err: any) {
-      console.error('💥 Error catch:', err);
-      setError(err.message || 'Une erreur est survenue');
-      setLoading(false);
+      
+    } catch (err) {
+      console.error('💥 Erreur:', err);
+      // Rediriger quand même en cas d'erreur
+      window.location.href = '/generate';
     }
   };
 
