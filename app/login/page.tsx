@@ -42,8 +42,12 @@ export default function LoginPage() {
           },
         });
         if (error) throw error;
-        setMessage('Compte créé ! Redirection...');
-        setTimeout(() => router.push('/onboarding'), 1500);
+        
+        console.log('✅ Signup réussi !', data);
+        
+        // REDIRECTION FORCÉE IMMÉDIATE
+        window.location.href = '/onboarding';
+        return;
       } else {
         // Login
         const { error } = await supabase.auth.signInWithPassword({
