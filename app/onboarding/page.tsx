@@ -28,36 +28,36 @@ export default function OnboardingPage() {
     setStep(step + 1);
   };
 
-  const handleSubmit = async () => {
-    console.log('🚀 Onboarding terminé !');
+  const handleSubmit = () => {
+    console.log('🚀 Onboarding terminé - REDIRECTION IMMÉDIATE !');
     
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        // Marquer l'onboarding comme terminé en base
-        await supabase
-          .from('user_profiles')
-          .upsert({
-            user_id: user.id,
-            onboarding_completed: true,
-            first_name: firstName.trim() || 'User',
-            user_type: userType || 'creator',
-            discovery_source: discoverySource || 'autre',
-          });
-        
-        console.log('✅ Onboarding marqué comme terminé');
-      }
-      
-      // Marquer en localStorage aussi
-      localStorage.setItem('onboarding_completed', 'true');
-      
-    } catch (err) {
-      console.error('❌ Erreur:', err);
-    }
-    
-    // REDIRECTION FORCÉE vers /generate
+    // REDIRECTION IMMÉDIATE SANS ATTENDRE
     window.location.href = '/generate';
+    
+    // Sauvegarder en arrière-plan (après la redirection)
+    setTimeout(async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          await supabase
+            .from('user_profiles')
+            .upsert({
+              user_id: user.id,
+              onboarding_completed: true,
+              first_name: firstName.trim() || 'User',
+              user_type: userType || 'creator',
+              discovery_source: discoverySource || 'autre',
+            });
+          
+          console.log('✅ Onboarding marqué comme terminé');
+        }
+        
+        localStorage.setItem('onboarding_completed', 'true');
+      } catch (err) {
+        console.error('❌ Erreur sauvegarde:', err);
+      }
+    }, 100);
   };
 
   const progress = (step / 3) * 100;
