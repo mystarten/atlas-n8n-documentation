@@ -159,11 +159,14 @@ export default function Generate() {
           }
         })
         
+        console.log('📊 Réponse incrémentation:', incrementResponse.status, incrementResponse.statusText)
+        
         if (incrementResponse.ok) {
           const incrementData = await incrementResponse.json()
           console.log('✅ Usage incrémenté:', incrementData)
         } else {
-          console.error('⚠️ Erreur incrémentation:', await incrementResponse.text())
+          const errorText = await incrementResponse.text()
+          console.error('⚠️ Erreur incrémentation:', errorText)
         }
       } catch (incrementError) {
         console.error('⚠️ Erreur lors de l\'incrémentation:', incrementError)
@@ -171,8 +174,11 @@ export default function Generate() {
 
       // ✅ Rafraîchir les stats après génération réussie
       try {
+        console.log('🔄 Rafraîchissement des stats...')
         const statsResponse = await fetch('/api/user/stats')
         const newStats = await statsResponse.json()
+        console.log('📊 Nouvelles stats:', newStats)
+        
         setUsageData({ current: newStats.used, limit: newStats.limit, tier: newStats.tier })
         setUsageLimit({ current: newStats.used, limit: newStats.limit })
         console.log('✅ Stats rafraîchies après génération:', newStats)
