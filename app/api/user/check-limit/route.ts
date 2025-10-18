@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function POST(request: Request) {
+export async function GET() {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -10,23 +10,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
     
-    console.log('🔄 Incrémentation de l\'usage pour user:', user.id)
+    console.log('🔍 Vérification limite pour user:', user.id)
     
-    // Utiliser la fonction RPC corrigée
-    const { data, error } = await supabase.rpc('increment_user_templates_usage', {
+    // Utiliser la fonction RPC pour vérifier les limites
+    const { data, error } = await supabase.rpc('check_usage_limit', {
       user_uuid: user.id
     })
     
     if (error) {
-      console.error('❌ Erreur incrémentation:', error)
+      console.error('❌ Erreur vérification limite:', error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
     
-    console.log('✅ Usage incrémenté avec succès, nouveau count:', data)
+    console.log('✅ Limite vérifiée:', data)
     
     return NextResponse.json({ 
-      success: true, 
-      newCount: data 
+      allowed: data.allowed,
+      current: data.current,
+      limit: data.limit,
+      tier: data.tier
     })
   } catch (error: any) {
     console.error('❌ Erreur serveur:', error)

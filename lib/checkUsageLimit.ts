@@ -4,17 +4,16 @@ const LIMITS = {
   free: 3,
   starter: 20,
   pro: 40,
-  enterprise: 60
+  enterprise: 999999
 } as const
 
 export async function checkUsageLimit(userId: string) {
   const supabase = createClient()
   
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('subscription_tier, templates_used, templates_limit')
-    .eq('id', userId)
-    .single()
+  // Utiliser la fonction RPC qui utilise la table profiles
+  const { data, error } = await supabase.rpc('check_usage_limit', {
+    user_uuid: userId
+  })
 
   if (error || !data) {
     return {
@@ -26,15 +25,13 @@ export async function checkUsageLimit(userId: string) {
     }
   }
 
-  const canGenerate = data.templates_used < data.templates_limit
-
   return {
-    canGenerate,
-    templatesUsed: data.templates_used,
-    templatesLimit: data.templates_limit,
-    subscriptionTier: data.subscription_tier,
-    message: canGenerate 
+    canGenerate: data.allowed,
+    templatesUsed: data.current,
+    templatesLimit: data.limit,
+    subscriptionTier: data.tier,
+    message: data.allowed 
       ? 'OK' 
-      : `Limite atteinte (${data.templates_used}/${data.templates_limit})`
+      : `Limite atteinte (${data.current}/${data.limit})`
   }
 }

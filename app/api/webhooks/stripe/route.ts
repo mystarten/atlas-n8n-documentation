@@ -157,13 +157,15 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
     console.log('✅ Profile trouvé:', profile.id, profile.email)
 
-    // ✅ METTRE À JOUR LE PROFILE
+    // ✅ METTRE À JOUR LE PROFILE ET RESET LE COMPTEUR
     const { error } = await supabase
       .from('profiles')
       .update({
         subscription_tier: plan,
         stripe_customer_id: customerId,
         stripe_subscription_id: subscriptionId,
+        templates_limit: plan === 'free' ? 3 : plan === 'starter' ? 20 : plan === 'pro' ? 40 : 999999,
+        templates_used: 0, // Reset du compteur après upgrade
         updated_at: new Date().toISOString()
       })
       .eq('id', profile.id)
@@ -195,7 +197,10 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
 
     const { error } = await supabase
       .from('profiles')
-      .update({ subscription_tier: plan })
+      .update({ 
+        subscription_tier: plan,
+        templates_limit: plan === 'free' ? 3 : plan === 'starter' ? 20 : plan === 'pro' ? 40 : 999999
+      })
       .eq('stripe_customer_id', customerId)
 
     if (error) {
@@ -218,7 +223,9 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
       .from('profiles')
       .update({
         subscription_tier: 'free',
-        stripe_subscription_id: null
+        stripe_subscription_id: null,
+        templates_limit: 3,
+        templates_used: 0 // Reset du compteur
       })
       .eq('stripe_customer_id', customerId)
 

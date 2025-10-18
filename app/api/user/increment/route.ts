@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     
     console.log('🔄 Incrémentation de l\'usage pour user:', user.id)
     
-    // Utiliser la fonction RPC corrigée
+    // Utiliser la fonction RPC pour incrémenter l'usage
     const { data, error } = await supabase.rpc('increment_user_templates_usage', {
       user_uuid: user.id
     })

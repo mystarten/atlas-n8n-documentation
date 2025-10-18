@@ -20,26 +20,24 @@ export async function GET() {
   const { data: { user } } = await supabase.auth.getUser()
   
   if (!user) {
-    return NextResponse.json({ used: 0, limit: 3 })
+    return NextResponse.json({ used: 0, limit: 3, tier: 'free' })
   }
 
-  // ✅ Utiliser admin pour lire (bypass RLS)
-  const { data: profile, error } = await supabaseAdmin
-    .from('profiles')
-    .select('subscription_tier, templates_used, templates_limit')
-    .eq('id', user.id)
-    .single()
+  // ✅ Utiliser la fonction RPC pour récupérer les stats
+  const { data: statsData, error } = await supabase.rpc('check_usage_limit', {
+    user_uuid: user.id
+  })
 
-  console.log('📊 Stats pour', user.email, ':', profile)
+  console.log('📊 Stats pour', user.email, ':', statsData)
 
-  if (!profile || error) {
-    console.error('❌ Erreur lecture profile:', error)
-    return NextResponse.json({ used: 0, limit: 3 })
+  if (!statsData || error) {
+    console.error('❌ Erreur lecture stats:', error)
+    return NextResponse.json({ used: 0, limit: 3, tier: 'free' })
   }
 
   return NextResponse.json({
-    used: profile.templates_used || 0,
-    limit: profile.templates_limit || 3,
-    tier: profile.subscription_tier || 'free'
+    used: statsData.current || 0,
+    limit: statsData.limit || 3,
+    tier: statsData.tier || 'free'
   })
 }
