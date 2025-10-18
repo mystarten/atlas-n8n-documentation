@@ -51,22 +51,34 @@ export default function OnboardingPage() {
   };
 
   const handleSubmit = async () => {
-    if (!discoverySource) {
-      setError('Veuillez sélectionner une option');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      // Alert 1 : Vérifier que la fonction est appelée
+      alert('🚀 handleSubmit appelé !');
       
-      console.log('👤 User:', user);
+      if (!discoverySource) {
+        alert('⚠️ Aucune source sélectionnée');
+        setError('Veuillez sélectionner une option');
+        return;
+      }
+
+      setLoading(true);
+      setError('');
+
+      alert('🔄 Chargement activé, récupération user...');
+
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      
+      if (userError) {
+        alert('❌ Erreur user: ' + userError.message);
+        throw userError;
+      }
       
       if (!user) {
+        alert('❌ User null !');
         throw new Error('Non authentifié');
       }
+
+      alert('✅ User récupéré : ' + user.email);
 
       const dataToInsert = {
         user_id: user.id,
@@ -76,27 +88,28 @@ export default function OnboardingPage() {
         onboarding_completed: true,
       };
 
-      console.log('📝 Data to insert:', dataToInsert);
+      alert('📝 Tentative d\'insertion...');
+      console.log('Data:', dataToInsert);
 
       const { data, error: insertError } = await supabase
         .from('user_profiles')
         .insert(dataToInsert)
         .select();
 
-      console.log('✅ Insert result:', data);
-      console.log('❌ Insert error:', insertError);
-
       if (insertError) {
-        console.error('🚨 Supabase error:', insertError);
+        alert('❌ Erreur Supabase: ' + insertError.message + ' - ' + insertError.details);
+        console.error('Supabase error:', insertError);
         throw insertError;
       }
 
-      // Redirection immédiate
-      console.log('🚀 Redirection vers /generate');
+      alert('✅ Insertion réussie ! Redirection...');
+      console.log('Success:', data);
+
       router.push('/generate');
       router.refresh();
     } catch (err: any) {
-      console.error('💥 Erreur catch:', err);
+      alert('💥 Erreur catch: ' + err.message);
+      console.error('Erreur complète:', err);
       setError(err.message || 'Une erreur est survenue');
       setLoading(false);
     }
