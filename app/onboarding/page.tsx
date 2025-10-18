@@ -52,11 +52,7 @@ export default function OnboardingPage() {
 
   const handleSubmit = async () => {
     try {
-      // Alert 1 : Vérifier que la fonction est appelée
-      alert('🚀 handleSubmit appelé !');
-      
       if (!discoverySource) {
-        alert('⚠️ Aucune source sélectionnée');
         setError('Veuillez sélectionner une option');
         return;
       }
@@ -64,21 +60,18 @@ export default function OnboardingPage() {
       setLoading(true);
       setError('');
 
-      alert('🔄 Chargement activé, récupération user...');
-
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      // ✅ SOLUTION : Utiliser getSession au lieu de getUser
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      if (userError) {
-        alert('❌ Erreur user: ' + userError.message);
-        throw userError;
+      if (sessionError) {
+        throw new Error('Erreur de session : ' + sessionError.message);
       }
       
-      if (!user) {
-        alert('❌ User null !');
-        throw new Error('Non authentifié');
+      if (!session || !session.user) {
+        throw new Error('Non authentifié - Veuillez vous reconnecter');
       }
 
-      alert('✅ User récupéré : ' + user.email);
+      const user = session.user;
 
       const dataToInsert = {
         user_id: user.id,
@@ -88,28 +81,25 @@ export default function OnboardingPage() {
         onboarding_completed: true,
       };
 
-      alert('📝 Tentative d\'insertion...');
-      console.log('Data:', dataToInsert);
+      console.log('📝 Insertion data:', dataToInsert);
 
       const { data, error: insertError } = await supabase
         .from('user_profiles')
         .insert(dataToInsert)
-        .select();
+        .select()
+        .single();
 
       if (insertError) {
-        alert('❌ Erreur Supabase: ' + insertError.message + ' - ' + insertError.details);
-        console.error('Supabase error:', insertError);
-        throw insertError;
+        console.error('❌ Supabase error:', insertError);
+        throw new Error(insertError.message);
       }
 
-      alert('✅ Insertion réussie ! Redirection...');
-      console.log('Success:', data);
+      console.log('✅ Success:', data);
 
-      router.push('/generate');
-      router.refresh();
+      // Redirection immédiate
+      window.location.href = '/generate';
     } catch (err: any) {
-      alert('💥 Erreur catch: ' + err.message);
-      console.error('Erreur complète:', err);
+      console.error('💥 Error:', err);
       setError(err.message || 'Une erreur est survenue');
       setLoading(false);
     }
