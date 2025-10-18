@@ -11,6 +11,7 @@ export default function Navbar() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const supabase = createClient();
@@ -29,16 +30,38 @@ export default function Navbar() {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
+
+      if (user) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        
+        setUserProfile(profile);
+      }
     };
 
     getUser();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', session.user.id)
+          .single();
+        
+        setUserProfile(profile);
+      } else {
+        setUserProfile(null);
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, [supabase]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -135,9 +158,9 @@ export default function Navbar() {
                   className="flex items-center gap-3 px-4 py-2 bg-[#1e293b]/80 backdrop-blur-sm border border-[#334155] rounded-full hover:bg-[#334155] transition-all duration-300 shadow-lg"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-lg">
-                    {user.email?.[0].toUpperCase()}
+                    {userProfile?.first_name?.[0]?.toUpperCase() || user.email?.[0].toUpperCase()}
                   </div>
-                  <span className="text-white text-sm font-inter max-w-[120px] truncate">{user.email}</span>
+                  <span className="text-white text-sm font-inter max-w-[120px] truncate">{userProfile?.first_name || user.email}</span>
                   <svg className={`w-4 h-4 text-[#cbd5e1] transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -148,7 +171,7 @@ export default function Navbar() {
                   <div className="absolute right-0 mt-3 w-56 bg-[#1e293b] border border-[#334155] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-4 py-3 border-b border-[#334155] bg-[#0f172a]">
                       <p className="text-xs text-[#64748b] font-inter">Connecté en tant que</p>
-                      <p className="text-sm text-white font-inter truncate mt-1">{user.email}</p>
+                      <p className="text-sm text-white font-inter truncate mt-1">{userProfile?.first_name || user.email}</p>
                     </div>
                     <Link
                       href="/account"

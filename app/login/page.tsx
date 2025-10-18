@@ -35,12 +35,12 @@ export default function LoginPage() {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/generate`,
+            emailRedirectTo: `${window.location.origin}/onboarding`,
           },
         });
         if (error) throw error;
         setMessage('Compte créé ! Redirection...');
-        setTimeout(() => router.push('/generate'), 1500);
+        setTimeout(() => router.push('/onboarding'), 1500);
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
