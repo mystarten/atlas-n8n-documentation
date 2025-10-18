@@ -250,6 +250,20 @@ export default function Generate() {
                     </span>
                   </span>
                 </div>
+                
+                {/* Badge discret pour upgrade pro */}
+                {usageData.tier === 'free' && (
+                  <div className="mt-3">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full text-sm hover:border-purple-500/40 transition-all duration-300 cursor-pointer group"
+                         onClick={() => router.push('/pricing')}>
+                      <span className="text-purple-300 group-hover:text-purple-200">✨</span>
+                      <span className="text-gray-300 group-hover:text-white">
+                        Génération illimitée + PDF avec le plan Pro
+                      </span>
+                      <span className="text-purple-400 group-hover:text-purple-300 text-xs">→</span>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -388,6 +402,11 @@ export default function Generate() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
                             <h4 className="text-lg font-semibold text-white">Export PDF</h4>
+                            {session && usageData && usageData.tier === 'free' && (
+                              <span className="px-2 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs font-bold rounded-full">
+                                PRO
+                              </span>
+                            )}
                           </div>
                           <p className="text-white/70 text-sm">
                             Document PDF professionnel, prêt à imprimer ou à partager
@@ -409,6 +428,13 @@ export default function Generate() {
                             <p className="mt-2 text-orange-300 text-xs">
                               ⚠️ Avec watermark "Généré par ATLAS"
                             </p>
+                          )}
+                          {session && usageData && usageData.tier === 'free' && (
+                            <div className="mt-3 p-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg">
+                              <p className="text-purple-300 text-xs text-center">
+                                💎 <strong>Upgradez vers Pro</strong> pour débloquer l'export PDF et la génération illimitée
+                              </p>
+                            </div>
                           )}
                         </div>
                       </label>
