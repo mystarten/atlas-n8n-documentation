@@ -28,41 +28,9 @@ export default function OnboardingPage() {
     setStep(step + 1);
   };
 
-  const handleSubmit = async () => {
-    console.log('🚀 handleSubmit appelé !');
-    setLoading(true);
-    
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        console.error('❌ Pas d\'utilisateur - Redirection /generate');
-        window.location.href = '/generate';
-        return;
-      }
-
-      console.log('✅ User:', user.id);
-
-      await supabase
-        .from('user_profiles')
-        .upsert({
-          user_id: user.id,
-          first_name: firstName.trim() || 'User',
-          user_type: userType || 'creator',
-          discovery_source: discoverySource || 'autre',
-          onboarding_completed: true,
-        });
-
-      console.log('✅ Profil sauvegardé');
-      
-      // REDIRECTION FORCÉE
-      window.location.href = '/generate';
-      
-    } catch (err) {
-      console.error('💥 Erreur:', err);
-      // Rediriger quand même en cas d'erreur
-      window.location.href = '/generate';
-    }
+  const handleSubmit = () => {
+    console.log('🚀 Redirection immédiate vers /generate');
+    window.location.href = '/generate';
   };
 
   const progress = (step / 3) * 100;
