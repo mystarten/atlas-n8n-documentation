@@ -12,43 +12,8 @@ export default function OnboardingPage() {
   const [discoverySource, setDiscoverySource] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [checkingProfile, setCheckingProfile] = useState(true);
   const router = useRouter();
   const supabase = createClient();
-
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        
-        if (sessionError || !session) {
-          router.push('/login');
-          return;
-        }
-
-        // Vérifier si le profil existe déjà
-        const { data: profile, error: profileError } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('user_id', session.user.id)
-          .maybeSingle();
-
-        // Si profil existe et onboarding complet → rediriger vers /generate
-        if (profile && profile.onboarding_completed) {
-          router.push('/generate');
-          return;
-        }
-
-        // Sinon, montrer l'onboarding
-        setCheckingProfile(false);
-      } catch (err) {
-        console.error('Error checking profile:', err);
-        setCheckingProfile(false);
-      }
-    };
-
-    checkUser();
-  }, [supabase, router]);
 
   const handleNext = () => {
     if (step === 1 && !firstName.trim()) {
@@ -117,21 +82,6 @@ export default function OnboardingPage() {
       setLoading(false);
     }
   };
-
-  // Loading state pendant la vérification du profil
-  if (checkingProfile) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0f1e] via-[#0f172a] to-[#0a0f1e] flex items-center justify-center">
-        <div className="text-center">
-          <div className="relative mb-6 mx-auto w-16 h-16">
-            <div className="w-16 h-16 border-4 border-[#334155] rounded-full"></div>
-            <div className="w-16 h-16 border-4 border-[#3b82f6] rounded-full border-t-transparent absolute top-0 left-0 animate-spin"></div>
-          </div>
-          <p className="text-[#94a3b8] font-inter">Chargement...</p>
-        </div>
-      </div>
-    );
-  }
 
   const progress = (step / 3) * 100;
 
