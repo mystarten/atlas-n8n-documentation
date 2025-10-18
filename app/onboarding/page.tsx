@@ -83,6 +83,11 @@ export default function OnboardingPage() {
     }
 
     console.log('🚀 Début handleSubmit');
+    console.log('📝 Données à sauvegarder:', {
+      firstName: firstName.trim(),
+      userType,
+      discoverySource
+    });
     setLoading(true);
     
     try {
@@ -98,6 +103,7 @@ export default function OnboardingPage() {
       console.log('✅ User trouvé:', user.id);
 
       // 1. Sauvegarder les données dans onboarding_data
+      console.log('💾 Tentative de sauvegarde dans onboarding_data...');
       const { data: onboardingData, error: onboardingError } = await supabase
         .from('onboarding_data')
         .upsert({
@@ -111,6 +117,12 @@ export default function OnboardingPage() {
 
       if (onboardingError) {
         console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
+        console.error('❌ Détails erreur:', {
+          message: onboardingError.message,
+          details: onboardingError.details,
+          hint: onboardingError.hint,
+          code: onboardingError.code
+        });
         setError(`Erreur de sauvegarde: ${onboardingError.message}`);
         setLoading(false);
         return;
@@ -119,6 +131,7 @@ export default function OnboardingPage() {
       console.log('✅ Données onboarding sauvegardées:', onboardingData);
 
       // 2. Marquer onboarding_completed = TRUE dans profiles
+      console.log('💾 Tentative de mise à jour onboarding_completed...');
       const { error: profileError } = await supabase
         .from('profiles')
         .update({ onboarding_completed: true })
@@ -126,6 +139,12 @@ export default function OnboardingPage() {
 
       if (profileError) {
         console.error('❌ Erreur mise à jour onboarding_completed:', profileError);
+        console.error('❌ Détails erreur:', {
+          message: profileError.message,
+          details: profileError.details,
+          hint: profileError.hint,
+          code: profileError.code
+        });
         setError(`Erreur de mise à jour: ${profileError.message}`);
         setLoading(false);
         return;
@@ -138,7 +157,7 @@ export default function OnboardingPage() {
       router.push('/generate');
       
     } catch (err: any) {
-      console.error('💥 Erreur:', err);
+      console.error('💥 Erreur générale:', err);
       setError(`Erreur inattendue: ${err.message || 'Veuillez réessayer.'}`);
       setLoading(false);
     }
@@ -445,16 +464,38 @@ export default function OnboardingPage() {
               <h3 className="text-xl font-semibold text-white mb-2 font-poppins">Configuration de votre espace</h3>
               <p className="text-[#94a3b8] font-inter text-center mb-4">Préparation de votre environnement personnalisé...</p>
               
-              {/* Bouton de debug temporaire */}
-              <button
-                onClick={() => {
-                  console.log('🔄 Debug: Forcer redirection vers /generate');
-                  router.push('/generate');
-                }}
-                className="px-4 py-2 bg-[#ef4444] text-white text-sm rounded-lg hover:bg-[#dc2626] transition-colors"
-              >
-                Debug: Forcer redirection
-              </button>
+              {/* Boutons de debug temporaires */}
+              <div className="flex gap-2">
+                <button
+                  onClick={async () => {
+                    console.log('🔄 Debug: Test connexion Supabase');
+                    const { data: { user } } = await supabase.auth.getUser();
+                    console.log('👤 User:', user);
+                    
+                    if (user) {
+                      const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', user.id)
+                        .single();
+                      console.log('📋 Profile:', profile);
+                    }
+                  }}
+                  className="px-4 py-2 bg-[#3b82f6] text-white text-sm rounded-lg hover:bg-[#2563eb] transition-colors"
+                >
+                  Debug: Test Supabase
+                </button>
+                
+                <button
+                  onClick={() => {
+                    console.log('🔄 Debug: Forcer redirection vers /generate');
+                    router.push('/generate');
+                  }}
+                  className="px-4 py-2 bg-[#ef4444] text-white text-sm rounded-lg hover:bg-[#dc2626] transition-colors"
+                >
+                  Debug: Forcer redirection
+                </button>
+              </div>
             </div>
           )}
 
