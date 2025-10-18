@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/account', '/admin', '/api/', '/auth/'],
+        disallow: ['/account', '/api/', '/auth/'],
       },
     ],
     sitemap: 'https://atlasbuilder.app/sitemap.xml',

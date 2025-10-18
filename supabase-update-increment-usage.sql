@@ -47,3 +47,4 @@ SELECT increment_user_usage((SELECT id FROM auth.users WHERE email = 'starten.co
 
 
 
+

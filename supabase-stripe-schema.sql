@@ -9,3 +9,4 @@ COMMENT ON COLUMN user_usage.stripe_subscription_id IS 'ID de l\'abonnement Stri
 
 
 
+
