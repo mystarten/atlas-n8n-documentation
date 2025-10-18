@@ -16,9 +16,9 @@ export default function OnboardingPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  // Vérification simplifiée - éviter les boucles
+  // Vérifier si l'onboarding est déjà complété
   useEffect(() => {
-    const checkUser = async () => {
+    const checkOnboardingStatus = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         
@@ -29,20 +29,36 @@ export default function OnboardingPage() {
         }
 
         console.log('✅ Utilisateur trouvé:', user.id);
+
+        // Vérifier onboarding_completed dans profiles
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('onboarding_completed')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        // Si onboarding_completed = TRUE, rediriger vers /generate
+        if (profile?.onboarding_completed) {
+          console.log('✅ Onboarding déjà complété, redirection vers /generate');
+          router.push('/generate');
+          return;
+        }
+
+        console.log('🆕 Onboarding nécessaire, affichage du formulaire');
         setIsCheckingOnboarding(false);
       } catch (error) {
-        console.error('❌ Erreur vérification utilisateur:', error);
+        console.error('❌ Erreur vérification onboarding:', error);
         setIsCheckingOnboarding(false);
       }
     };
 
-    // Timeout de sécurité très court
+    // Timeout de sécurité
     const timeout = setTimeout(() => {
       console.log('⏰ Timeout de sécurité - affichage du formulaire');
       setIsCheckingOnboarding(false);
-    }, 2000);
+    }, 3000);
 
-    checkUser();
+    checkOnboardingStatus();
 
     return () => clearTimeout(timeout);
   }, [supabase, router]);
@@ -81,31 +97,43 @@ export default function OnboardingPage() {
 
       console.log('✅ User trouvé:', user.id);
 
-      // Essayer de sauvegarder, mais ne pas bloquer si ça échoue
-      try {
-        const { data: onboardingData, error: onboardingError } = await supabase
-          .from('onboarding_data')
-          .upsert({
-            user_id: user.id,
-            first_name: firstName.trim(),
-            user_type: userType,
-            discovery_source: discoverySource,
-          })
-          .select()
-          .single();
+      // 1. Sauvegarder les données dans onboarding_data
+      const { data: onboardingData, error: onboardingError } = await supabase
+        .from('onboarding_data')
+        .upsert({
+          user_id: user.id,
+          first_name: firstName.trim(),
+          user_type: userType,
+          discovery_source: discoverySource,
+        })
+        .select()
+        .single();
 
-        if (onboardingError) {
-          console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
-          console.log('⚠️ Continuons quand même vers /generate');
-        } else {
-          console.log('✅ Données onboarding sauvegardées:', onboardingData);
-        }
-      } catch (saveError) {
-        console.error('❌ Erreur lors de la sauvegarde:', saveError);
-        console.log('⚠️ Continuons quand même vers /generate');
+      if (onboardingError) {
+        console.error('❌ Erreur sauvegarde onboarding_data:', onboardingError);
+        setError(`Erreur de sauvegarde: ${onboardingError.message}`);
+        setLoading(false);
+        return;
       }
 
-      // Rediriger vers /generate dans tous les cas
+      console.log('✅ Données onboarding sauvegardées:', onboardingData);
+
+      // 2. Marquer onboarding_completed = TRUE dans profiles
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ onboarding_completed: true })
+        .eq('id', user.id);
+
+      if (profileError) {
+        console.error('❌ Erreur mise à jour onboarding_completed:', profileError);
+        setError(`Erreur de mise à jour: ${profileError.message}`);
+        setLoading(false);
+        return;
+      }
+
+      console.log('✅ Onboarding marqué comme complété');
+
+      // 3. Rediriger vers /generate
       console.log('🚀 Onboarding terminé - REDIRECTION vers /generate');
       router.push('/generate');
       
