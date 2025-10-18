@@ -16,16 +16,7 @@ export default async function GenerateLayout({
     redirect('/login');
   }
 
-  const { data: profile } = await supabase
-    .from('user_profiles')
-    .select('*')
-    .eq('user_id', user.id)
-    .single();
-
-  if (!profile || !profile.onboarding_completed) {
-    redirect('/onboarding');
-  }
-
+  // Plus de vérification onboarding - accès direct à /generate
   return <>{children}</>;
 }
 
