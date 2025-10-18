@@ -544,7 +544,7 @@ export default function Home() {
               </p>
             </motion.div>
             
-                    </div>
+                        </div>
                     </div>
       </motion.section>
 
@@ -592,7 +592,7 @@ export default function Home() {
               <p className="text-[#cbd5e1] font-inter">
                 Workflow automatisant la saisie de tickets de caisse dans un CRM comptable
               </p>
-              </div>
+                  </div>
             
             <div className="grid md:grid-cols-2 gap-8 mb-6">
               {/* Avant */}
@@ -600,46 +600,51 @@ export default function Home() {
                 <div className="mb-4">
                   <p className="text-white font-semibold font-inter mb-1">Avant ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Workflow brut sans documentation</p>
-            </div>
+                    </div>
                 <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
                   <img 
                     src="/img/comptableavant.png" 
                     alt="Workflow comptable avant ATLAS"
                     className="w-full h-auto"
                   />
-                </div>
-              </div>
+                    </div>
+                  </div>
 
               {/* Après */}
               <div className="group">
                 <div className="mb-4">
                   <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Documentation générée automatiquement</p>
-                </div>
-                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
+                  </div>
+                <div className="relative rounded-2xl overflow-hidden border-2 border-[#3b82f6]/50 shadow-2xl shadow-[#3b82f6]/60 group-hover:border-[#3b82f6]/80 group-hover:shadow-[#3b82f6]/80 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#3b82f6]/10 via-transparent to-[#8b5cf6]/10 pointer-events-none"></div>
                   <img 
                     src="/img/comptableapres.png" 
                     alt="Workflow comptable après ATLAS"
-                    className="w-full h-auto"
+                    className="w-full h-auto relative z-10"
                   />
-                </div>
               </div>
             </div>
-
-            {/* Notes détaillées - PLUS PETITE */}
-            <div className="bg-[#1e293b]/30 backdrop-blur-sm rounded-xl border border-[#334155]/20 p-4">
-              <p className="text-white font-semibold mb-2 text-sm font-inter">Annotations Détaillées</p>
-              <p className="text-[#cbd5e1] text-xs mb-3 font-inter">
-                ATLAS ajoute automatiquement des notes explicatives sur chaque nœud du workflow
-              </p>
-              <div className="rounded-lg overflow-hidden border border-[#334155]/20">
-                <img 
-                  src="/img/comptablenotes.png" 
-                  alt="Annotations détaillées du workflow comptable"
-                  className="w-full h-auto opacity-90"
-                />
             </div>
-        </div>
+
+            {/* Notes détaillées - ACCORDÉON */}
+            <div className="mt-4">
+              <details className="group">
+                <summary className="cursor-pointer px-4 py-3 bg-[#1e293b]/30 backdrop-blur-sm rounded-lg border border-[#334155]/20 hover:border-[#3b82f6]/30 transition-colors list-none flex items-center justify-between">
+                  <span className="text-white text-sm font-semibold font-inter">📝 Voir les annotations détaillées</span>
+                  <svg className="w-5 h-5 text-[#3b82f6] group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="mt-3 rounded-lg overflow-hidden border border-[#334155]/20">
+                  <img 
+                    src="/img/comptablenotes.png" 
+                    alt="Annotations détaillées du workflow comptable"
+                    className="w-full h-auto opacity-90"
+                  />
+                </div>
+              </details>
+              </div>
           </motion.div>
 
           {/* Exemple 2 : Veille Concurrentielle */}
@@ -681,11 +686,12 @@ export default function Home() {
                   <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Workflow documenté et compréhensible</p>
               </div>
-                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border-2 border-[#3b82f6]/50 shadow-2xl shadow-[#3b82f6]/60 group-hover:border-[#3b82f6]/80 group-hover:shadow-[#3b82f6]/80 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#3b82f6]/10 via-transparent to-[#8b5cf6]/10 pointer-events-none"></div>
                   <img 
                     src="/img/concurrenceapres.png" 
                     alt="Workflow veille concurrentielle après ATLAS"
-                    className="w-full h-auto"
+                    className="w-full h-auto relative z-10"
                   />
             </div>
               </div>
@@ -730,11 +736,12 @@ export default function Home() {
                   <p className="text-white font-semibold font-inter mb-1">Après ATLAS</p>
                   <p className="text-[#64748b] text-sm font-inter">Documentation claire et précise</p>
                   </div>
-                <div className="relative rounded-2xl overflow-hidden border border-[#334155]/30 group-hover:border-[#3b82f6]/50 transition-colors">
+                <div className="relative rounded-2xl overflow-hidden border-2 border-[#3b82f6]/50 shadow-2xl shadow-[#3b82f6]/60 group-hover:border-[#3b82f6]/80 group-hover:shadow-[#3b82f6]/80 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#3b82f6]/10 via-transparent to-[#8b5cf6]/10 pointer-events-none"></div>
                   <img 
                     src="/img/soraapres.png" 
                     alt="Workflow Sora après ATLAS"
-                    className="w-full h-auto"
+                    className="w-full h-auto relative z-10"
                   />
                 </div>
               </div>
