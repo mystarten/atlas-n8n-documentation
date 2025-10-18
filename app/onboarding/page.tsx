@@ -23,9 +23,12 @@ export default function OnboardingPage() {
         const { data: { user } } = await supabase.auth.getUser();
         
         if (!user) {
+          console.log('❌ Pas d\'utilisateur, redirection vers login');
           router.push('/login');
           return;
         }
+
+        console.log('✅ Utilisateur trouvé:', user.id);
 
         const { data: onboardingData } = await supabase
           .from('onboarding_data')
@@ -40,14 +43,23 @@ export default function OnboardingPage() {
           return;
         }
 
+        console.log('🆕 Onboarding nécessaire, affichage du formulaire');
         setIsCheckingOnboarding(false);
       } catch (error) {
-        console.error('Erreur vérification onboarding:', error);
+        console.error('❌ Erreur vérification onboarding:', error);
         setIsCheckingOnboarding(false);
       }
     };
 
+    // Timeout de sécurité pour éviter le loading infini
+    const timeout = setTimeout(() => {
+      console.log('⏰ Timeout de sécurité - affichage du formulaire');
+      setIsCheckingOnboarding(false);
+    }, 5000);
+
     checkOnboardingStatus();
+
+    return () => clearTimeout(timeout);
   }, [supabase, router]);
 
   const handleNext = () => {

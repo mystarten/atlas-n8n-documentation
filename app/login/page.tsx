@@ -45,11 +45,10 @@ export default function LoginPage() {
         
         console.log('✅ Signup réussi !', data);
         
-        // Redirection directe vers onboarding après création de compte
-        setMessage('Compte créé avec succès ! Redirection...');
-        setTimeout(() => {
-          window.location.href = '/onboarding';
-        }, 1000);
+        // Pour signup, on attend la confirmation par email
+        // L'utilisateur sera redirigé via le callback auth
+        setMessage('✅ Compte créé ! Vérifiez votre email pour confirmer votre compte.');
+        setLoading(false);
       } else {
         // Login
         const { data, error } = await supabase.auth.signInWithPassword({

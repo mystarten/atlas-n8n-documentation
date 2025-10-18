@@ -16,7 +16,25 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}/login?error=auth_failed`)
     }
     
-    // ✅ Rediriger vers /generate ou la page spécifiée
+    // Vérifier si c'est un nouvel utilisateur (pas encore d'onboarding)
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    if (user) {
+      // Vérifier si l'utilisateur a déjà fait l'onboarding
+      const { data: onboardingData } = await supabase
+        .from('onboarding_data')
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle()
+      
+      // Si pas d'onboarding, rediriger vers /onboarding
+      if (!onboardingData) {
+        console.log('🆕 Nouvel utilisateur détecté → /onboarding')
+        return NextResponse.redirect(`${origin}/onboarding`)
+      }
+    }
+    
+    // ✅ Rediriger vers la page demandée ou /generate
     return NextResponse.redirect(`${origin}${next}`)
   }
 
