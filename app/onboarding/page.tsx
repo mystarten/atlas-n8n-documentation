@@ -29,36 +29,39 @@ export default function OnboardingPage() {
   };
 
   const handleSubmit = async () => {
-    console.log('🚀 Onboarding terminé');
+    console.log('🚀 Début handleSubmit');
     
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        // Sauvegarder ET marquer comme complété
-        const { error } = await supabase
-          .from('user_profiles')
-          .upsert({
-            user_id: user.id,
-            first_name: firstName.trim() || 'User',
-            user_type: userType || 'creator',
-            discovery_source: discoverySource || 'autre',
-            onboarding_completed: true, // ← CRUCIAL
-          });
+    // Sauvegarder en arrière-plan sans bloquer
+    const saveProfile = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
         
-        if (error) {
-          console.error('❌ Erreur sauvegarde:', error);
-        } else {
-          console.log('✅ Onboarding marqué comme terminé');
+        if (user) {
+          await supabase
+            .from('user_profiles')
+            .upsert({
+              user_id: user.id,
+              first_name: firstName.trim() || 'User',
+              user_type: userType || 'creator',
+              discovery_source: discoverySource || 'autre',
+              onboarding_completed: true,
+            });
+          
+          console.log('✅ Profil sauvegardé');
         }
+      } catch (err) {
+        console.error('❌ Erreur:', err);
       }
-    } catch (err) {
-      console.error('💥 Erreur:', err);
-    }
+    };
     
-    // Redirection forcée
-    console.log('🚀 Redirection vers /generate');
-    window.location.href = '/generate';
+    // Lancer la sauvegarde en arrière-plan
+    saveProfile();
+    
+    // REDIRECTION IMMÉDIATE (ne pas attendre la sauvegarde)
+    console.log('🚀 REDIRECTION MAINTENANT vers /generate');
+    setTimeout(() => {
+      window.location.href = '/generate';
+    }, 500);
   };
 
   const progress = (step / 3) * 100;
