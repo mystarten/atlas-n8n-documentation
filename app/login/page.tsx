@@ -31,11 +31,14 @@ export default function LoginPage() {
 
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/onboarding`,
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            data: {
+              email_confirm: true // Force la confirmation automatique
+            }
           },
         });
         if (error) throw error;
