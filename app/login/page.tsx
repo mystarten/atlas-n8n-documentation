@@ -62,10 +62,10 @@ export default function LoginPage() {
         
         console.log('✅ Signup réussi !', data);
         
-        // Redirection directe vers onboarding (même si pas encore confirmé)
+        // Redirection directe vers /generate
         setMessage('✅ Compte créé avec succès ! Redirection...');
         setTimeout(() => {
-          window.location.href = '/onboarding';
+          window.location.href = '/generate';
         }, 1000);
         setLoading(false);
       } else {
