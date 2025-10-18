@@ -28,36 +28,37 @@ export default function OnboardingPage() {
     setStep(step + 1);
   };
 
-  const handleSubmit = () => {
-    console.log('🚀 Onboarding terminé - REDIRECTION IMMÉDIATE !');
+  const handleSubmit = async () => {
+    console.log('🚀 Onboarding terminé');
     
-    // REDIRECTION IMMÉDIATE SANS ATTENDRE
-    window.location.href = '/generate';
-    
-    // Sauvegarder en arrière-plan (après la redirection)
-    setTimeout(async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        // Sauvegarder ET marquer comme complété
+        const { error } = await supabase
+          .from('user_profiles')
+          .upsert({
+            user_id: user.id,
+            first_name: firstName.trim() || 'User',
+            user_type: userType || 'creator',
+            discovery_source: discoverySource || 'autre',
+            onboarding_completed: true, // ← CRUCIAL
+          });
         
-        if (user) {
-          await supabase
-            .from('user_profiles')
-            .upsert({
-              user_id: user.id,
-              onboarding_completed: true,
-              first_name: firstName.trim() || 'User',
-              user_type: userType || 'creator',
-              discovery_source: discoverySource || 'autre',
-            });
-          
+        if (error) {
+          console.error('❌ Erreur sauvegarde:', error);
+        } else {
           console.log('✅ Onboarding marqué comme terminé');
         }
-        
-        localStorage.setItem('onboarding_completed', 'true');
-      } catch (err) {
-        console.error('❌ Erreur sauvegarde:', err);
       }
-    }, 100);
+    } catch (err) {
+      console.error('💥 Erreur:', err);
+    }
+    
+    // Redirection forcée
+    console.log('🚀 Redirection vers /generate');
+    window.location.href = '/generate';
   };
 
   const progress = (step / 3) * 100;
