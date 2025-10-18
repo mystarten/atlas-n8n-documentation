@@ -62,25 +62,42 @@ export default function OnboardingPage() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
-      if (!user) throw new Error('Non authentifié');
+      console.log('👤 User:', user);
+      
+      if (!user) {
+        throw new Error('Non authentifié');
+      }
 
-      const { error: insertError } = await supabase
+      const dataToInsert = {
+        user_id: user.id,
+        first_name: firstName.trim(),
+        user_type: userType,
+        discovery_source: discoverySource,
+        onboarding_completed: true,
+      };
+
+      console.log('📝 Data to insert:', dataToInsert);
+
+      const { data, error: insertError } = await supabase
         .from('user_profiles')
-        .insert({
-          user_id: user.id,
-          first_name: firstName.trim(),
-          user_type: userType,
-          discovery_source: discoverySource,
-          onboarding_completed: true,
-        });
+        .insert(dataToInsert)
+        .select();
 
-      if (insertError) throw insertError;
+      console.log('✅ Insert result:', data);
+      console.log('❌ Insert error:', insertError);
 
-      // Rediriger immédiatement
+      if (insertError) {
+        console.error('🚨 Supabase error:', insertError);
+        throw insertError;
+      }
+
+      // Redirection immédiate
+      console.log('🚀 Redirection vers /generate');
       router.push('/generate');
       router.refresh();
     } catch (err: any) {
-      setError(err.message);
+      console.error('💥 Erreur catch:', err);
+      setError(err.message || 'Une erreur est survenue');
       setLoading(false);
     }
   };
@@ -253,12 +270,67 @@ export default function OnboardingPage() {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: 'tiktok', label: 'TikTok', icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg> },
-                    { value: 'instagram', label: 'Instagram', icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/><path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> },
-                    { value: 'bouche_a_oreille', label: 'Bouche-à-oreille', icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" /></svg> },
-                    { value: 'recherche_google', label: 'Recherche Google', icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg> },
-                    { value: 'youtube', label: 'YouTube', icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> },
-                    { value: 'autre', label: 'Autre', icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" /></svg> },
+                    { 
+                      value: 'tiktok', 
+                      label: 'TikTok',
+                      gradient: 'from-[#00f2ea] to-[#ff0050]',
+                      icon: (
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                        </svg>
+                      )
+                    },
+                    { 
+                      value: 'instagram', 
+                      label: 'Instagram',
+                      gradient: 'from-[#f09433] via-[#dc2743] to-[#bc1888]',
+                      icon: (
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+                          <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                      )
+                    },
+                    { 
+                      value: 'bouche_a_oreille', 
+                      label: 'Bouche-à-oreille',
+                      gradient: 'from-[#667eea] to-[#764ba2]',
+                      icon: (
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                        </svg>
+                      )
+                    },
+                    { 
+                      value: 'recherche_google', 
+                      label: 'Recherche Google',
+                      gradient: 'from-[#4285F4] via-[#EA4335] to-[#FBBC05]',
+                      icon: (
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/>
+                        </svg>
+                      )
+                    },
+                    { 
+                      value: 'youtube', 
+                      label: 'YouTube',
+                      gradient: 'from-[#FF0000] to-[#CC0000]',
+                      icon: (
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                      )
+                    },
+                    { 
+                      value: 'autre', 
+                      label: 'Autre',
+                      gradient: 'from-[#6366f1] to-[#8b5cf6]',
+                      icon: (
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                        </svg>
+                      )
+                    },
                   ].map((source) => (
                     <button
                       key={source.value}
@@ -266,19 +338,30 @@ export default function OnboardingPage() {
                         setDiscoverySource(source.value);
                         setError('');
                       }}
-                      className={`p-4 rounded-xl border-2 transition-all group ${
+                      className={`p-5 rounded-xl border-2 transition-all group relative overflow-hidden ${
                         discoverySource === source.value
-                          ? 'bg-[#3b82f6]/10 border-[#3b82f6] shadow-lg shadow-[#3b82f6]/20 scale-[1.02]'
-                          : 'bg-[#0f172a] border-[#334155] hover:border-[#3b82f6]/50 hover:bg-[#0f172a]/80'
+                          ? 'border-transparent shadow-2xl scale-[1.02]'
+                          : 'border-[#334155] hover:border-[#3b82f6]/50 hover:bg-[#0f172a]/80'
                       }`}
                     >
-                      <div className="flex flex-col items-center gap-2">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                          discoverySource === source.value ? 'bg-[#3b82f6] text-white' : 'bg-[#334155] text-[#cbd5e1] group-hover:bg-[#3b82f6]/50 group-hover:text-white'
+                      {/* Gradient background when selected */}
+                      {discoverySource === source.value && (
+                        <div className={`absolute inset-0 bg-gradient-to-r ${source.gradient} opacity-10`}></div>
+                      )}
+                      
+                      <div className="relative flex flex-col items-center gap-3">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${
+                          discoverySource === source.value 
+                            ? `bg-gradient-to-r ${source.gradient} text-white shadow-lg` 
+                            : 'bg-[#334155] text-[#cbd5e1] group-hover:bg-[#334155] group-hover:text-white'
                         }`}>
                           {source.icon}
                         </div>
-                        <span className="text-white text-sm font-inter">{source.label}</span>
+                        <span className={`text-sm font-inter font-medium ${
+                          discoverySource === source.value ? 'text-white' : 'text-[#cbd5e1]'
+                        }`}>
+                          {source.label}
+                        </span>
                       </div>
                     </button>
                   ))}
