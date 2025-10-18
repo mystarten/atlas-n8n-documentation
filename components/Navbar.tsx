@@ -68,6 +68,13 @@ export default function Navbar() {
           <Link href="/pricing" className={`text-sm transition-colors font-inter ${pathname === '/pricing' ? 'text-white font-medium' : 'text-[#e2e8f0] hover:text-white'}`}>
             Tarifs
           </Link>
+          
+          {/* Lien Générer (seulement si connecté) */}
+          {user && (
+            <Link href="/generate" className={`text-sm transition-colors font-inter ${pathname === '/generate' ? 'text-white font-medium' : 'text-[#e2e8f0] hover:text-white'}`}>
+              Générer
+            </Link>
+          )}
         </div>
 
         {/* Desktop - User Menu OU Login Button */}
@@ -87,21 +94,13 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              {/* Dropdown Menu */}
+              {/* Dropdown Menu (uniquement compte et déconnexion) */}
               {isUserMenuOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-[#1e293b] border border-[#334155] rounded-lg shadow-xl overflow-hidden">
-                  <Link
-                    href="/generate"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    className="block px-4 py-3 text-[#e2e8f0] hover:bg-[#334155] transition-colors font-inter text-sm"
-                  >
-                    <div className="flex items-center gap-3">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      Générer
-                    </div>
-                  </Link>
+                  <div className="px-4 py-3 border-b border-[#334155]">
+                    <p className="text-xs text-[#64748b] font-inter">Connecté en tant que</p>
+                    <p className="text-sm text-white font-inter truncate mt-1">{user.email}</p>
+                  </div>
                   <Link
                     href="/account"
                     onClick={() => setIsUserMenuOpen(false)}
@@ -175,10 +174,10 @@ export default function Navbar() {
 
             {user ? (
               <>
-                <Link href="/generate" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-lg bg-[#3b82f6]/20 text-white font-medium font-inter">
+                <Link href="/generate" onClick={() => setIsOpen(false)} className={`block px-4 py-3 rounded-lg transition-colors font-inter ${pathname === '/generate' ? 'bg-[#3b82f6]/20 text-white font-medium' : 'text-[#e2e8f0] hover:bg-[#334155]'}`}>
                   Générer
                 </Link>
-                <Link href="/account" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-lg text-[#e2e8f0] hover:bg-[#334155] transition-colors font-inter">
+                <Link href="/account" onClick={() => setIsOpen(false)} className={`block px-4 py-3 rounded-lg transition-colors font-inter ${pathname === '/account' ? 'bg-[#3b82f6]/20 text-white font-medium' : 'text-[#e2e8f0] hover:bg-[#334155]'}`}>
                   Mon compte
                 </Link>
                 <button onClick={handleLogout} className="w-full text-left px-4 py-3 rounded-lg text-[#ef4444] hover:bg-[#334155] transition-colors font-inter">
