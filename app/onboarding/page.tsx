@@ -30,38 +30,47 @@ export default function OnboardingPage() {
 
   const handleSubmit = async () => {
     console.log('🚀 Début handleSubmit');
+    setLoading(true);
     
-    // Sauvegarder en arrière-plan sans bloquer
-    const saveProfile = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        
-        if (user) {
-          await supabase
-            .from('user_profiles')
-            .upsert({
-              user_id: user.id,
-              first_name: firstName.trim() || 'User',
-              user_type: userType || 'creator',
-              discovery_source: discoverySource || 'autre',
-              onboarding_completed: true,
-            });
-          
-          console.log('✅ Profil sauvegardé');
-        }
-      } catch (err) {
-        console.error('❌ Erreur:', err);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        console.error('❌ Pas d\'utilisateur');
+        window.location.href = '/generate';
+        return;
       }
-    };
-    
-    // Lancer la sauvegarde en arrière-plan
-    saveProfile();
-    
-    // REDIRECTION IMMÉDIATE (ne pas attendre la sauvegarde)
-    console.log('🚀 REDIRECTION MAINTENANT vers /generate');
-    setTimeout(() => {
+
+      console.log('✅ User trouvé:', user.id);
+
+      // SAUVEGARDER D'ABORD (ATTENDRE que ça soit fait)
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .upsert({
+          user_id: user.id,
+          first_name: firstName.trim() || 'User',
+          user_type: userType || 'creator',
+          discovery_source: discoverySource || 'autre',
+          onboarding_completed: true,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('❌ Erreur sauvegarde:', error);
+      } else {
+        console.log('✅ Profil sauvegardé avec succès:', data);
+      }
+
+      // PUIS rediriger (après que la sauvegarde soit confirmée)
+      console.log('🚀 Sauvegarde OK - REDIRECTION vers /generate');
       window.location.href = '/generate';
-    }, 500);
+      
+    } catch (err) {
+      console.error('💥 Erreur:', err);
+      // Rediriger quand même
+      window.location.href = '/generate';
+    }
   };
 
   const progress = (step / 3) * 100;
