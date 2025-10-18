@@ -30,6 +30,8 @@ export default function OnboardingPage() {
 
   const handleSubmit = async () => {
     try {
+      console.log('🚀 handleSubmit démarré');
+      
       if (!discoverySource) {
         setError('Veuillez sélectionner une option');
         return;
@@ -38,13 +40,15 @@ export default function OnboardingPage() {
       setLoading(true);
       setError('');
 
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log('🔍 Récupération user...');
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
       
-      if (sessionError || !session || !session.user) {
+      if (userError || !user) {
+        console.error('❌ User error:', userError);
         throw new Error('Non authentifié. Veuillez vous reconnecter.');
       }
 
-      const user = session.user;
+      console.log('✅ User récupéré:', user.id);
 
       const profileData = {
         user_id: user.id,
@@ -55,7 +59,7 @@ export default function OnboardingPage() {
         updated_at: new Date().toISOString(),
       };
 
-      console.log('📝 Insertion data:', profileData);
+      console.log('📝 Data à sauvegarder:', profileData);
 
       // UPSERT : crée si n'existe pas, met à jour sinon
       const { data, error: upsertError } = await supabase
@@ -69,15 +73,16 @@ export default function OnboardingPage() {
 
       if (upsertError) {
         console.error('❌ Supabase error:', upsertError);
-        throw new Error('Erreur lors de l\'enregistrement. Veuillez réessayer.');
+        throw new Error(upsertError.message || 'Erreur lors de l\'enregistrement.');
       }
 
-      console.log('✅ Success:', data);
+      console.log('✅ Profil sauvegardé avec succès !', data);
+      console.log('🚀 Redirection vers /generate');
 
       // Redirection immédiate vers /generate
       window.location.href = '/generate';
     } catch (err: any) {
-      console.error('💥 Error:', err);
+      console.error('💥 Error catch:', err);
       setError(err.message || 'Une erreur est survenue');
       setLoading(false);
     }
