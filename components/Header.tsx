@@ -31,8 +31,17 @@ export default function Header() {
   }, [supabase.auth])
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    window.location.href = '/'
+    try {
+      console.log('🚪 Déconnexion en cours...');
+      await supabase.auth.signOut();
+      console.log('✅ Déconnexion réussie');
+      // Forcer le rechargement pour nettoyer l'état
+      window.location.href = '/';
+    } catch (error) {
+      console.error('❌ Erreur déconnexion:', error);
+      // Déconnexion forcée même en cas d'erreur
+      window.location.href = '/';
+    }
   }
 
   return (

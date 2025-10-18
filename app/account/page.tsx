@@ -22,6 +22,14 @@ export default function AccountPage() {
 
   useEffect(() => {
     loadUserData()
+    
+    // Timeout de sécurité pour éviter le chargement infini
+    const timeout = setTimeout(() => {
+      console.log('⏰ Timeout de sécurité - arrêt du loading');
+      setIsLoading(false);
+    }, 10000);
+    
+    return () => clearTimeout(timeout);
   }, [])
 
   // Vérifier si l'abonnement est expiré
@@ -43,11 +51,15 @@ export default function AccountPage() {
   }, [subscriptionEndDate, user?.id])
 
   const loadUserData = async () => {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      window.location.href = '/'
-      return
-    }
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        console.log('❌ Pas d\'utilisateur, redirection vers /');
+        window.location.href = '/'
+        return
+      }
+      
+      console.log('✅ Utilisateur trouvé:', user.id);
 
     setUser(user)
 

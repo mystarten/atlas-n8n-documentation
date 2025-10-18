@@ -31,23 +31,7 @@ export default function LoginPage() {
 
     try {
       if (isSignUp) {
-        // Essayer d'abord de se connecter (au cas où le compte existe déjà)
-        const { data: existingUser } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        
-        if (existingUser.user) {
-          console.log('✅ Compte existant, connexion réussie');
-          setMessage('✅ Connexion réussie ! Redirection...');
-          setTimeout(() => {
-            window.location.href = '/generate';
-          }, 1000);
-          setLoading(false);
-          return;
-        }
-        
-        // Sinon, créer le compte
+        // Créer le compte directement
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
@@ -62,11 +46,17 @@ export default function LoginPage() {
         
         console.log('✅ Signup réussi !', data);
         
-        // Redirection directe vers /generate
-        setMessage('✅ Compte créé avec succès ! Redirection...');
-        setTimeout(() => {
-          window.location.href = '/generate';
-        }, 1000);
+        // Si l'utilisateur est connecté directement, rediriger
+        if (data.user && data.session) {
+          console.log('✅ Utilisateur connecté automatiquement');
+          setMessage('✅ Compte créé avec succès ! Redirection...');
+          setTimeout(() => {
+            window.location.href = '/generate';
+          }, 1000);
+        } else {
+          // Sinon, attendre la confirmation par email
+          setMessage('✅ Compte créé ! Vérifiez votre email pour confirmer votre compte.');
+        }
         setLoading(false);
       } else {
         // Login
