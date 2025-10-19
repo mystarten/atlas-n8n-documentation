@@ -33,9 +33,9 @@ export default function Navbar() {
 
       if (user) {
         const { data: profile } = await supabase
-          .from('user_profiles')
+          .from('profiles')
           .select('*')
-          .eq('user_id', user.id)
+          .eq('id', user.id)
           .single();
         
         setUserProfile(profile);
@@ -49,9 +49,9 @@ export default function Navbar() {
       
       if (session?.user) {
         const { data: profile } = await supabase
-          .from('user_profiles')
+          .from('profiles')
           .select('*')
-          .eq('user_id', session.user.id)
+          .eq('id', session.user.id)
           .single();
         
         setUserProfile(profile);
