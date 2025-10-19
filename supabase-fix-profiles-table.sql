@@ -62,14 +62,16 @@ FROM profiles
 WHERE id = 'dcaba08f-e421-4f6c-b5b7-4d2dd47ced3c';
 
 -- 10. Créer un profil par défaut pour l'utilisateur test si il n'en a pas
-INSERT INTO profiles (id, subscription_tier, templates_used, templates_limit, company_name)
+INSERT INTO profiles (id, email, subscription_tier, templates_used, templates_limit, company_name)
 VALUES (
     'dcaba08f-e421-4f6c-b5b7-4d2dd47ced3c',
+    'test12@test.com',
     'free',
     0,
     3,
     NULL
 ) ON CONFLICT (id) DO UPDATE SET
+    email = COALESCE(profiles.email, EXCLUDED.email),
     subscription_tier = EXCLUDED.subscription_tier,
     templates_used = COALESCE(profiles.templates_used, 0),
     templates_limit = COALESCE(profiles.templates_limit, 3),
