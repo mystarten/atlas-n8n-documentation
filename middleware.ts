@@ -37,18 +37,25 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  // Si pas de session et tentative d'accès à /generate, rediriger vers /login
+  // ✅ Middleware plus permissif - laisser le côté client gérer l'auth
+  // On redirige seulement si on est sûr qu'il n'y a pas de session
   if (!session && req.nextUrl.pathname.startsWith('/generate')) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = '/login';
-    return NextResponse.redirect(redirectUrl);
+    // Vérifier si on a au moins un cookie de session
+    const sessionCookie = req.cookies.get('sb-access-token') || req.cookies.get('sb-refresh-token')
+    if (!sessionCookie) {
+      const redirectUrl = req.nextUrl.clone();
+      redirectUrl.pathname = '/login';
+      return NextResponse.redirect(redirectUrl);
+    }
   }
 
-  // Si pas de session et tentative d'accès à /account, rediriger vers /login
   if (!session && req.nextUrl.pathname.startsWith('/account')) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = '/login';
-    return NextResponse.redirect(redirectUrl);
+    const sessionCookie = req.cookies.get('sb-access-token') || req.cookies.get('sb-refresh-token')
+    if (!sessionCookie) {
+      const redirectUrl = req.nextUrl.clone();
+      redirectUrl.pathname = '/login';
+      return NextResponse.redirect(redirectUrl);
+    }
   }
 
   return res;

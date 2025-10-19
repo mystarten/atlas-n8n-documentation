@@ -50,10 +50,17 @@ export default function Generate() {
   // ✅ Charger les données depuis l'API (comme UserContext)
   useEffect(() => {
     const loadUsageData = async () => {
+      // ✅ Vérifier la session AVANT de charger les données
       const { data: { session } } = await supabase.auth.getSession()
-      setSession(session)
+      console.log('🔍 Session check:', session?.user?.email || 'No session')
       
-      if (!session?.user?.id) return
+      if (!session?.user?.id) {
+        console.log('❌ Pas de session, redirection vers login')
+        router.push('/login')
+        return
+      }
+      
+      setSession(session)
       
       try {
         console.log('🔄 Chargement des données utilisateur...')
@@ -95,7 +102,20 @@ export default function Generate() {
     }
     
     loadUsageData()
-  }, [supabase.auth])
+    
+    // ✅ Écouter les changements de session
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('🔄 Auth state change:', event, session?.user?.email || 'No session')
+      if (event === 'SIGNED_OUT' || !session) {
+        router.push('/login')
+      } else if (event === 'SIGNED_IN') {
+        setSession(session)
+        loadUsageData()
+      }
+    })
+    
+    return () => subscription.unsubscribe()
+  }, [supabase.auth, router])
 
   const handleFileSelect = (selectedFile: File | null) => {
     setFile(selectedFile)
@@ -114,10 +134,15 @@ export default function Generate() {
       return
     }
     
-    if (!session) {
+    // ✅ Vérifier la session plus robustement
+    const { data: { session: currentSession } } = await supabase.auth.getSession()
+    if (!currentSession?.user?.id) {
+      console.log('❌ Pas de session dans handleGenerate, redirection')
       router.push('/login')
       return
     }
+    
+    setSession(currentSession)
 
     // Scroll vers le haut pour voir le loader
     window.scrollTo({ top: 0, behavior: 'smooth' })
