@@ -1,11 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { createClient as createAdminClient } from '@supabase/supabase-js'
 
 // Force dynamic rendering to avoid static generation issues
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request) {
   try {
+    // Utiliser le client normal pour vérifier l'auth
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
@@ -15,8 +17,20 @@ export async function POST(request: Request) {
     
     console.log('🔄 Incrémentation de l\'usage pour user:', user.id)
     
+    // ✅ Utiliser le service role pour bypass RLS
+    const supabaseAdmin = createAdminClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
+    
     // ✅ Méthode simplifiée : mise à jour directe de la table profiles
-    const { data: currentProfile, error: fetchError } = await supabase
+    const { data: currentProfile, error: fetchError } = await supabaseAdmin
       .from('profiles')
       .select('templates_used, subscription_tier')
       .eq('id', user.id)
@@ -40,7 +54,7 @@ export async function POST(request: Request) {
     // Incrémenter le compteur
     const newCount = (currentProfile.templates_used || 0) + 1
     
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('profiles')
       .update({ 
         templates_used: newCount,
