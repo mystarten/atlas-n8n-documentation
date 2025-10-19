@@ -67,8 +67,9 @@ export default function Generate() {
         
         // ✅ Utiliser l'API stats au lieu de checkUsageLimit
         const res = await fetch('/api/user/stats')
-        const statsData = await res.json()
+        console.log('📡 Réponse API stats:', res.status, res.statusText)
         
+        const statsData = await res.json()
         console.log('📊 Stats récupérées:', statsData)
         
         setUsageData({
@@ -279,22 +280,28 @@ export default function Generate() {
             </p>
             
             {/* Affichage du compteur d'usage */}
-            {session && usageData && (
+            {session && (
               <div className="text-center mb-4">
-                <span className="text-gray-400">
-                  Vous avez utilisé <strong className="text-blue-400 font-semibold">{usageData.current} / {usageData.limit}</strong> templates
-                </span>
+                {usageData ? (
+                  <span className="text-gray-400">
+                    Vous avez utilisé <strong className="text-blue-400 font-semibold">{usageData.current} / {usageData.limit}</strong> templates
+                  </span>
+                ) : (
+                  <span className="text-gray-400">
+                    Chargement de vos statistiques...
+                  </span>
+                )}
                 <div className="mt-2">
                   <span className="px-3 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-sm">
                     <span className="text-gray-400">Plan : </span>
                     <span className="text-blue-400 font-semibold capitalize">
-                      {formatTier(usageData.tier)}
+                      {usageData ? formatTier(usageData.tier) : 'Gratuit'}
                     </span>
                   </span>
                 </div>
                 
                 {/* Badge discret pour upgrade pro */}
-                {usageData.tier === 'free' && (
+                {usageData && usageData.tier === 'free' && (
                   <div className="mt-3">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full text-sm hover:border-purple-500/40 transition-all duration-300 cursor-pointer group"
                          onClick={() => router.push('/pricing')}>

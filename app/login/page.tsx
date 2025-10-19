@@ -46,13 +46,13 @@ export default function LoginPage() {
         
         console.log('✅ Signup réussi !', data);
         
-        // Si l'utilisateur est connecté directement, rediriger
-        if (data.user && data.session) {
-          console.log('✅ Utilisateur connecté automatiquement');
-          setMessage('✅ Compte créé avec succès ! Redirection...');
-          setTimeout(() => {
-            window.location.href = '/generate';
-          }, 1000);
+         // Si l'utilisateur est connecté directement, rediriger
+         if (data.user && data.session) {
+           console.log('✅ Utilisateur connecté automatiquement');
+           setMessage('✅ Compte créé avec succès ! Redirection...');
+           setTimeout(() => {
+             router.push('/generate');
+           }, 1000);
         } else {
           // Sinon, attendre la confirmation par email
           setMessage('✅ Compte créé ! Vérifiez votre email pour confirmer votre compte.');
@@ -70,7 +70,7 @@ export default function LoginPage() {
         // Redirection simple vers /generate
         setMessage('Connexion réussie ! Redirection...');
         setTimeout(() => {
-          window.location.href = '/generate';
+          router.push('/generate');
         }, 1000);
         return;
       }
