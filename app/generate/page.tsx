@@ -151,6 +151,8 @@ export default function Generate() {
     setIsLoading(true)
     setError('')
     setShowLimitAlert(false)
+    
+    console.log('🚀 Génération démarrée, isLoading:', true)
 
     try {
       // ✅ Vérifier la limite depuis les données actuelles
@@ -530,6 +532,9 @@ export default function Generate() {
 
           {isLoading && (
             <div className="max-w-4xl mx-auto">
+              <div className="text-center text-white mb-4">
+                DEBUG: isLoading = {isLoading.toString()}
+              </div>
               <LoadingProgress />
             </div>
           )}
