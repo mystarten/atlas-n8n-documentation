@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic'
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-09-30.clover',
 })
